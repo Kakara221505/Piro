@@ -1,0 +1,751 @@
+<ngx-spinner bdColor="rgb(255,255,255,1)" size="large" color="#33cc94" type="ball-scale-multiple"></ngx-spinner>
+<div class="yes" *ngIf="showContent">
+  <div class="row" *ngIf="!showIframe">
+    <div class="col-md-12 left-section" *ngIf="!eventStatus">
+      <div class="row">
+        <div class="box-style">
+          <div class="col-md-4">
+            <div class="box-green">
+              <!-- <p class="Error-message" *ngIf="errorMessage" >{{errorMessage}}</p>
+              <p class="Error-message" *ngIf="errorMessageVerify" >{{errorMessageVerify}}</p> -->
+
+              <!-- <form #accessFrom="ngForm" *ngIf="accessType === 'OPEN'">
+                <div class="row">
+                  <div class="col-md images">
+                    <img src="../../assets/images/pirowhitelogo.svg" alt="" class="img-white" />
+                  </div>
+                </div>
+                <div class="row">
+                  <p class="green-text">Let's dive into the Space</p>
+                </div>
+                <div class="access-one">
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-md-10">
+                      <div class="mb-3">
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="exampleFormControlInput1"
+                          placeholder="Enter Email Address"
+                          [(ngModel)]="access.email"
+                          pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                          [email]="true"
+                          name="emails"
+                          #emailss="ngModel"
+                          [ngClass]="{ 'is-invalid': accessFrom.submitted && emailss.errors }"
+                          required
+                        />
+                        <div *ngIf="accessFrom.submitted && emailss.errors" class="invalid-feedback">
+                          <div *ngIf="emailss.errors['required']">Email is required</div>
+                          <div *ngIf="emailss.errors['pattern']">Enter Valid Email!</div>
+                        </div>
+                      </div>
+                      <p class="error-class-backend-1" *ngIf="errorMessage">
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {{ errorMessage }}.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-md-10">
+                      <div class="mb-5">
+                        <button type="submit" class="btn-Log" (click)="joinAccess(accessFrom)">
+                          Sign in with email <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form> -->
+              <form
+                action=""
+                #passwordForm="ngForm"
+                *ngIf="accessType === 'PASSWORD_PROTECTED'"
+                [ngStyle]="{ display: passwordStyle }"
+                (ngSubmit)="passwordForm.form.valid && joinPassword(passwordForm)"
+              >
+                <div class="row">
+                  <div class="col-md images">
+                    <img src="../../assets/images/pirowhitelogo.svg" alt="" class="img-white" />
+                  </div>
+                </div>
+                <div class="row">
+                  <p class="green-text">Let's dive into the Space</p>
+                </div>
+                <div class="row">
+                  <p class="pass-text">
+                    This event is <b>Password Protected</b> , you need to enter the password to enter in the event
+                  </p>
+                </div>
+                <div class="access-one">
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-md-9 px-0 inputs">
+                      <div class="mb-3">
+                        <input
+                          [type]="fieldTextType ? 'text' : 'password'"
+                          type="password"
+                          class="form-control"
+                          id="exampleFormControlInput1"
+                          placeholder="Enter Your password"
+                          [(ngModel)]="pass.password"
+                          name="passs"
+                          #passwords="ngModel"
+                          [ngClass]="{ 'is-invalid': passwordForm.submitted && passwords.errors }"
+                          required
+                        />
+
+                        <div *ngIf="passwordForm.submitted && passwords.errors" class="invalid-feedback">
+                          <div *ngIf="passwords.errors['required']">Password is required</div>
+                        </div>
+                      </div>
+                      <p class="error-class-backend-1" *ngIf="errorMessage">
+                        <i class="fa-solid fa-circle-exclamation"></i> {{ errorMessage | titlecase }}.
+                      </p>
+                    </div>
+                    <div class="col-md-1 px-0 input-group-append">
+                      <span class="input-group-text">
+                        <i
+                          class="fa"
+                          [ngClass]="{
+                            'fa-eye-slash': !fieldTextType,
+                            'fa-eye': fieldTextType
+                          }"
+                          (click)="toggleFieldTextType()"
+                        ></i>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-md-10">
+                      <div class="mb-4">
+                        <button type="submit" class="btn-Log">
+                          Submit <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <form action="" #emailForm="ngForm" *ngIf="accessType === 'EMAIL_AND_OTP'" [ngStyle]="{ display: emailandOTPStyle }">
+                <div class="row">
+                  <div class="col-md images">
+                    <img src="../../assets/images/pirowhitelogo.svg" alt="" class="img-white" />
+                  </div>
+                </div>
+                <div class="row">
+                  <p class="green-text">Let's dive into the Space</p>
+                </div>
+                <!-- <div class="access-one" [ngStyle]="{ display: formStyle }">
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-md-11">
+                      <div class="mb-3">
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="exampleFormControlInput1"
+                          placeholder="Enter Email Address"
+                          [(ngModel)]="emailOtp.email"
+                          pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                          [email]="true"
+                          name="emails"
+                          #emailss="ngModel"
+                          [ngClass]="{ 'is-invalid': emailForm.submitted && emailss.errors }"
+                          required
+                        />
+                        <div *ngIf="emailForm.submitted && emailss.errors" class="invalid-feedback">
+                          <div *ngIf="emailss.errors['required']">Email is required</div>
+                          <div *ngIf="emailss.errors['pattern']">Enter Valid Email!</div>
+                        </div>
+                      </div>
+                      <p class="error-class-backend-1" *ngIf="errorMessage">
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {{ errorMessage }}.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-md-11">
+                      <div class="submit-btn">
+                        <button type="submit" class="btn-Log" (click)="joinEmailOtp(emailForm)">
+                          Submit <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="access-two">
+                  <div>
+                    <p class="otp-para">Received a verification code?</p>
+                    <p class="otp-text">
+                      We've sent an otp on your registered email address <b> {{ profileEmail }}</b
+                      >. Please Enter it below .
+                    </p>
+                  </div>
+                  <div class="col-md-12 otps">
+                    <form action="" autocomplete="off">
+                      <div class="form-group otp">
+                        <ng-otp-input
+                          (onInputChange)="onOtpChange($event)"
+                          ngDefaultControl
+                          [config]="{ length: 6 }"
+                        ></ng-otp-input>
+                        <p class="not-otp-para mt-2">Didn't receive the code? <a href="" class="create-link-resend">Resend</a></p>
+                      </div>
+                      <p class="error-class-backend-2" *ngIf="errorMessageVerify">
+                        <i class="fa-solid fa-circle-exclamation"></i> {{ errorMessageVerify }}
+                      </p>
+                      <div class="form-actions">
+                        <div class="row d-flex justify-content-center">
+                          <div class="col-md-11">
+                            <div class="mb-2">
+                              <button class="btn-Log" (click)="joinViaOTP()">
+                                Login <i class="fa fa-spinner fa-spin" *ngIf="imgloading2"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </form>
+              <form
+                action=""
+                #emailFormNotLogin="ngForm"
+                *ngIf="accessType === 'EMAIL_AND_OTP'"
+                [ngStyle]="{ display: emailandOTPNotLogginStyle }"
+                (ngSubmit)="emailFormNotLogin.form.valid && joinByEmailOtpNotLogin(emailFormNotLogin)"
+              >
+                <div class="row">
+                  <div class="col-md images">
+                    <img src="../../assets/images/pirowhitelogo.svg" alt="" class="img-white" />
+                  </div>
+                </div>
+                <div class="row">
+                  <p class="green-text">Let's dive into the Space</p>
+                </div>
+                <div class="access-one" [ngStyle]="{ display: notLoginformStyle }">
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-md-11">
+                      <div class="mb-3">
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="exampleFormControlInput1"
+                          placeholder="Enter Email Address"
+                          [(ngModel)]="emailOtp.email"
+                          pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                          [email]="true"
+                          name="emails"
+                          #emailss="ngModel"
+                          [ngClass]="{ 'is-invalid': emailFormNotLogin.submitted && emailss.errors }"
+                          required
+                        />
+                        <div *ngIf="emailFormNotLogin.submitted && emailss.errors" class="invalid-feedback">
+                          <div *ngIf="emailss.errors['required']">Email is required</div>
+                          <div *ngIf="emailss.errors['pattern']">Enter Valid Email!</div>
+                        </div>
+                      </div>
+                      <p class="error-class-backend-2" *ngIf="errorMessage">
+                        <i class="fa-solid fa-circle-exclamation"></i> {{ errorMessage }}.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-md-11">
+                      <div class="submit-btn">
+                        <button type="submit" class="btn-Log">
+                          Submit <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="access-two" [ngStyle]="{ display: notLoginOtpStyle }">
+                  <div>
+                    <p class="otp-para">Received a verification code?</p>
+                    <p class="otp-text">
+                      We've sent an otp on your registered email address <b> {{ profileEmail }}</b
+                      >. Please Enter it below .
+                    </p>
+                  </div>
+                  <div class="col-md-12 otps">
+                    <form
+                      action=""
+                      #otpFormNotLoggin="ngForm"
+                      autocomplete="off"
+                      (ngSubmit)="otpFormNotLoggin.form.valid && joinViaOTPNotLogin()"
+                    >
+                      <div class="form-group otp">
+                        <ng-otp-input
+                          (onInputChange)="onOtpChange($event)"
+                          ngDefaultControl
+                          [config]="{ length: 6 }"
+                        ></ng-otp-input>
+                        <!-- <p class="not-otp-para mt-2">Didn't receive the code? <a href="" class="create-link-resend">Resend</a></p> -->
+                        <p class="not-otp-para mt-2">Didn't receive the code?</p>
+                      </div>
+                      <p class="error-class-backend-2" *ngIf="errorMessageVerify">
+                        <i class="fa-solid fa-circle-exclamation"></i> {{ errorMessageVerify }}
+                      </p>
+                      <div class="form-actions">
+                        <div class="row d-flex justify-content-center">
+                          <div class="col-md-11">
+                            <div class="mb-2">
+                              <button class="btn-Log">Login <i class="fa fa-spinner fa-spin" *ngIf="imgloading2"></i></button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </form>
+
+              <!-- nft form start Login open access -->
+              <form
+                action=""
+                *ngIf="accessType === 'NFT_BASED'"
+                [ngStyle]="{ display: nftBased }"
+               
+              >        
+                <div class="row">
+                  <div class="col-md images">
+                    <img src="../../assets/images/pirowhitelogo.svg" alt="" class="img-white" />
+                  </div>
+                </div>
+                <div class="row">
+                  <p class="green-text">Let's dive into the Space</p>
+                </div>
+                <div class="row">
+                  <p class="pass-text">
+                    This event requires you own NFT of “collection name”
+                  </p>
+                </div>
+                <div class="access-one">
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-md-9 px-0 inputs">
+                      <div class="mb-3 wallet">
+                        <p>Please connect your wallet to verify</p>   
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-md-10">
+                      <div class="mb-4">
+                        <button type="button" class="btn btn-down connectMetamast" (click)="meetaMask()">
+                          <img src="../../../assets/images/metramask.png" alt="" class="mx-1"/>
+                          <span class="metamask"> Connect with MetaMask</span></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <!-- nft form end -->
+
+              <!-- Second nft Form -->
+              <!-- <form
+                action=""
+                #passwordForm="ngForm"
+                *ngIf="accessType === 'PASSWORD_PROTECTED'"
+                [ngStyle]="{ display: passwordStyle }"
+                (ngSubmit)="passwordForm.form.valid && joinPassword(passwordForm)"
+              >        
+                <div class="row">
+                  <div class="col-md images">
+                    <img src="../../assets/images/pirowhitelogo.svg" alt="" class="img-white" />
+                  </div>
+                </div>
+                <div class="row">
+                  <p class="green-text">Let's dive into the Space</p>
+                </div>
+                <div class="row">
+                  <p class="pass-text">
+                    This event requires you own NFT of “collection name”
+                  </p>
+                </div>
+                <div class="access-one">
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-md-9 px-0 inputs">
+                      <div class="mb-3 wallet">
+                        <p>Please connect your wallet to verify</p>   
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-md-10">
+                      <div class="mb-4">
+                        <button type="button" class="btn btn-down connectMetamast">
+                          <img src="../../../assets/images/metramask.png" alt="" class="mx-1"/>
+                          <span class="metamask"> Connect with MetaMask</span></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form> -->
+               <!-- Second nft Form end -->
+              
+              <!-- nft form error Login messge-->
+              <form
+                action=""
+                *ngIf="accessType === 'NFT_BASED'"
+                [ngStyle]="{ display: NonnftBased }"
+              >
+              
+                <div class="row">
+                  <div class="col-md images">
+                    <img src="../../assets/images/pirowhitelogo.svg" alt="" class="img-white" />
+                  </div>
+                </div>
+                <div class="row">
+                  <p class="green-text">Let's dive into the Space</p>
+                </div>
+                <div class="row required">
+                  <img src="../../../assets/images/Group.svg" alt="">
+                </div>
+                <div class="access-one">
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-md-9 px-0 inputs">
+                      <div class="mb-3 accessEvent">
+                        <p>You don’t have the required NFT to access this event</p>   
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-md-10">
+                      <div class="mb-4">
+                        <button type="button" class="btn btn-down" (click)="goDashboard()">
+                          <span class="connecting"> Try connecting another account</span></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <!-- nft form end -->
+
+                 <!-- nft form start WithoutLogin open access -->
+                 <form
+                 action=""
+                 *ngIf="accessType === 'NFT_BASED' || changeMetaMaskAccount"
+                 [ngStyle]="{ display: nftNotBased }"
+                
+               >        
+                 <div class="row">
+                   <div class="col-md images">
+                     <img src="../../assets/images/pirowhitelogo.svg" alt="" class="img-white" />
+                   </div>
+                 </div>
+                 <div class="row">
+                   <p class="green-text">Let's dive into the Space</p>
+                 </div>
+                 <div class="row">
+                   <p class="pass-text">
+                     This event requires you own NFT of “collection name”
+                   </p>
+                 </div>
+                 <div class="access-one">
+                   <div class="row d-flex justify-content-center">
+                     <div class="col-md-9 px-0 inputs">
+                       <div class="mb-3 wallet">
+                         <p>Please connect your wallet to verify</p>   
+                       </div>
+                     </div>
+                   </div>
+                   <div class="row d-flex justify-content-center">
+                     <div class="col-md-10">
+                       <div class="mb-4">
+                         <button type="button" class="btn btn-down connectMetamast" (click)="meetaMask1()">
+                           <img src="../../../assets/images/metramask.png" alt="" class="mx-1"/>
+                           <span class="metamask"> Connect with MetaMask</span></button>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+               </form>
+               <!-- nft form end -->
+
+              <!-- open access when not signed in start-->
+              <!-- <form
+              action=""
+              #passwordForm="ngForm"
+              *ngIf="accessType === 'PASSWORD_PROTECTED'"
+              [ngStyle]="{ display: passwordStyle }"
+              (ngSubmit)="passwordForm.form.valid && joinPassword(passwordForm)"
+            >
+            
+            
+              <div class="row">
+                <div class="col-md images">
+                  <img src="../../assets/images/pirowhitelogo.svg" alt="" class="img-white" />
+                </div>
+              </div>
+              <div class="row">
+                <p class="green-text">Let's dive into the Space</p>
+              </div>
+              <div class="row loginSin">
+                <label for="name">Enter your Name</label> <br>
+                <input type="text" name="name" id=""> 
+              </div>
+              <div class="access-one">
+                <label for="name">Select Gender</label>
+              </div>
+                <div class="btn maleFmale" data-toggle="buttons">
+                    <button type="button" name="options" id="option1" checked> Male </button>
+                    <button type="button" name="options" id="option1" > Female </button>
+                    <button type="button" name="options" id="option1" > Other </button>
+                </div>
+                <div class="btn submit">
+                    <button type="button" name="options" id="option1" checked> Submit </button>
+                </div>
+                
+            </form> -->
+              <!-- open access when not signed in end-->
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="registrationBased" *ngIf="accessType === 'REGISTRATION'">
+        <div class="row">
+          <div class="regis-back">
+            <div class="col-md-8">
+              <div class="row">
+                <div class="col-md registartion-img">
+                  <img src="../../assets/images/pirowhitelogo.svg" alt="" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="timer">
+                  <div class="col-md-3 pading-left">
+                    <div class="box-1">
+                      <p class="dates-show" #days></p>
+                    </div>
+                    <p class="desc">Days</p>
+                  </div>
+                  <div class="col-md-3 pading-left">
+                    <div class="box-1">
+                      <p class="dates-show" #hours></p>
+                    </div>
+                    <p class="desc">Hours</p>
+                  </div>
+                  <div class="col-md-3 pading-left">
+                    <div class="box-1">
+                      <p class="dates-show" #minutes></p>
+                    </div>
+                    <p class="desc">Minutes</p>
+                  </div>
+                  <div class="col-md-3 pading-left">
+                    <div class="box-1">
+                      <p class="dates-show" #seconds></p>
+                    </div>
+                    <p class="desc">Seconds</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="heading">
+                  <h2 class="regis-title">Book Fair In Metaverse</h2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md">
+                  <p class="para-regis">
+                    This event is scheduled for December 26, 2022 from 8 PM (IST) onwards. Please visit back on the event day.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="eventStatus === 'CLOSED'">
+      <div class="row mt-3">
+        <div class="col-md-12 piro-imgs">
+          <img src="../../assets/images/PiroSpacelogo.svg" alt="" />
+        </div>
+      </div>
+      <div class="">
+        <div class="col-md">
+          <p class="over-head">Event is Over!</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md img-over">
+          <img src="../../assets/images/Event is over.svg" alt="" class="event-img" />
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mt-3">
+        <div class="col-md-6">
+          <p class="over-body">This event is over, please get in touch with the Organiser for any further information</p>
+        </div>
+      </div>
+      <div class="">
+        <div class="d-flex justify-content-center mt-4 mb-5">
+          <div class="col-md-2 mx-3">
+            <button class="btn-not" (click)="goDashboard()">Go back to Homepage</button>
+          </div>
+          <div class="col-md-2">
+            <button class="btn-registernow" (click)="explore()">Explore More Events</button>
+          </div>
+        </div>
+      </div>
+      <!-- {{errorMessageVerify}} -->
+    </div>
+    <div class="row" *ngIf="eventStatus === 'NOTSTARTED'">
+      <div class="row mt-3">
+        <div class="col-md-12 piro-imgs">
+          <img src="../../assets/images/PiroSpacelogo.svg" alt="" />
+        </div>
+      </div>
+      <div class="">
+        <div class="col-md">
+          <p class="over-head">Event has not been started yet</p>
+        </div>
+      </div>
+      <div class="">
+        <div class="col-md">
+          <p class="over-head-tune">Please stay tuned!</p>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-10">
+          <hr />
+        </div>
+      </div>
+      <div class="mt-4">
+        <p class="over-head-event">Event will start in</p>
+        <div class="timer-2">
+          <div class="col-md-2 pading-left">
+            <div class="box-2">
+
+              <p class="time-show">{{ showDate }}</p>
+            </div>
+            <p class="desc-over">Days</p>
+          </div>
+          <div class="col-md-2 pading-left">
+            <div class="box-2">
+              <p class="time-show">{{ showHours }}</p>
+            </div>
+            <p class="desc-over">Hours</p>
+          </div>
+          <div class="col-md-2 pading-left">
+            <div class="box-2">
+              <p class="time-show">{{ showMintues }}</p>
+            </div>
+            <p class="desc-over">Minutes</p>
+          </div>
+          <div class="col-md-2 pading-left">
+            <div class="box-2">
+              <p class="time-show">{{ showSeconds }}</p>
+            </div>
+            <p class="desc-over">Seconds</p>
+          </div>
+        </div>
+      </div>
+      <div class="">
+        <div class="d-flex justify-content-center mt-4 mb-5">
+          <div class="col-md-2 mx-3">
+            <button class="btn-not" (click)="goDashboard()">Go back to Homepage</button>
+          </div>
+          <div class="col-md-2">
+            <button class="btn-registernow" (click)="explore()">Explore More Events</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="eventStatus === 'EVENTMAXLIMITREACHED'">
+      <div class="row mt-3">
+        <div class="col-md-12 piro-imgs">
+          <img src="../../assets/images/PiroSpacelogo.svg" alt="" />
+        </div>
+      </div>
+      <div class="">
+        <div class="col-md">
+          <p class="over-head">Max Attendee Limit Reached</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md img-over">
+          <img src="../../assets/images/Maxattendee.png" alt="" class="event-img" />
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mt-3">
+        <div class="col-md-7">
+          <p class="over-body">
+            This event has reached the maximum Attendees limit. please get in touch with the Organiser for any further information
+          </p>
+        </div>
+      </div>
+      <div class="">
+        <div class="d-flex justify-content-center mt-4 mb-5">
+          <div class="col-md-2 mx-3">
+            <button class="btn-not" (click)="goDashboard()">Go back to Homepage</button>
+          </div>
+          <div class="col-md-2">
+            <button class="btn-registernow" (click)="explore()">Explore More Events</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<iframe
+  [src]="iframeLink"
+  scrolling="no"
+  allow="camera; microphone"
+  *ngIf="showIframe"
+  class="iframes"
+  (load)="frameLoad()"
+></iframe>
+
+
+<!-- model -->
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{ display: displayStyle }">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content2">
+      <div class="row">
+        <div class="col-md-12 success">
+          <div class="img-success">
+            <img src="../../../assets/images/polygon.webp" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-body para">
+        <p class="contact">You are not connected to Polygon Testnet, please switch your network to continue</p>
+      </div>
+      <div class="btn-done">
+        <button type="button" class="btn btn-down1" (click)="handleSwitchChain()" >
+          <span class="metamask"> Switch Network and Sign</span></button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{ display: displayStyleNonLogin }">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content2">
+      <div class="row">
+        <div class="col-md-12 success">
+          <div class="img-success">
+            <img src="../../../assets/images/polygon.webp" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-body para">
+        <p class="contact">You are not connected to Polygon Testnet, please switch your network to continue</p>
+      </div>
+      <div class="btn-done">
+        <button type="button" class="btn btn-down1" (click)="handleSwitchChainNonLogin()" >
+          <span class="metamask"> Switch Network and Sign</span></button>
+      </div>
+      
+    </div>
+  </div>
+</div>

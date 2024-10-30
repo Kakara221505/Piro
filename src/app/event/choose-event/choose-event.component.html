@@ -1,0 +1,115 @@
+<div class="row">
+  <div class="col-md-2">
+    <app-sidenav></app-sidenav>
+  </div>
+  <div class="col-md">
+    <div class="first">
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <div class="container">
+            <div class="row chooseEvents">
+              <div class="col-md-10 mt-4">
+                <h2 class="event-head">Choose your Event’s Space</h2>
+                <p class="event-para">Please select any of the pre-build templates of spaces where you can host your event.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="scrools">
+          <div class="row event-rows mt-4"  *ngIf="!contentLoaded">
+            <div class="col-md-4" *ngFor="let line of [0,1,2];">
+              <div class="card" >
+                <div class="loader" >
+                  <ngx-skeleton-loader
+                  [theme]="{
+                    width: '100%',
+                    'border-radius': '0',
+                    height: '200px',
+                    'margin-bottom': '10px'
+                  }"
+                ></ngx-skeleton-loader>
+                <ngx-skeleton-loader
+                [theme]="{
+                  width: '100%',
+                  'border-radius': '0',
+                  height: '15px',
+                  'margin-bottom': '10px'
+                }"
+              ></ngx-skeleton-loader>
+              <ngx-skeleton-loader
+              [theme]="{
+                width: '100%',
+                'border-radius': '0',
+                height: '15px',
+                'margin-bottom': '10px'
+              }"
+            ></ngx-skeleton-loader>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row event-rows py-3 mb-3" *ngIf="contentLoaded">
+            <div class="col-md-4 d-flex justify-content-center" *ngFor="let choose of chooseEvent; let i = index">
+              <div
+                class="card mb-3"
+                (click)="onCLickImg(choose.id)"
+                [ngClass]="select === choose.id ? 'card-active card' : 'card'">
+                <div class="imgs">
+                  <img [src]="choose.defaultVenueImageUrl" class="card-img-top" alt="..." *ngIf="choose.defaultVenueImageUrl !== null" />
+                  <img [src]="imgVenues" class="card-img-top" alt="..." *ngIf="choose.defaultVenueImageUrl === null"  />
+                  <!-- <img [src]="imgVenue || events?.defaultVenueImage" alt="" class="img-place" /> -->
+                </div>
+                <div class="card-body">
+                  <div class="card-title">
+                    <p  class="title-venue">{{ choose.venueName }}</p>
+                  </div>
+                  <!-- <div class="info">
+                    <p class="view">3D View</p>
+                    <p class="detail mx-3">Details <i class="fa-solid fa-arrow-right"></i></p>
+
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="row d-flex justify-content-end mt-4 chooseEventButton" *ngIf="contentLoaded">
+          <div class="col-md-3 reset">
+            <button type="submit" class="btn_reset" (click)="cancel()">Cancel</button>
+          </div>
+          <div class="col-md-2 reset">
+            <button type="submit" class="btn_mythree" (click)="Save()">
+              Continue <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-3">
+
+          </div>
+          <div class="col-md">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

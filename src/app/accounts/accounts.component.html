@@ -1,0 +1,498 @@
+<div class="row">
+  <div class="col-md-2">
+    <app-sidenav></app-sidenav>
+  </div>
+  <div class="col-md">
+    <div class="container">
+      <div class="row headers mt-2">
+        <div class="col-md-12">
+          <button type="button" class="btn_signout" (click)="signout()">Sign Out</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-10 mt-4">
+          <h3 class="account-head">Account Details</h3>
+          <p class="account-para">Manage your subscription, Billing Information and Transaction details.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="accounts">
+          <div class="col-md-12">
+            <img src="../../assets/images/accouts.png" alt="" class="event-img" />
+          </div>
+          <div class="col-md-12 mt-3 mb-4">
+            <p class="event-box-para">You don't have any subscription yet.</p>
+            <b class="event-bold">Check our best plans and select as per your requirement</b>
+          </div>
+        </div>
+      </div>
+      <article class="section">
+        <header class="section__header">
+          <h2 class="section__title">Choose a plan that suits you best</h2>
+          <p class="section__subtitle">Powerful features for powerful occassions.</p>
+        </header>
+
+        <!-- Pricing Cards -->
+        <section class="row row--wrap">
+          <div class="col-md-3 mt-2">
+            <section class="pricing-card pricing-card--outline">
+              <div class="pricing-card__summary">
+                <div class="pricing-card__head">
+                  <h3 class="pricing-card__tier">Freebie</h3>
+                </div>
+
+                <p class="pricing-card__description">Ideal for individuals who need quick access to basic features.</p>
+              </div>
+
+              <p class="pricing-card__pricing-line">
+                <span class="pricing-card__price">$0</span>
+                <span>/ Month</span>
+              </p>
+
+              <button class="button pricing-card__action" (click)="payment()">Get Started Now</button>
+
+              <ul class="pricing-card__features">
+                <li class="pricing-card__feature">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>20,000+ of PNG & SVG graphics</span>
+                </li>
+                <li class="pricing-card__feature">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>Access to 100 million stock images</span>
+                </li>
+                <li class="pricing-card__feature pricing-card__feature--disabled" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M18.3 5.71C17.91 5.32 17.28 5.32 16.89 5.71L12 10.59L7.10997 5.7C6.71997 5.31 6.08997 5.31 5.69997 5.7C5.30997 6.09 5.30997 6.72 5.69997 7.11L10.59 12L5.69997 16.89C5.30997 17.28 5.30997 17.91 5.69997 18.3C6.08997 18.69 6.71997 18.69 7.10997 18.3L12 13.41L16.89 18.3C17.28 18.69 17.91 18.69 18.3 18.3C18.69 17.91 18.69 17.28 18.3 16.89L13.41 12L18.3 7.11C18.68 6.73 18.68 6.09 18.3 5.71Z"
+                    />
+                  </svg>
+                  <span>Upload custom icons and fonts</span>
+                </li>
+                <li class="pricing-card__feature pricing-card__feature--disabled" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M18.3 5.71C17.91 5.32 17.28 5.32 16.89 5.71L12 10.59L7.10997 5.7C6.71997 5.31 6.08997 5.31 5.69997 5.7C5.30997 6.09 5.30997 6.72 5.69997 7.11L10.59 12L5.69997 16.89C5.30997 17.28 5.30997 17.91 5.69997 18.3C6.08997 18.69 6.71997 18.69 7.10997 18.3L12 13.41L16.89 18.3C17.28 18.69 17.91 18.69 18.3 18.3C18.69 17.91 18.69 17.28 18.3 16.89L13.41 12L18.3 7.11C18.68 6.73 18.68 6.09 18.3 5.71Z"
+                    />
+                  </svg>
+                  <span>Unlimited Sharing</span>
+                </li>
+                <li class="pricing-card__feature pricing-card__feature--disabled" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M18.3 5.71C17.91 5.32 17.28 5.32 16.89 5.71L12 10.59L7.10997 5.7C6.71997 5.31 6.08997 5.31 5.69997 5.7C5.30997 6.09 5.30997 6.72 5.69997 7.11L10.59 12L5.69997 16.89C5.30997 17.28 5.30997 17.91 5.69997 18.3C6.08997 18.69 6.71997 18.69 7.10997 18.3L12 13.41L16.89 18.3C17.28 18.69 17.91 18.69 18.3 18.3C18.69 17.91 18.69 17.28 18.3 16.89L13.41 12L18.3 7.11C18.68 6.73 18.68 6.09 18.3 5.71Z"
+                    />
+                  </svg>
+                  <span>Upload graphics & video in up to 4k</span>
+                </li>
+                <li class="pricing-card__feature pricing-card__feature--disabled" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M18.3 5.71C17.91 5.32 17.28 5.32 16.89 5.71L12 10.59L7.10997 5.7C6.71997 5.31 6.08997 5.31 5.69997 5.7C5.30997 6.09 5.30997 6.72 5.69997 7.11L10.59 12L5.69997 16.89C5.30997 17.28 5.30997 17.91 5.69997 18.3C6.08997 18.69 6.71997 18.69 7.10997 18.3L12 13.41L16.89 18.3C17.28 18.69 17.91 18.69 18.3 18.3C18.69 17.91 18.69 17.28 18.3 16.89L13.41 12L18.3 7.11C18.68 6.73 18.68 6.09 18.3 5.71Z"
+                    />
+                  </svg>
+                  <span>Unlimited Projects</span>
+                </li>
+                <li class="pricing-card__feature pricing-card__feature--disabled" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M18.3 5.71C17.91 5.32 17.28 5.32 16.89 5.71L12 10.59L7.10997 5.7C6.71997 5.31 6.08997 5.31 5.69997 5.7C5.30997 6.09 5.30997 6.72 5.69997 7.11L10.59 12L5.69997 16.89C5.30997 17.28 5.30997 17.91 5.69997 18.3C6.08997 18.69 6.71997 18.69 7.10997 18.3L12 13.41L16.89 18.3C17.28 18.69 17.91 18.69 18.3 18.3C18.69 17.91 18.69 17.28 18.3 16.89L13.41 12L18.3 7.11C18.68 6.73 18.68 6.09 18.3 5.71Z"
+                    />
+                  </svg>
+                  <span>Instant Access to our design system</span>
+                </li>
+                <li class="pricing-card__feature pricing-card__feature--disabled" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M18.3 5.71C17.91 5.32 17.28 5.32 16.89 5.71L12 10.59L7.10997 5.7C6.71997 5.31 6.08997 5.31 5.69997 5.7C5.30997 6.09 5.30997 6.72 5.69997 7.11L10.59 12L5.69997 16.89C5.30997 17.28 5.30997 17.91 5.69997 18.3C6.08997 18.69 6.71997 18.69 7.10997 18.3L12 13.41L16.89 18.3C17.28 18.69 17.91 18.69 18.3 18.3C18.69 17.91 18.69 17.28 18.3 16.89L13.41 12L18.3 7.11C18.68 6.73 18.68 6.09 18.3 5.71Z"
+                    />
+                  </svg>
+                  <span>Create teams to collaborate on designs</span>
+                </li>
+              </ul>
+            </section>
+          </div>
+
+          <!-- card 2-->
+
+          <div class="col-md-3 mt-2">
+            <section class="pricing-card pricing-card--outline">
+              <div class="pricing-card__summary">
+                <div class="pricing-card__head">
+                  <h3 class="pricing-card__tier">Premium Monthly</h3>
+                </div>
+
+                <p class="pricing-card__description">Ideal for individuals who need quick access to basic features.</p>
+              </div>
+
+              <p class="pricing-card__pricing-line">
+                <span class="pricing-card__price">$25</span>
+                <span>/ Month</span>
+              </p>
+
+              <button class="button pricing-card__action" (click)="payment()">Get Started Now</button>
+
+              <ul class="pricing-card__features">
+                <li class="pricing-card__feature">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>20,000+ of PNG & SVG graphics</span>
+                </li>
+                <li class="pricing-card__feature">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>Access to 100 million stock images</span>
+                </li>
+                <li class="pricing-card__feature" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>Upload custom icons and fonts</span>
+                </li>
+                <li class="pricing-card__feature" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>Unlimited Sharing</span>
+                </li>
+                <li class="pricing-card__feature" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>Upload graphics & video in up to 4k</span>
+                </li>
+                <li class="pricing-card__feature" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>Unlimited Projects</span>
+                </li>
+                <li class="pricing-card__feature pricing-card__feature--disabled" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M18.3 5.71C17.91 5.32 17.28 5.32 16.89 5.71L12 10.59L7.10997 5.7C6.71997 5.31 6.08997 5.31 5.69997 5.7C5.30997 6.09 5.30997 6.72 5.69997 7.11L10.59 12L5.69997 16.89C5.30997 17.28 5.30997 17.91 5.69997 18.3C6.08997 18.69 6.71997 18.69 7.10997 18.3L12 13.41L16.89 18.3C17.28 18.69 17.91 18.69 18.3 18.3C18.69 17.91 18.69 17.28 18.3 16.89L13.41 12L18.3 7.11C18.68 6.73 18.68 6.09 18.3 5.71Z"
+                    />
+                  </svg>
+                  <span>Instant Access to our design system</span>
+                </li>
+                <li class="pricing-card__feature pricing-card__feature--disabled" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M18.3 5.71C17.91 5.32 17.28 5.32 16.89 5.71L12 10.59L7.10997 5.7C6.71997 5.31 6.08997 5.31 5.69997 5.7C5.30997 6.09 5.30997 6.72 5.69997 7.11L10.59 12L5.69997 16.89C5.30997 17.28 5.30997 17.91 5.69997 18.3C6.08997 18.69 6.71997 18.69 7.10997 18.3L12 13.41L16.89 18.3C17.28 18.69 17.91 18.69 18.3 18.3C18.69 17.91 18.69 17.28 18.3 16.89L13.41 12L18.3 7.11C18.68 6.73 18.68 6.09 18.3 5.71Z"
+                    />
+                  </svg>
+                  <span>Create teams to collaborate on designs</span>
+                </li>
+              </ul>
+            </section>
+          </div>
+
+          <!--card 3-->
+          <div class="col-md-3 mt-2">
+            <section class="pricing-card pricing-card--primary">
+              <div class="pricing-card__summary">
+                <div class="pricing-card__head">
+                  <h3 class="pricing-card__tier">Single Event</h3>
+                </div>
+
+                <p class="pricing-card__description">Ideal for individuals who need quick access to basic features.</p>
+              </div>
+
+              <p class="pricing-card__pricing-line">
+                <span class="pricing-card__price">$25</span>
+                <span>/ Month</span>
+              </p>
+
+              <button class="button pricing-card__action" (click)="payment()">Get Started Now</button>
+
+              <ul class="pricing-card__features">
+                <li class="pricing-card__feature pricing-card__feature--3">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>20,000+ of PNG & SVG graphics</span>
+                </li>
+                <li class="pricing-card__feature pricing-card__feature--3">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>Access to 100 million stock images</span>
+                </li>
+                <li class="pricing-card__feature pricing-card__feature--3" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>Upload custom icons and fonts</span>
+                </li>
+                <li class="pricing-card__feature pricing-card__feature--3" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>Unlimited Sharing</span>
+                </li>
+                <li class="pricing-card__feature pricing-card__feature--3" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>Upload graphics & video in up to 4k</span>
+                </li>
+                <li class="pricing-card__feature pricing-card__feature--3" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>Unlimited Projects</span>
+                </li>
+                <li class="pricing-card__feature pricing-card__feature--disabled" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M18.3 5.71C17.91 5.32 17.28 5.32 16.89 5.71L12 10.59L7.10997 5.7C6.71997 5.31 6.08997 5.31 5.69997 5.7C5.30997 6.09 5.30997 6.72 5.69997 7.11L10.59 12L5.69997 16.89C5.30997 17.28 5.30997 17.91 5.69997 18.3C6.08997 18.69 6.71997 18.69 7.10997 18.3L12 13.41L16.89 18.3C17.28 18.69 17.91 18.69 18.3 18.3C18.69 17.91 18.69 17.28 18.3 16.89L13.41 12L18.3 7.11C18.68 6.73 18.68 6.09 18.3 5.71Z"
+                    />
+                  </svg>
+                  <span>Instant Access to our design system</span>
+                </li>
+                <li class="pricing-card__feature pricing-card__feature--disabled" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M18.3 5.71C17.91 5.32 17.28 5.32 16.89 5.71L12 10.59L7.10997 5.7C6.71997 5.31 6.08997 5.31 5.69997 5.7C5.30997 6.09 5.30997 6.72 5.69997 7.11L10.59 12L5.69997 16.89C5.30997 17.28 5.30997 17.91 5.69997 18.3C6.08997 18.69 6.71997 18.69 7.10997 18.3L12 13.41L16.89 18.3C17.28 18.69 17.91 18.69 18.3 18.3C18.69 17.91 18.69 17.28 18.3 16.89L13.41 12L18.3 7.11C18.68 6.73 18.68 6.09 18.3 5.71Z"
+                    />
+                  </svg>
+                  <span>Create teams to collaborate on designs</span>
+                </li>
+              </ul>
+            </section>
+          </div>
+
+          <!--carsd 4-->
+
+          <div class="col-md-3 mt-2">
+            <section class="pricing-card pricing-card--outline">
+              <div class="pricing-card__summary">
+                <div class="pricing-card__head">
+                  <h3 class="pricing-card__tier">Enterprise</h3>
+                </div>
+
+                <p class="pricing-card__description">Ideal for individuals who need quick access to basic features.</p>
+              </div>
+
+              <p class="pricing-card__pricing-line">
+                <span class="pricing-card__price">CUSTOM</span>
+              </p>
+
+              <button class="button pricing-card__action" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Contact Sales Team
+              </button>
+
+              <ul class="pricing-card__features">
+                <li class="pricing-card__feature">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>20,000+ of PNG & SVG graphics</span>
+                </li>
+                <li class="pricing-card__feature">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>Access to 100 million stock images</span>
+                </li>
+                <li class="pricing-card__feature" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>Upload custom icons and fonts</span>
+                </li>
+                <li class="pricing-card__feature" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>Unlimited Sharing</span>
+                </li>
+                <li class="pricing-card__feature" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>Upload graphics & video in up to 4k</span>
+                </li>
+                <li class="pricing-card__feature" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>Unlimited Projects</span>
+                </li>
+                <li class="pricing-card__feature" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>Instant Access to our design system</span>
+                </li>
+                <li class="pricing-card__feature" aria-hidden="true">
+                  <svg class="pricing-card__bullet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                      d="M9.00001 16.17L5.53001 12.7C5.14002 12.31 4.51001 12.31 4.12001 12.7C3.73001 13.09 3.73001 13.72 4.12001 14.11L8.30001 18.29C8.69001 18.68 9.32001 18.68 9.71001 18.29L20.29 7.71C20.68 7.32 20.68 6.69 20.29 6.3C19.9 5.91 19.27 5.91 18.88 6.3L9.00001 16.17Z"
+                    />
+                  </svg>
+                  <span>Create teams to collaborate on designs</span>
+                </li>
+              </ul>
+            </section>
+          </div>
+        </section>
+      </article>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="infos ">
+          <p>
+            Please enter your email address and contact number so that our Sales Team could get in touch with you at earliest.
+          </p>
+        </div>
+        <form autocomplete="off" [formGroup]="bookForm">
+          <div class="row paddings">
+            <div class="col-lg-12">
+              <div class="form-group mb-3">
+                <input
+                  autocomplete="false"
+                  type="text"
+                  class="form-control extra-width"
+                  id="name"
+                  placeholder="Name *"
+                  formControlName="name"
+                  data-toggle="tooltip"
+                  data-trigger="hover"
+                  data-placement="top"
+                  required
+                  data-original-title=""
+                  title=""
+                />
+                <div class="mt-1" *ngIf="f['name'].touched && f['name'].invalid">
+                  <p *ngIf="f['name'].errors && f['name'].errors['required']" style="color: red">Name is required</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <div class="form-group mb-3">
+                <input
+                  autocomplete="false"
+                  type="email"
+                  class="form-control extra-width"
+                  placeholder="Email *"
+                  formControlName="email"
+                  data-toggle="tooltip"
+                  data-trigger="hover"
+                  data-placement="top"
+                  required
+                  data-original-title=""
+                  title=""
+                  pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                  [email]="true"
+                />
+
+                <div class="mt-1" *ngIf="f['email'].touched && f['email'].invalid">
+                  <p *ngIf="f['email'].errors && f['email'].errors['required']" style="color: red">Email is required</p>
+                  <p *ngIf="f['email'].errors?.['pattern']" style="color: red">Enter A Valid Email</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="tele mb-3">
+                <ngx-intl-tel-input
+                  [cssClass]="'form-control '"
+                  [preferredCountries]="preferredCountries"
+                  [enableAutoCountrySelect]="false"
+                  [enablePlaceholder]="true"
+                  [searchCountryFlag]="true"
+                  [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                  [selectFirstCountry]="false"
+                  [selectedCountryISO]="CountryISO.India"
+                  [selectFirstCountry]="selectFirstCountry"
+                  [phoneValidation]="true"
+                  [separateDialCode]="separateDialCode"
+                  (ngModelChange)="onChange($event)"
+                  formControlName="phone"
+                  required
+                >
+                </ngx-intl-tel-input>
+              </div>
+              <div class="mt-1" *ngIf="f['phone'].touched && f['phone'].invalid">
+                <p *ngIf="f['phone'].errors && f['phone'].errors['required']" style="color: red">Phone is required</p>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn_sales" (click)="bookDemo()" [disabled]="!bookForm.valid">
+                Submit <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div> -->
+    </div>
+  </div>
+</div>

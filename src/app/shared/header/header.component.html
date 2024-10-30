@@ -1,0 +1,98 @@
+<div class="col-md-12">
+    <!-- <button type="button" class="btn_signout" (click)="signout()">
+      <img src="../../assets/images/Sign out icon.png" alt="" width="15%" /> Sign Out
+    </button> -->
+    <!-- <div class="dropdown">
+      <i class="fa-sharp fa-solid fa-bell profileIcons"></i>
+      <button
+        class="btn dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton1"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <img src="../../assets/images/Ellipse 179.svg" alt="" width="20%" class="mx-2" />
+        <b>{{ profileName | titlecase }}</b>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li (click)="signout()"><a class="dropdown-item">Sign Out</a></li>
+      </ul>
+    </div> -->
+    <!-- <i class="fa-sharp fa-solid fa-bell profileIcons"></i> -->
+    <div class="btn-group">
+      <button
+      *ngIf="signature === null"
+     
+        class="btn btn-secondary connectwallet"
+        type="button"
+        aria-expanded="false"
+        (click)="meetaMask()"
+      >
+        <img src="../../../assets/images/greenwallet.svg" alt="" width="20%" class="mx-2" />
+        <b>Connect Wallet</b>
+      </button>
+      <button
+      *ngIf="account"
+     
+        class="btn btn-secondary connectwallet"
+        type="button"
+        aria-expanded="false"
+        (click)="meetaMask()"
+      >
+        <img src="../../../assets/images/greenwallet.svg" alt="" width="20%" class="mx-2" />
+        <b>Connect Wallet</b>
+      </button>
+      <button
+      *ngIf="signature"
+      class="btn btn-secondary connectwallet"
+      type="button"
+      aria-expanded="false"
+     
+    >
+      <img src="../../../assets/images/metramask.png" alt="" width="20%" class="mx-2" />
+      <b>{{shortenedAddress}}</b>
+    </button>
+    </div>
+    <div class="btn-group">
+      <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        id="defaultDropdown"
+        data-bs-toggle="dropdown"
+        data-bs-auto-close="true"
+        aria-expanded="false"
+      >
+        <img src="../../assets/images/Ellipse 179.svg" alt="" width="20%" class="mx-2" />
+        <b>{{ profileName | titlecase }}</b>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="defaultDropdown">
+        <li (click)="signout()"><a class="dropdown-item">Sign Out</a></li>
+      </ul>
+    </div>
+  </div>
+
+
+
+  <!-- popup -->
+  <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{ display: displayStyle }">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content2">
+        <div class="row">
+          <div class="col-md-12 success">
+            <div class="img-success">
+              <img src="../../../assets/images/polygon.webp" alt="" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-body para">
+          <p class="contact">You are not connected to Polygon Testnet, please switch your network to continue</p>
+        </div>
+        <div class="btn-done">
+          <button type="button" class="btn btn-down" (click)="handleSwitchChain()" >
+            <span class="metamask"> Switch Network and Sign</span></button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  

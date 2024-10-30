@@ -1,0 +1,187 @@
+<div class="row">
+  <div class="col-md-2">
+    <app-sidenav></app-sidenav>
+  </div>
+  <div class="col-md">
+    <div class="first">
+      <div class="row headers mt-2">
+        <app-header></app-header>
+      </div>
+      <div class="tab-1 mt-5">
+        <button class="drafts">Draft</button>
+      </div>
+      <div class="vert-tabs py-5">
+        <div class="d-flex align-items-start">
+          <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <button
+              class="nav-link btn-tab"
+              id="v-pills-home-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#v-pills-home"
+              type="button"
+              role="tab"
+              aria-controls="v-pills-home"
+              aria-selected="true"
+              #basicDetails
+              [ngClass]="{ 'active': activeTab === 'basic-details' }"
+              (click)="goToNextTab('basic-details')"
+            >
+              <b class="circle">1</b>
+              <b class="tab-titles"> Basic Details</b>
+            </button>
+
+            <button
+              class="nav-link btn-tab"
+              id="v-pills-profile-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#vPillsProfile"
+              type="button"
+              role="tab"
+              aria-controls="vPillsProfile"
+              aria-selected="false"
+              #manageSpace
+              [ngClass]="{ 'active': activeTab === 'manage-space' }"
+              [disabled]="!eventId"
+              (click)="goToNextTab('manage-space')"
+            >
+              <b class="circle">2</b>
+              <b class="tab-titles">Manage Space</b>
+            </button>
+
+            <button
+              class="nav-link btn-tab"
+              id="v-pills-messages-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#v-pills-messages"
+              type="button"
+              role="tab"
+              aria-controls="v-pills-messages"
+              aria-selected="false"
+              #accessManagement
+              [ngClass]="{ 'active': activeTab === 'access-manage' }"
+              [disabled]="!eventId"
+              (click)="goToNextTab('access-manage')"
+            >
+              <b class="circle">3</b>
+              <b class="tab-titles">Access Management</b>
+            </button>
+            <button
+              class="nav-link btn-tab"
+              id="v-pills-settings-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#v-pills-settings"
+              type="button"
+              role="tab"
+              aria-controls="v-pills-settings"
+              aria-selected="false"
+              #roleManagement
+              [ngClass]="{ 'active': activeTab === 'role-management' }"
+              [disabled]="!eventId"
+              (click)="goToNextTab('role-management')"
+            >
+              <b class="circle">4</b>
+              <b class="tab-titles">Role Management</b>
+            </button>
+            <button
+              class="nav-link btn-tab"
+              id="v-pills-event-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#v-pills-event"
+              type="button"
+              role="tab"
+              aria-controls="v-pills-event"
+              aria-selected="false"
+              #addInvitees
+              [ngClass]="{ 'active': activeTab === 'add-invitees' }"
+              [disabled]="!eventId"
+              (click)="goToNextTab('add-invitees')"
+            >
+              <b class="circle">5</b>
+              <b class="tab-titles">Add Invitees</b>
+            </button>
+
+            <button
+              class="nav-link btn-tab"
+              id="six-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#six"
+              type="button"
+              role="tab"
+              aria-controls="six"
+              aria-selected="false"
+              #addEventSession
+              [ngClass]="{ 'active': activeTab === 'add-event-session' }"
+              [disabled]="!eventId"
+              (click)="goToNextTab('add-event-session')"
+            >
+              <b class="circle">6</b>
+              <b class="tab-titles">Add Event Session</b>
+            </button>
+          </div>
+          <div class="tab-content" id="v-pills-tabContent">
+            <div
+              class="tab-pane fade"
+              id="v-pills-home"
+              role="tabpanel"
+              aria-labelledby="v-pills-home-tab"
+              [ngClass]="{ 'active': activeTab === 'basic-details', 'show': activeTab === 'basic-details' }"
+            >
+              <app-basic-details></app-basic-details>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="vPillsProfile"
+              role="tabpanel"
+              aria-labelledby="v-pills-profile-tab"
+
+              [ngClass]="{ 'active': activeTab === 'manage-space', 'show': activeTab === 'manage-space' }"
+              *ngIf="activeTab === 'manage-space'"
+            >
+              <app-manage-space></app-manage-space>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="v-pills-messages"
+              role="tabpanel"
+              aria-labelledby="v-pills-messages-tab"
+              [ngClass]="{ 'active': activeTab === 'access-manage', 'show': activeTab === 'access-manage' }"
+              *ngIf="activeTab === 'access-manage'"
+            >
+              <app-access-management></app-access-management>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="v-pills-settings"
+              role="tabpanel"
+              aria-labelledby="v-pills-settings-tab"
+              [ngClass]="{ 'active': activeTab === 'role-management', 'show': activeTab === 'role-management' }"
+              *ngIf="activeTab === 'role-management'"
+            >
+              <app-role-management></app-role-management>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="v-pills-event"
+              role="tabpanel"
+              aria-labelledby="v-pills-event-tab"
+              [ngClass]="{ 'active': activeTab === 'add-invitees', 'show': activeTab === 'add-invitees' }"
+              *ngIf="activeTab === 'add-invitees'"
+            >
+              <app-add-invitees></app-add-invitees>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="six"
+              role="tabpanel"
+              aria-labelledby="six-tab"
+              [ngClass]="{ 'active': activeTab === 'add-event-session', 'show': activeTab === 'add-event-session' }"
+              *ngIf="activeTab === 'add-event-session'"
+            >
+              <app-add-event-session></app-add-event-session>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

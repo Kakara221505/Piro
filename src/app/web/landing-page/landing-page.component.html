@@ -1,0 +1,299 @@
+<div class="container py-1">
+  <nav class="navbar navbar-expand-lg bg-white">
+    <div class="container-fluid">
+      <img src="../../assets/images/PiroSpacelogo.svg" alt="" class="piro-img" (click)="imgClick()" />
+      <!-- <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button> -->
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <!-- <li class="nav-item dropdown mx-2">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Products
+            </a>
+            <ul class="dropdown-menu" >
+              <li><a class="dropdown-item" href="#">Piro</a></li>
+              <li><a class="dropdown-item" href="#">Piro action</a></li>
+            </ul>
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link active" href="#">Pricing</a>
+          </li> -->
+          <li class="nav-item mx-2">
+            <button type="button" class="btn btn-book mx-2" (click)="bookDemo()">Book A Demo</button>
+          </li>
+          <!-- <li class="nav-item mx-2">
+            <a class="nav-link" href="#">Login</a>
+          </li>
+          <li class="nav-item mx-2">
+            <button type="button" class="btn btn-host">Sign Up</button>
+          </li> -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="heading-page">
+    <div class="row">
+      <div class="col-md-6">
+        <div>
+          <p class="book-text">Book A Demo</p>
+          <hr class="underline" />
+        </div>
+        <div>
+          <p class="host-event">Interested in hosting your own event?</p>
+        </div>
+        <div class="host-para">
+          <p>Provide us below details and our sales team will get in touch with you for further details.</p>
+        </div>
+        <div class="col-md-5">
+          <div class="form-submit">
+            <form autocomplete="off" [formGroup]="bookForm">
+              <div class="row">
+                <div class="col-md-12 d-none mb-2"></div>
+                <div class="col-lg-12">
+                  <div class="form-group mb-3">
+                    <input
+                      autocomplete="false"
+                      type="text"
+                      class="form-control extra-width"
+                      id="name"
+                      placeholder="Name *"
+                      formControlName="name"
+                      data-toggle="tooltip"
+                      data-trigger="hover"
+                      data-placement="top"
+                      required
+                      data-original-title=""
+                      title=""
+                    />
+                    <div class="mt-1" *ngIf="f['name'].touched && f['name'].invalid">
+                      <p *ngIf="f['name'].errors && f['name'].errors['required']" style="color: red">Name is required</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-12">
+                  <div class="form-group mb-3">
+                    <input
+                      autocomplete="false"
+                      type="email"
+                      class="form-control extra-width"
+                      placeholder="Email *"
+                      formControlName="email"
+                      data-toggle="tooltip"
+                      data-trigger="hover"
+                      data-placement="top"
+                      required
+                      data-original-title=""
+                      title=""
+                      pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                      [email]="true"
+                    />
+
+                    <div class="mt-1" *ngIf="f['email'].touched && f['email'].invalid">
+                      <p *ngIf="f['email'].errors && f['email'].errors['required']" style="color: red">Email is required</p>
+                      <p *ngIf="f['email'].errors?.['pattern']" style="color: red">Enter A Valid Email</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="tele mb-3 extra-width">
+                    <ngx-intl-tel-input
+                      [cssClass]="'form-control '"
+                      [preferredCountries]="preferredCountries"
+                      [enableAutoCountrySelect]="false"
+                      [enablePlaceholder]="true"
+                      [searchCountryFlag]="true"
+                      [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                      [selectFirstCountry]="false"
+                      [selectedCountryISO]="CountryISO.India"
+                      [selectFirstCountry]="selectFirstCountry"
+                      [phoneValidation]="true"
+                      [separateDialCode]="separateDialCode"
+                      (ngModelChange)="onChange($event)"
+                      formControlName="phone"
+                      required
+                    >
+                    </ngx-intl-tel-input>
+                  </div>
+                  <div class="mt-1" *ngIf="f['phone'].touched && f['phone'].invalid">
+                    <p *ngIf="f['phone'].errors && f['phone'].errors['required']" style="color: red">Phone is required</p>
+                  </div>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn_mythree" style="width: 100%; cursor: pointer" (click)="bookDemoForm()">
+                  Submit <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 landing-img">
+        <img src="../../assets/images/Hero section imag.png" alt="" class="hero-img" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="compaines-trusted">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2 company-text">
+        <p>Trusted by companies of all sizes</p>
+      </div>
+
+      <div class="col-md-10">
+        <div class="h-100">
+          <div class="container rounded">
+            <div class="slider">
+              <div class="logos">
+                <img src="../../assets/images/Monkhub-logo.svg" alt="" />
+                <img src="../../assets/images/Aidus.svg" alt="" class="mx-4" />
+                <img src="../../assets/images/BitHappier.svg" alt="" class="mx-4" />
+                <img src="../../assets/images/Pwc.svg" alt="" class="mx-4" />
+                <img src="../../assets/images/Monkhub-logo.svg" alt="" />
+                <img src="../../assets/images/Aidus.svg" alt="" class="mx-4" />
+                <img src="../../assets/images/BitHappier.svg" alt="" class="mx-4" />
+                <img src="../../assets/images/Pwc.svg" alt="" class="mx-4" />
+                <img src="../../assets/images/Monkhub-logo.svg" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="virtual-back">
+  <div class="container virtual-cont">
+    <div class="virtual-occasion">
+      <h2 class="Virtual-text">Virtual Worlds For Every Occasion</h2>
+    </div>
+    <div class="d-flex justify-content-center">
+      <p class="virtual-para">
+        Explore the Immersive experience of our virtual spaces where you can plan events tailored to the occasion.
+      </p>
+    </div>
+    <div class="row event-rows py-3">
+      <div class="col-md-4 d-flex justify-content-center">
+        <div class="card">
+          <img src="../../assets/images/Rectangle 140.png" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">Seminars & Conferences</h5>
+            <p class="card-text">
+              Have fun hosting your seminars and conferences in a virtual world, enabling an immersive experience for your
+              teammates and guests.
+            </p>
+            <!-- <a href="#" class="card-link">See More <i class="fa-solid fa-arrow-right"></i></a> -->
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 d-flex justify-content-center">
+        <div class="card">
+          <img src="../../assets/images/Rectangle 143.png" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">Music Concert</h5>
+            <p class="card-text">
+              Immerse yourself in the virtual Musical encounter in our virtual space, getting a thrilling experience altogether
+              with varied audiences.
+            </p>
+            <!-- <a href="#" class="card-link">See More <i class="fa-solid fa-arrow-right"></i></a> -->
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 d-flex justify-content-center">
+        <div class="card">
+          <img src="../../assets/images/Rectangle 148.png" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">Business Expos</h5>
+            <p class="card-text">
+              Host your Business Expos, Seminars, Talks, and workshops for your attendees in a more intuitive way in our virtual
+              space.
+            </p>
+            <!-- <a href="#" class="card-link">See More <i class="fa-solid fa-arrow-right"></i></a> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row py-3">
+      <div class="col-md-4 d-flex justify-content-center">
+        <div class="card">
+          <img src="../../assets/images/Rectangle 157.png" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">Team Get Together</h5>
+            <p class="card-text">
+              Allow your team to experience a brand-new way of engaging and rejoicing together in our fascinating virtual space.
+            </p>
+            <!-- <a href="#" class="card-link">See More <i class="fa-solid fa-arrow-right"></i></a> -->
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 d-flex justify-content-center">
+        <div class="card">
+          <img src="../../assets/images/Rectangle 154.png" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">Festival Celebrations</h5>
+            <p class="card-text">
+              Why flee from festival celebrations with your people when you can relax and soak in the ambiance of festivities in
+              our virtual world?
+            </p>
+            <!-- <a href="#" class="card-link">See More <i class="fa-solid fa-arrow-right"></i></a> -->
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 d-flex justify-content-center">
+        <div class="card">
+          <img src="../../assets/images/Rectangle 153.png" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">Parties</h5>
+            <p class="card-text">
+              Enable the carefree spirit in you to surface by partying in our virtual space with your near and dear ones.
+            </p>
+            <!-- <a href="#" class="card-link">See More <i class="fa-solid fa-arrow-right"></i></a> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{ display: displayStyle }">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="row">
+        <div class="col-md-12 success">
+          <div class="img-success">
+            <img src="../../assets/images/IconArtwork.jpg" alt="" width="100%" />
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-body para">
+        <p class="contact">Thank You</p>
+        <p>
+          Your submission has been received. One of our representative from sales team will get in touch with you shortly for further assistance.
+        </p>
+      </div>
+      <div class="btn-done">
+        <button type="button" class="btn btn-down" (click)="closePopup()">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-key-features></app-key-features>
+<app-event-management></app-event-management>
+<!-- <app-case-studies></app-case-studies> -->
+<app-book-demo></app-book-demo>
+<!-- <app-footer></app-footer> -->
+<app-footer-landing></app-footer-landing>

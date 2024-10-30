@@ -1,0 +1,187 @@
+.case-occasion {
+  padding-top: 5rem;
+}
+
+.case-text {
+  text-align: center;
+  font-weight: 600;
+}
+
+.case-para {
+  width: 45rem;
+  text-align: center;
+}
+
+.case-back {
+  background: url("../../../assets/images/caseStudy.jpg");
+}
+
+.card-link {
+  text-decoration: none !important;
+  color: #33cc94;
+  font-weight: 600;
+}
+
+.card-img-top {
+  padding-top: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.card {
+  box-shadow: -3px 0px 0px 0px #33cc94;
+  border-radius: 8px;
+  border-color: white;
+  width: 20rem;
+}
+
+.card-title {
+  padding-top: 0.5rem;
+  font-weight: 550;
+}
+
+.card-text {
+  line-height: 1.3;
+}
+
+.card-title {
+  font-size: 24px !important;
+}
+
+.book-btn {
+  position: absolute;
+  padding-top: 16rem;
+  padding-right: 19.5rem;
+}
+
+.btn-host {
+  background-color: #33cc94;
+  color: white;
+  font-weight: 500;
+  padding: 0.8rem 2.9rem;
+  border-radius: 4px;
+}
+
+.btn-host:hover{
+  color: #33cc94;
+  border-color: #33cc94;
+  background-color: transparent;
+}
+.book-img {
+  width: 100%;
+  /* background-image: url("../../assets/images/Bookademobox.png"); */
+}
+
+.mobile{
+  width: 100%;
+}
+
+@media only screen and (max-width: 1920px) {
+  .mobile{
+    display: none;
+  }
+}
+
+
+@media only screen and (max-width: 1366px) { .book-btn {
+  position: absolute;
+  padding-top: 15rem;
+  padding-right: 15rem;
+  }
+}
+
+@media only screen and (max-width: 1280px) {
+  .book-btn {
+    padding-top: 14.5rem;
+    padding-right: 15rem;
+  }
+  .mobile{
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .book-btn {
+    padding-top: 13rem;
+    padding-right: 10.11;
+  }
+  .mobile{
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .book-btn {
+    padding-top: 9.5rem;
+    padding-right: 8.5rem;
+  }
+
+  .btn-host {
+    padding: 0.6rem 1rem;
+  }
+
+  .card-title {
+    font-size: 20px !important;
+  }
+
+  .card-text {
+    font-size: 12px;
+  }
+
+  .card-link {
+    font-size: 13px;
+  }
+  .mobile{
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 820px) {
+  .book-btn {
+    padding-top: 9.5rem;
+    padding-right: 8.5rem;
+  }
+
+  .btn-host {
+    padding: 0.2rem 1rem;
+  }
+  .mobile{
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .card {
+    margin-bottom: 2rem;
+  }
+
+  .book-btn {
+    padding-top: 16rem;
+    padding-right: 12rem;
+  }
+
+  .btn-host {
+    padding: 0.4rem 1rem;
+  }
+
+  .case-text{
+    font-size: 1.7rem;
+  }
+
+  .desktop{
+    display: none;
+  }
+
+  .mobile{
+    display: block;
+  }
+  /* .book-img{
+    background: url("../../assets/images/MobileView.svg");
+  } */
+}
+
+@media only screen and (max-width: 412px) {
+  .book-btn {
+    padding-right: 11rem !important;
+  }
+}

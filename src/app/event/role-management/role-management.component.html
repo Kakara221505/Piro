@@ -1,0 +1,659 @@
+<div class="container boxs">
+  <div class="">
+    <h4 class="role-title">Role Management</h4>
+    <p>Add organizers and speaker for your event with further customization of their roles.</p>
+  </div>
+  <hr />
+
+  <div class="row mt-4">
+    <div class="heading">
+      <h4 class="role-title">Add Organizer</h4>
+      <p>You can add organizers for the event, who will also have some access of the event environment.</p>
+    </div>
+    <form #addRoleManagement="ngForm" (ngSubmit)="addRoleManagement.form.valid && addOrganizer(addRoleManagement)">
+      <div class="row">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group mb-3">
+              <input
+                autocomplete="false"
+                type="text"
+                class="form-control extra-width"
+                placeholder="Enter Organizer Name *"
+                [(ngModel)]="organizerRole.userName"
+                data-toggle="tooltip"
+                data-trigger="hover"
+                data-placement="top"
+                required
+                name="OrganizerName"
+                #OrganizerName="ngModel"
+                [ngClass]="{ 'is-invalid': addRoleManagement.submitted && OrganizerName.errors }"
+                maxlength="30"
+              />
+              <div *ngIf="addRoleManagement.submitted && OrganizerName.errors" class="invalid-feedback">
+                <div *ngIf="OrganizerName.errors['required']">Organizer Name is required</div>
+                <!-- <div *ngIf="namess.errors['pattern']">Please enter letters only</div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group mb-3">
+              <input
+                autocomplete="false"
+                type="email"
+                class="form-control extra-width"
+                placeholder="Enter Organizer Email Address *"
+                [(ngModel)]="organizerRole.email"
+                data-toggle="tooltip"
+                data-trigger="hover"
+                data-placement="top"
+                required
+                pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                (keyup)="validateEmail(addRoleManagement)"
+                [email]="true"
+                name="emails"
+                #organizerEmail="ngModel"
+                [ngClass]="{ 'is-invalid': addRoleManagement.submitted && organizerEmail.errors }"
+                (keyup)="keyFunc($event)"
+              />
+              <div *ngIf="addRoleManagement.submitted && organizerEmail.errors" class="invalid-feedback">
+                <div *ngIf="organizerEmail.errors['required']">Email is required</div>
+                <div *ngIf="organizerEmail.errors['pattern']">Enter A Valid Email</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <button type="submit" class="btn_mythree-role">
+              Add Organizer <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+            </button>
+          </div>
+          <p class="error-class-backend" *ngIf="errorMessageOrg">
+            <i class="fa-solid fa-circle-exclamation"></i> {{ errorMessageOrg }}.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <h6 class="org-head">Added Organizers</h6>
+        <div class="details">
+          <div class="row mb-2 mt-2" *ngFor="let org of organizers; let i = index">
+            <div class="col-md-5 colors">
+              <div class="row">
+                <div class="col-md">
+                  <p style="margin-bottom: 0rem">
+                    <b> {{ org.fullName }}</b>
+                  </p>
+                  <p>{{ org.email }}</p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md d-flex">
+                  <div class="dropdown">
+                    <button
+                      class="btn dropdown-toggle"
+                      type="button"
+                      id="dropdownMenuButton1"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          data-bs-toggle="modal"
+                          data-bs-target="#staticBackdrop"
+                          (click)="editModal(org.id)"
+                          >Edit</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          data-bs-toggle="modal"
+                          data-bs-target="#staticBackdrop1"
+                          (click)="deleteRole(org.fullName, org.id)"
+                          >Delete</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+          </div>
+        </div>
+        <p *ngIf="noTotalsOrganizer === 0" class="notFound mt-2">There’re No Organisers Added!</p>
+      </div>
+      <div class="row">
+        <h6 class="org-head">Manage Organizer's Profile</h6>
+        <div class="toogles">
+          <div class="toogle-check">
+            <label class="form-check-label" for="flexSwitchCheckDefault"
+              >Add/Remove Speaker
+              <span class="extra-note"><p>Organizers will also have the access to add or remove speakers.</p></span>
+            </label>
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="flexSwitchCheckDefault"
+                value="true"
+                name="speaker"
+                [(ngModel)]="organizerRole.canAddSpeaker"
+                checked="{{ organizers?.canAddSpeaker }}"
+              />
+            </div>
+          </div>
+          <div class="toogle-check">
+            <label class="form-check-label" for="flexSwitchCheckChecked"
+              >Attendees Invitation<span class="extra-note"
+                ><p>Organizers will also have the access to share invitation to event attendees.</p></span
+              >
+            </label>
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="flexSwitchCheckChecked"
+                value="true"
+                name="initation"
+                [(ngModel)]="organizerRole.canSendInvitation"
+                checked="{{ organizers?.canSendInvitation }}"
+              />
+            </div>
+          </div>
+          <div class="toogle-check">
+            <label class="form-check-label" for="flexSwitchCheckDisabled"
+              >Access to multiple Stages<span class="extra-note"
+                ><p>Organizers will also have the access to visit or be part of more then one stages.</p></span
+              >
+            </label>
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="flexSwitchCheckDisabled"
+                value="true"
+                name="satges"
+                [(ngModel)]="organizerRole.hasAcessToMultipleStages"
+                checked="{{ organizers?.hasAcessToMultipleStages }}"
+              />
+            </div>
+          </div>
+          <div class="toogle-check">
+            <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"
+              >Screen Sharing<span class="extra-note"
+                ><p>You can decide about giving screenshare option to the organizer during the event.</p></span
+              >
+            </label>
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="flexSwitchCheckCheckedDisabled"
+                value="true"
+                name="share"
+                [(ngModel)]="organizerRole.canShareScreen"
+                checked="{{ organizers?.canShareScreen }}"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <hr class="mt-4" />
+  </div>
+  <div class="row mt-4">
+    <div class="heading">
+      <h4 class="role-title">Add Speaker</h4>
+      <p class="para-speakers">You can add speakers for the event, who will also have some access of the event environment.</p>
+      <p>You can customize their role as well.</p>
+    </div>
+    <div class="row">
+      <form autocomplete="off" #addSpeakerForm="ngForm" (ngSubmit)="addSpeakerForm.form.valid && addSpeaker(addSpeakerForm)">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group mb-3">
+              <input
+                autocomplete="false"
+                type="text"
+                class="form-control extra-width"
+                placeholder="Enter Speaker Name *"
+                [(ngModel)]="roles.userName"
+                data-toggle="tooltip"
+                data-trigger="hover"
+                data-placement="top"
+                required
+                data-original-title=""
+                title=""
+                name="names"
+                #userNames="ngModel"
+                [ngClass]="{ 'is-invalid': addSpeakerForm.submitted && userNames.errors }"
+                maxlength="20"
+              />
+              <div *ngIf="addSpeakerForm.submitted && userNames.errors" class="invalid-feedback">
+                <div *ngIf="userNames.errors['required']">Speaker Name is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group mb-3">
+              <input
+                autocomplete="false"
+                type="email"
+                class="form-control extra-width"
+                placeholder="Enter Speaker Email Address *"
+                [(ngModel)]="roles.email"
+                data-toggle="tooltip"
+                data-trigger="hover"
+                data-placement="top"
+                required
+                data-original-title=""
+                title=""
+                pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                [email]="true"
+                name="emails"
+                #userEmails="ngModel"
+                [ngClass]="{ 'is-invalid': addSpeakerForm.submitted && userEmails.errors }"
+                (keyup)="keyFuncSpeaker($event)"
+              />
+              <div *ngIf="addSpeakerForm.submitted && userEmails.errors" class="invalid-feedback">
+                <div *ngIf="userEmails.errors['required']">Email is required</div>
+                <div *ngIf="userEmails.errors['email']">Please Enter Valid Email</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group mb-3">
+              <ng-select
+                [selectableGroup]="true"
+                [closeOnSelect]="false"
+                bindLabel="name"
+                bindValue="id"
+                [(ngModel)]="stagesAlloted"
+                [multiple]="true"
+                name="stages"
+                placeholder="Select Stages *"
+                class=""
+                [required]="true"
+                #userStages="ngModel"
+                [ngClass]="{ 'is-invalid': addSpeakerForm.submitted && userStages.errors }"
+              >
+                <ng-option [value]="i + 1" *ngFor="let list of listofStages; let i = index">
+                  {{ list }}
+                </ng-option>
+              </ng-select>
+              <div *ngIf="addSpeakerForm.submitted && userStages.errors" class="invalid-feedback">
+                <div *ngIf="userStages.errors['required']">Stages is required</div>
+              </div>
+            </div>
+            <p class="notes"><b>Note:</b> You can select more than one stages</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group mb-3">
+              <!-- <input
+                autocomplete="false"
+                type="text"
+                class="form-control extra-width"
+                placeholder="Designation/Bio (optional)"
+                [(ngModel)]="roles.description"
+                data-toggle="tooltip"
+                data-trigger="hover"
+                data-placement="top"
+                data-original-title=""
+                title=""
+                name="bio"
+              /> -->
+              <textarea
+              autocomplete="false"
+              type="text"
+              class="form-control extra-width"
+              placeholder="Designation/Bio (optional)"
+              [(ngModel)]="roles.description"
+              data-toggle="tooltip"
+              data-trigger="hover"
+              data-placement="top"
+              data-original-title=""
+              title=""
+              name="bio"
+              maxlength="300"
+            ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <p class="error-class-backend" *ngIf="errorMessage">
+            <i class="fa-solid fa-circle-exclamation"></i> {{ errorMessage }}.
+          </p>
+          <div class="col-md-1">
+            <!-- <p class="more-speaker">+ Add More Speaker</p> -->
+          </div>
+          <div class="col-md-5 adds">
+            <button type="submit" class="btn_mythreeSpeaker">
+              Add Speaker <i class="fa fa-spinner fa-spin" *ngIf="imgloading2"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+      <div class="row">
+        <h6 class="org-head">Added Speakers</h6>
+        <div class="details">
+          <div class="row mb-2 mt-2" *ngFor="let org of speakers; let i = index">
+            <div class="row">
+              <div class="col-md-10 colors">
+                <div class="row">
+                  <p style="margin-bottom: 0.2rem">
+                    <b> {{ org.fullName }}</b>
+                  </p>
+                  <div class="row ">
+                    <div class="col-md d-flex">
+                      <p class="marg">STAGE {{org.stagesAllocated}}</p>
+                      |
+                      <p class="mx-2 emails">{{ org.email }}</p>
+                    </div>
+                    <div class="row">
+                      <div class="col-md">
+                        <p>{{ org.description }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md d-flex">
+                    <div class="dropdown">
+                      <button
+                        class="btn dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop3"
+                            (click)="editModal2(org.id)"
+                            >Edit</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop2"
+                            (click)="deleteRole(org.fullName, org.id)"
+                            >Delete</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="col-md-1 colors-icon">
+                <div class="icon">
+                  <button
+                    class="mx-2 icon-pens"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop3"
+                    (click)="editModal2(org.email)"
+                  >
+                    <i class="fa-solid fa-pen"></i>
+                  </button>
+                  <button
+                    class="icon-pens"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop2"
+                    (click)="deleteRole(org.fullName, org.id)"
+                  >
+                    <i class="fa-sharp fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+        <p *ngIf="noTotalSpeakers === 0" class="notFound mt-2">There’re No Speakers Added!</p>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-end mb-4 mt-4">
+      <!-- <div class="col-md-3 reset">
+        <button type="submit" class="btn_reset"  [disabled]="!roleForm.valid">Reset</button>
+      </div> -->
+      <div class="col-md-4 d-flex justify-content-end">
+        <button type="submit" class="btn_myfour" (click)="save()">
+          Save & Next <i class="fa fa-spinner fa-spin" *ngIf="imgloading1"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Edit Organizer Access</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="toogles-edit">
+            <div class="toogle-check">
+              <label class="form-check-label" for="flexSwitchCheckDefault0"
+                >Add/Remove Speaker
+                <span class="extra-note"><p>Organizers will also have the access to add or remove speakers.</p></span>
+              </label>
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="flexSwitchCheckDefault0"
+                  value="true"
+                  name="speakers"
+                  [(ngModel)]="editRoles.canAddSpeaker"
+                  checked="{{ organizers?.canAddSpeaker }}"
+                />
+              </div>
+            </div>
+            <div class="toogle-check">
+              <label class="form-check-label" for="flexSwitchCheckChecked0"
+                >Attendees Invitation<span class="extra-note"
+                  ><p>Organizers will also have the access to share invitation to event attendees.</p></span
+                >
+              </label>
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="flexSwitchCheckChecked0"
+                  value="true"
+                  name="initations"
+                  [(ngModel)]="editRoles.canSendInvitation"
+                  checked="{{ organizers?.canSendInvitation }}"
+                />
+              </div>
+            </div>
+            <div class="toogle-check">
+              <label class="form-check-label" for="flexSwitchCheckDisabled0"
+                >Access to multiple Stages<span class="extra-note"
+                  ><p>Organizers will also have the access to visit or be part of more then one stages.</p></span
+                >
+              </label>
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="flexSwitchCheckDisabled0"
+                  value="true"
+                  name="satgess"
+                  [(ngModel)]="editRoles.hasAcessToMultipleStages"
+                  checked="{{ organizers?.hasAcessToMultipleStages }}"
+                />
+              </div>
+            </div>
+            <div class="toogle-check">
+              <label class="form-check-label" for="flexSwitchCheckCheckedDisabled0"
+                >Screen Sharing<span class="extra-note"
+                  ><p>You can decide about giving screenshare option to the organizer during the event.</p></span
+                >
+              </label>
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="flexSwitchCheckCheckedDisabled0"
+                  value="true"
+                  name="shares"
+                  [(ngModel)]="editRoles.canShareScreen"
+                  checked="{{ organizers?.canShareScreen }}"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="updateRole()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="staticBackdrop3"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Change Stage</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form #updateSpeker="ngForm" >
+      <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+              <div class="form-group mb-3">
+                <ng-select
+                  [selectableGroup]="true"
+                  [closeOnSelect]="false"
+                  bindLabel="name"
+                  bindValue="id"
+                  [(ngModel)]="stagesAlloted1"
+                  [multiple]="true"
+                  name="stagess"
+                  placeholder="Select Stages"
+                  class=""
+                  [required]="true"
+                  #userStagesList="ngModel"
+                  [ngClass]="{ 'is-invalid': updateSpeker.submitted && userStagesList.errors }"
+                >
+                  <ng-option [value]="i + 1" *ngFor="let list of listofStages; let i = index">
+                    {{ list }}
+                  </ng-option>
+                </ng-select>
+                <div *ngIf="addSpeakerForm.submitted && userStagesList.errors" class="invalid-feedback">
+                  <div *ngIf="userStagesList.errors['required']">Stages is required</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="!updateSpeker.valid" (click)="updateSpeaker(updateSpeker)">
+            Save <i class="fa fa-spinner fa-spin" *ngIf="imgloadingUpdate"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="staticBackdrop1"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body delete">
+        Are You sure you want to remove <b>{{ confirmMessage }}</b> from Organizers list?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary yes" data-bs-dismiss="modal" (click)="yes()">Yes, Remove It</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="staticBackdrop2"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body delete">
+        Are You sure you want to remove <b>{{ confirmMessage }}</b> from Speaker list?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary yes" data-bs-dismiss="modal" (click)="yes()">Yes, Remove It</button>
+      </div>
+    </div>
+  </div>
+</div>

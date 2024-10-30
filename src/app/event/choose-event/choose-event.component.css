@@ -1,0 +1,150 @@
+.view{
+  color: #33cc94;
+  font-weight: 600;
+  margin-bottom: 0rem;
+}
+.virtual-occasion {
+  padding-top: 5rem;
+}
+
+.Virtual-text {
+  text-align: center;
+  font-weight: 600;
+}
+
+.virtual-para {
+  width: 45rem;
+  text-align: center;
+  font-size: 18px;
+}
+
+.virtual-back {
+  background: url("../../../assets/images/BGVirtual.jpg");
+}
+
+.card-link {
+  text-decoration: none !important;
+  color: #33cc94;
+  font-weight: 600;
+}
+
+.card {
+  box-shadow: 0px 30px 45px rgba(69, 125, 104, 0.1);
+  border-radius: 8px;
+  border-color: white;
+  cursor: pointer;
+  width: 100%;
+  height: 23rem;
+}
+
+.event-para{
+  font-size: 18px;
+}
+
+.card-img-top {
+  padding-top: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  height: inherit;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 36px 36px 36px 36px !important;
+  padding-bottom: 1rem !important;
+}
+.chooseEvents{
+  margin-left: -130px !important;
+}
+.imgs{
+ height: 270px;
+}
+
+.scrools{
+  max-height: 31rem;
+  overflow-y: auto;
+}
+
+.reset{
+  text-align: end;
+}
+.chooseEventButton{
+  margin-left: -40px !important;
+  margin-bottom: 20px !important;
+}
+
+.event-head{
+  font-weight: 600;
+}
+.btn_mythree {
+  background: #33cc94;
+  padding: 0px 30px !important;
+  border: 1px solid #33cc94 !important;
+  -webkit-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  display: inline-block;
+  color: #ffffff;
+  border-radius: 4px;
+  font-weight: 600;
+  height: 50px;
+  cursor: pointer;
+  width: 12rem;
+}
+
+.btn_mythree:hover{
+  color: #33cc94;
+  background: #ffffff;
+}
+
+.btn_reset:hover {
+  color: #ffffff;
+  background: #33cc94;
+}
+.btn_reset{
+  border: 1px solid #33cc94 !important;
+  -webkit-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  display: inline-block;
+  color: #33cc94;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  height: 50px;
+  border: none;
+  background-color: white;
+  width: 12rem;
+}
+
+.card-active{
+  border: 3px solid #33cc94;
+}
+
+.info{
+  display: flex;
+}
+.detail{
+  color: #33cc94;
+  font-weight: 600;
+  margin-left: 7px;
+  margin-bottom: 0rem;
+}
+
+.title-venue{
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .first{
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  .btn_reset{
+    width: 24rem !important;
+  }
+  .btn_mythree{
+    width: 24rem !important;
+    margin-top: 10px !important;
+  }
+}

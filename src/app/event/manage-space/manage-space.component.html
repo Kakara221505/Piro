@@ -1,0 +1,177 @@
+<div class="container row height">
+  <div id="manage" class="space">
+    <h4 class="manage-title">Manage Space</h4>
+    <p>You can customize the event template you selected to host your event.</p>
+  </div>
+  <div class="change-template" id="previously">
+    <h4 class="manage-title">Change Space Template</h4>
+    <p>You can change the previously selected event template.</p>
+    <p><b>Selected Space :</b> {{ selectSpace | titlecase }}</p>
+    <button id="buttons" type="button" style="cursor: pointer" class="button" (click)="chooseEvent()">Change Venue</button>
+  </div>
+  <div class="customize-template mt-4" id="display">
+    <h4 class="manage-title">Customize Template</h4>
+    <p>Add the banner images which will display in your space during the event.</p>
+    <form #addBannerForm="ngForm" class="formStart">
+      <div class="container" id="banner">
+        <div class="row event-rows py-3" style="display: flex">
+          <div class="col-md-4 justify-content-center mb-3" *ngFor="let banner of banners; let i = index">
+            <h5>{{ banner.bannerLocation }}</h5>
+            <p>
+              Recommended Size: <b>{{ banner.width + "px " + " x " + banner.height + "px" }}</b>
+            </p>
+            <div class="card">
+              <div class="card-body">
+                <div class="box" *ngIf="banner.eventBannerUrl === null" (click)="fileUploadi.click()">
+                  <img src="../../assets/images/Icon Artwork.png" alt="" />
+                  <div>
+                    <p *ngIf="!uploadImgs"><a class="text" >Choose file to upload</a></p>
+                    <input
+                      style="display: none"
+                      type="file"
+                      #imageInput
+                      (change)="fileChangeEvent($event, banner.id)"
+                      #fileUploadi
+                      accept="image/png,image/jpeg"
+                      [multiple]="false"
+                      id="select-file-{{ i }}"
+                    />
+                    <p *ngIf="uploadImgs" ><i class="fa fa-spinner fa-spin"></i> Uploading ...</p>
+
+                    <!--(change)="processFile(imageInput, banner.id)"-->
+                  </div>
+                </div>
+                <!-- <div class="imgs">
+                  <input
+                    #imageInput
+                    type="file"
+                    accept="image/*"
+                    (change)="processFile(imageInput, banner.id)"
+                    *ngIf="banner.eventBannerUrl === null"
+                  />
+                </div> -->
+
+                <!-- <div class="img-show" *ngIf="this.imageUrl !== ''">
+                  <img [src]="imageUrl" alt="" *ngIf="ids === banner.id" class="showsImg" />
+                </div> -->
+
+                <!-- <div class="img-show-list">
+                  <div class="image_item">
+                    <img [src]="banner.eventBannerUrl" *ngIf="banner.eventBannerUrl !== null" class="showsImg" />
+                    <div class="iconsss" *ngIf="banner.eventBannerUrl !== null">
+                      <i class="fa fa-trash" aria-hidden="true" (click)="deleteBannerImage(banner.eventBannerId)"></i>
+                      <label for="upload" style="background-color: white">
+                        <i class="fa fa-upload" aria-hidden="true"></i>
+                        <input
+                          #imageInput
+                          type="file"
+                          accept="image/*"
+                          (change)="processFile(imageInput, banner.id)"
+                          id="upload"
+                          class="main-upload"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="img-show-list">
+                  <div class="image_item">
+                    <img [src]="banner.eventBannerUrl" *ngIf="banner.eventBannerUrl !== null" class="showsImg" />
+                    <div class="iconsss" *ngIf="banner.eventBannerUrl !== null">
+                      <i class="fa fa-trash" aria-hidden="true" (click)="deleteBannerImage(banner.eventBannerId)"></i>
+                      <i class="fa fa-upload" aria-hidden="true" (click)="hiddenfileinput.click()"></i>
+                      <input
+                        style="display: none"
+                        type="file"
+                        #imageInput
+                        (change)="processFile(imageInput, banner.id)"
+                        #hiddenfileinput
+                        accept="image/png,image/jpeg"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p> Max file size : <b>20MB</b> | Supported files : <b>JPEG or PNG</b></p>
+        </div>
+      </div>
+      <p class="mt-3"><b>Note : </b> <b>Different events templates have different number of hoardings/banners.</b> </p>
+      <div class="row d-flex justify-content-end mb-2">
+        <!-- <div class="reset-manage col-md-3">
+          <button type="reset" class="my_reset">Reset</button>
+        </div> -->
+        <div class="col-md-4 d-flex justify-content-end">
+          <button type="button" class="btn_myfour" [disabled]="buttonDisabled" (click)="saveBanner(addBannerForm)">
+            Save & Next <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- <div class="" *ngIf="ids !== banner.id">
+                  <div class="img-show-list" *ngFor="let img of imgs">
+                    <div class="image_item">
+                      <img [src]="img.bannerUrl" alt="" *ngIf="img.bannerId === banner.id" class="showsImg" />
+                      <i class="fa fa-trash" aria-hidden="true" (click)="deleteBannerImage()"></i>
+                      <a href="#"></a>
+                    </div>
+                  </div>
+                </div> -->
+
+<!-- Image Cropper -->
+<button class="btn-register hidden" #btnOpenModal data-bs-toggle="modal" data-bs-target="#passwordAccess">Open Cropper</button>
+<div #myModal class="modal fade" id="passwordAccess" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Crop Image</h2>
+      </div>
+      <div class="modal-body">
+        <!--<input type="file" (change)="fileChangeEvent($event)" />-->
+
+        <!--<button (click)="rotateLeft()">Rotate left</button>
+<button (click)="rotateRight()">Rotate right</button>
+<button (click)="flipHorizontal()">Flip horizontal</button>
+<button (click)="flipVertical()">Flip vertical</button>
+<button (click)="toggleContainWithinAspectRatio()">{{containWithinAspectRatio?'Fill Aspect Ratio':'Contain Within Aspect Ratio'}}</button>
+<button (click)="resetImage()">Reset image</button>
+<input [(ngModel)]="rotation" placeholder="Rotation" type="number" (keyup)="updateRotation()" />-->
+        <button (click)="zoomOut()">Zoom -</button> <button (click)="zoomIn()">Zoom +</button>
+
+        <div>
+          <image-cropper
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [containWithinAspectRatio]="containWithinAspectRatio"
+            [aspectRatio]="aspectRatioX/aspectRatioY"
+            [resizeToWidth]="256"
+            [cropperMinWidth]="128"
+            [onlyScaleDown]="true"
+            [roundCropper]="false"
+            [canvasRotation]="canvasRotation"
+            [transform]="transform"
+            [alignImage]="'center'"
+            [style.display]="showCropper ? null : 'none'"
+            format="png"
+            (imageCropped)="imageCropped($event)"
+            (imageLoaded)="imageLoaded()"
+            (cropperReady)="cropperReady($event)"
+            (loadImageFailed)="loadImageFailed()"
+            class="image-cropper"
+          ></image-cropper>
+        </div>
+        <img [src]="croppedImage" [style.border]="croppedImage ? '1px solid black' : 'none'" style="display: none" />
+
+        <div class="text-center">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+          <button (click)="convertAndUploadFile()" class="btn_myfour" data-bs-dismiss="modal">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Image Cropper End-->

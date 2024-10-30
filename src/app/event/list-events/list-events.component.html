@@ -1,0 +1,247 @@
+<div class="row">
+  <div class="col-md-2">
+    <app-sidenav></app-sidenav>
+  </div>
+  <div class="col-md">
+    <div class="first">
+      <div class="row headers mt-4">
+        <app-header></app-header>
+      </div>
+
+      <div class="row headers-heading">
+        <div class="col-md-10 py-4">
+          <h2 class="event-head">My Events</h2>
+          <p class="event-para">Check your upcoming and past events</p>
+        </div>
+        <!-- <div class="col-md-2 mt-4 search">
+          <input type="text" placeholder="Search">
+        </div> -->
+        <div class="col-md-2 mt-4" *ngIf="accessCheck === true && earlyAccessStatus === 'APPROVED'">
+          <button type="button" class="btn_mythree-3" (click)="addEvents()">Create An Event</button>
+        </div>
+      </div>
+      <div class="row events-list">
+        <div class="col-md mt-4">
+          <ul class="nav nav-pills mb-3 tabss" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="pills-home-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#pills-home"
+                type="button"
+                role="tab"
+                aria-controls="pills-home"
+                aria-selected="true"
+              >
+                All
+              </button>
+            </li>
+            <li class="nav-item mx-3" role="presentation">
+              <button
+                class="nav-link"
+                id="pills-profile-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#pills-profile"
+                type="button"
+                role="tab"
+                aria-controls="pills-profile"
+                aria-selected="false"
+                (click)="getUpcomingEvent()"
+              >
+                Upcoming
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="pills-past-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#pills-past"
+                type="button"
+                role="tab"
+                aria-controls="pills-past"
+                aria-selected="false"
+                (click)="getPastEvent()"
+              >
+                Past
+              </button>
+            </li>
+          </ul>
+          <div class="mt-4" [ngStyle]="{ display: displayStyle }">
+            <div class="row events">
+              <div class="col-md-12">
+                <img src="../../assets/images/event-conole.png" alt="" class="event-img" />
+              </div>
+              <div class="col-md-12 mt-3 mb-4">
+                <p class="event-box-para">There’re no upcoming and past events at the moment.</p>
+                <b class="bold">You’ll see the complete list when there’ll be any</b>
+              </div>
+            </div>
+          </div>
+          <div class="tab-content" id="pills-tabContent" [ngStyle]="{ display: listStyle }">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+              <div class="row mt-3 extra-events" *ngFor="let all of allEvents; let i = index">
+                <div class="col-md box">
+                  <div class="row">
+                    <div class="col-md-1 box-green">
+                      <p class="dates-strt">
+                        {{ all.utcStartDate | date : "MMM" }} <br />
+                        <span class="date-single">{{ all.utcStartDate | date : "d" }}</span> {{ all.utcStartDate | date : "y" }}
+                      </p>
+                    </div>
+                    <div class="col-md-2 paddings">
+                      <h6 class="plan-title">EVENT</h6>
+                      <span class="spans-text">{{ all.title }}</span>
+                    </div>
+
+                    <div class="col-md-2 paddings">
+                      <h6 class="plan-title">TIME</h6>
+                      <span class="spans-text"
+                        >{{ all.localStartDate | date : "shortTime" }} - {{ all.localEndDate | date : "shortTime" }}
+                      </span>
+                    </div>
+                    <div class="col-md-2 paddings">
+                      <h6 class="plan-title">TIMEZONE</h6>
+                      <span class="spans-text">{{ all.timeZoneName + " " + all.timeZoneText }}</span>
+                    </div>
+                    <div class="col-md-2 paddings">
+                      <h6 class="plan-title">ACCESS</h6>
+                      <span class="spans-text-all">{{all.acessType}}</span>
+                    </div>
+                    <div class="col-md-2 paddings">
+                      <h6 class="plan-title">EVENT TYPE</h6>
+                      <span class="spans-text">{{ all.eventType }}</span>
+                    </div>
+
+                    <div class="col-md-1 paddings-btn">
+                      <!-- <button type="button" class="btn_view" [routerLink]="['../join' ,all.identifier]" *ngIf="currentDateTime < all.endDate">Join</button> -->
+                      <button
+                        type="button"
+                        class="btn_view"
+                        (click)="joinEvent(all.identifier)"
+                        *ngIf="currentDateTime < all.utcEndDate"
+                      >
+                        Join
+                      </button>
+                      <button type="button" class="btn_view_Exp" *ngIf="currentDateTime > all.utcEndDate">Expired</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+              <div class="row mt-3 extra-events" *ngFor="let upcoming of upComingEvents; let i = index">
+                <div class="col-md box">
+                  <div class="row">
+                    <div class="col-md-1 box-green">
+                      <p class="dates-strt">
+                        {{ upcoming.utcStartDate | date : "MMM" }} <br />
+                        <span class="date-single">{{ upcoming.utcStartDate | date : "d" }}</span>
+                        {{ upcoming.utcStartDate | date : "y" }}
+                      </p>
+                    </div>
+                    <div class="col-md-2 paddings">
+                      <h6 class="plan-title">EVENT</h6>
+                      <span class="spans-text">{{ upcoming.title }}</span>
+                    </div>
+
+                    <div class="col-md-2 paddings">
+                      <h6 class="plan-title">TIME</h6>
+                      <span class="spans-text"
+                        >{{ upcoming.utcStartDate | date : "shortTime" }} - {{ upcoming.utcEndDate | date : "shortTime" }}
+                      </span>
+                    </div>
+                    <div class="col-md-2 paddings">
+                      <h6 class="plan-title">TIMEZONE</h6>
+                      <span class="spans-text">{{ upcoming.timeZoneName + " " + upcoming.timeZoneText }} </span>
+                    </div>
+                    <div class="col-md-2 paddings">
+                      <h6 class="plan-title">ACCESS</h6>
+                      <span class="spans-text">{{ upcoming.acessType }}</span>
+                    </div>
+                    <div class="col-md-2 paddings">
+                      <h6 class="plan-title">EVENT TYPE</h6>
+                      <span class="spans-text">{{ upcoming.eventType }}</span>
+                    </div>
+
+                    <div class="col-md-1 paddings-btn">
+                      <button
+                        type="button"
+                        class="btn_view"
+                        (click)="joinEvent(upcoming.identifier)"
+                        *ngIf="currentDateTime < upcoming.utcEndDate"
+                      >
+                        Join
+                      </button>
+                      <button type="button" class="btn_view_Exp" *ngIf="currentDateTime > upcoming.utcEndDate">Expired</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row events" *ngIf="noUpcomingsEvents === 0">
+                <div class="col-md-12">
+                  <img src="../../assets/images/event-conole.png" alt="" class="event-img" />
+                </div>
+                <div class="col-md-12 mt-3 mb-4">
+                  <p class="event-box-para">There’re no Upcoming events at the moment.</p>
+                  <b class="bold">You’ll see the complete list when there’ll be any</b>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="pills-past" role="tabpanel" aria-labelledby="pills-past-tab">
+              <div class="row mt-3 extra-events" *ngFor="let past of pastEvents; let i = index">
+                <div class="col-md box">
+                  <div class="row">
+                    <div class="col-md-1 box-green">
+                      <p class="dates-strt">
+                        {{ past.utcStartDate | date : "MMM" }} <br />
+                        <span class="date-single">{{ past.utcStartDate | date : "d" }}</span> {{ past.utcStartDate | date : "y" }}
+                      </p>
+                    </div>
+                    <div class="col-md-2 paddings">
+                      <h6 class="plan-title">EVENT</h6>
+                      <span class="spans-text">{{ past.title }}</span>
+                    </div>
+
+                    <div class="col-md-2 paddings">
+                      <h6 class="plan-title">TIME</h6>
+                      <span class="spans-text"
+                        >{{ past.utcStartDate | date : "shortTime" }} - {{ past.utcEndDate | date : "shortTime" }}
+                      </span>
+                    </div>
+                    <div class="col-md-2 paddings">
+                      <h6 class="plan-title">TIMEZONE</h6>
+                      <span class="spans-text">{{ past.timeZoneName + " " + past.timeZoneText }}</span>
+                    </div>
+
+                    <div class="col-md-2 paddings">
+                      <h6 class="plan-title">ACCESS</h6>
+                      <span class="spans-text">{{ past.acessType }}</span>
+                    </div>
+                    <div class="col-md-2 paddings">
+                      <h6 class="plan-title">EVENT TYPE</h6>
+                      <span class="spans-text">{{ past.eventType }}</span>
+                    </div>
+                    <div class="col-md-1 paddings-btn">
+                      <button type="button" class="btn_view_Exp">Expired</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row events" *ngIf="noEventsPast === 0">
+                <div class="col-md-12">
+                  <img src="../../assets/images/event-conole.png" alt="" class="event-img" />
+                </div>
+                <div class="col-md-12 mt-3 mb-4">
+                  <p class="event-box-para">There’re no Past events at the moment.</p>
+                  <b class="bold">You’ll see the complete list when there’ll be any</b>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

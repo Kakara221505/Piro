@@ -1,0 +1,350 @@
+<div class="row boxs">
+  <div class="">
+    <h4 class="basic-title">Basic Details</h4>
+    <p>Check event details, Add event summary, edit the privacy, manage type of events etc.</p>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="form-submit">
+      <form autocomplete="off" #basicForm="ngForm" name="form" novalidate (ngSubmit)="basicForm.form.valid && Save(basicForm)">
+        <div class="row mt-4">
+          <div class="col-md-8">
+            <div class="form-group mb-3">
+              <label for="validationCustom01" class="form-label">Event Title </label>
+              <input
+                autocomplete="false"
+                type="text"
+                class="form-control extra-width"
+                id="name"
+                placeholder="Enter Event Title"
+                [(ngModel)]="basic.title"
+                required
+                name="title"
+                #titles="ngModel"
+                [ngClass]="{ 'is-invalid': basicForm.submitted && titles.errors }"
+                maxlength="50"
+              />
+              <span class="opt-limit">Max character limit : 50</span>
+              <div *ngIf="basicForm.submitted && titles.errors" class="invalid-feedback">
+                <div *ngIf="titles.errors['required']">Event Title is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group mb-3">
+              <label for="validationCustom01" class="form-label labels"
+                >Privacy
+                <!-- <button
+                  type="button"
+                  class="btns"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Note : Private Privacy : Piro Space won’t show your events as open events. & Public Privacy: Piro Space will show your events as open events and anyone can register for the event."
+                >
+                  <i class="fa fa-info-circle" aria-hidden="true"></i>
+                </button> -->
+              </label>
+              <ng-select
+                [closeOnSelect]="true"
+                [clearable]="false"
+                bindLabel="text"
+                bindValue="text"
+                [(ngModel)]="basic.eventPrivacy"
+                [multiple]="false"
+                name="eventprivacy"
+                [required]="true"
+                placeholder="Select Privacy"
+                #privacy="ngModel"
+                [ngClass]="{ 'is-invalid': basicForm.submitted && privacy.errors }"
+              >
+                <ng-option value="" disabled >
+                  Select Privacy..
+                </ng-option>
+                <ng-option  value="PUBLIC">
+                  Public
+                  <span class="para-privacy">(Attendees are outside of my team)</span>
+                </ng-option>
+                <ng-option value="PRIVATE">
+                  Private
+                  <span class="para-privacy"> (Attendees are in my team or organization)</span>
+                </ng-option>
+              </ng-select>
+              <div *ngIf="basicForm.submitted && privacy.errors" class="invalid-feedback">
+                <div *ngIf="privacy.errors['required']">Please Select One Privacy</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <label for="validationCustom01" class="form-label">Event Start Date</label>
+
+            <div class="form-group mb-3 extra-group">
+              <input
+                [owlDateTimeTrigger]="dt"
+                [owlDateTime]="dt"
+                class="form-control"
+                placeholder="Select Start Date"
+                [(ngModel)]="basic.eventStartDate"
+                name="eventStart"
+                #eventStarts="ngModel"
+                [min]="myToday"
+                [ngClass]="{ 'is-invalid': basicForm.submitted && eventStarts.errors }"
+                required
+                (dateTimeChange)="onStartChange($event)"
+              />
+              <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+              <div *ngIf="basicForm.submitted && eventStarts.errors" class="invalid-feedback">
+                <div *ngIf="eventStarts.errors['required']">Select Start Date</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="validationCustom01" class="form-label">Event Start Time </label>
+            <div class="form-group mb-3 extra-group">
+              <ng-select
+                [selectableGroup]="true"
+                [closeOnSelect]="false"
+                bindLabel="name"
+                bindValue="id"
+                [(ngModel)]="eventStartTime"
+                [multiple]="false"
+                name="eventStartTime"
+                placeholder="Select Start Time"
+                [required]="true"
+                #startTime="ngModel"
+                [clearable]="false"
+                [closeOnSelect]="true"
+                [ngClass]="{ 'is-invalid': basicForm.submitted && startTime.errors }"
+                (ngModelChange)="onSelected($event)"
+              >
+                <ng-option [value]="times.value" *ngFor="let times of timers; let i = index">
+                  {{ times.name }}
+                </ng-option>
+              </ng-select>
+              <div *ngIf="basicForm.submitted && startTime.errors" class="invalid-feedback">
+                <div *ngIf="startTime.errors['required']">Select Start Time</div>
+              </div>
+            </div>
+          </div>
+               <div class="col-md-4">
+            <div class="form-group mb-3">
+              <label for="validationCustom01" class="form-label labels"
+                >Type
+              </label>
+              <ng-select
+                [closeOnSelect]="true"
+                [clearable]="false"
+                bindLabel="text"
+                bindValue="text"
+                [(ngModel)]="basic.eventTypeId"
+                [multiple]="false"
+                name="types"
+                [required]="true"
+                placeholder="Select Type"
+                #Types="ngModel"
+                [ngClass]="{ 'is-invalid': basicForm.submitted && Types.errors }"
+              >
+              <ng-option value="" disabled >
+                Select Type..
+              </ng-option>
+              <ng-option [value]="event.id" *ngFor="let event of events; let i = index">
+                {{ event.type }}
+              </ng-option>
+              </ng-select>
+              <div *ngIf="basicForm.submitted && privacy.errors" class="invalid-feedback">
+                <div *ngIf="privacy.errors['required']">Please Select One Privacy</div>
+              </div>
+            </div>
+          </div>
+        
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <label for="validationCustom01" class="form-label">Event End Date</label>
+
+            <div class="form-group mb-3 extra-group">
+              <input
+                [owlDateTime]="dt1"
+                [owlDateTimeTrigger]="dt1"
+                placeholder="Select End Date"
+                class="form-control"
+                [(ngModel)]="basic.eventEndDate"
+                name="endDate"
+                #endDtimes="ngModel"
+                [ngClass]="{ 'is-invalid': basicForm.submitted && endDtimes.errors }"
+                required
+                [min]="minEndDate"
+                (dateTimeChange)="onStartChange2($event)"
+              />
+              <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+              <div *ngIf="basicForm.submitted && endDtimes.errors" class="invalid-feedback">
+                <div *ngIf="endDtimes.errors['required']">Select End Date</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="validationCustom01" class="form-label">Event End Time</label>
+            <div class="form-group mb-3 extra-group">
+              <ng-select
+                [selectableGroup]="true"
+                [closeOnSelect]="false"
+                bindLabel="name"
+                bindValue="id"
+                [(ngModel)]="eventEndTime"
+                [multiple]="false"
+                name="eventEndTimes"
+                placeholder="Select End Time"
+                [required]="true"
+                #endMinutes="ngModel"
+                [clearable]="false"
+                [closeOnSelect]="true"
+                [ngClass]="{ 'is-invalid': basicForm.submitted && endMinutes.errors }"
+              >
+                <!-- <ng-option [value]="null" selected *ngFor="let times of timerEnd; let i = index">Hello</ng-option> -->
+                <ng-option [value]="times.values" *ngFor="let times of timerEnd; let i = index">
+                  {{ times.name }}
+                </ng-option>
+              </ng-select>
+              <div *ngIf="basicForm.submitted && endMinutes.errors" class="invalid-feedback">
+                <div *ngIf="endMinutes.errors['required']">Select End Time</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group mb-3">
+              <label for="validationCustom01" class="form-label">No. of Attendees</label>
+              <ng-select 
+              [closeOnSelect]="true"
+              [clearable]="false"
+                required
+                [(ngModel)]="basic.maxAttendees"
+                name="attendes"
+                #attened="ngModel"
+                [ngClass]="{ 'is-invalid': basicForm.submitted && attened.errors }"
+              >
+                <ng-option value="" disabled selected>Select No. of Attendees</ng-option>
+                <ng-option value="10">0-10</ng-option>
+                <ng-option value="30">10-30</ng-option>
+                <ng-option value="50">20-50</ng-option>
+                <ng-option value="100">More than 50</ng-option>
+              </ng-select>
+              <div *ngIf="basicForm.submitted && attened.errors" class="invalid-feedback">
+                <div *ngIf="attened.errors['required']">Attendees is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-8">
+            <div class="form-group mb-3">
+              <label for="validationCustomTimezone" class="form-label">Time Zone </label>
+              <ng-select
+                [closeOnSelect]="true"
+                [clearable]="false"
+                bindLabel="text"
+                bindValue="text"
+                [(ngModel)]="timezoneIds"
+                [multiple]="false"
+                name="stages"
+                [required]="true"
+                placeholder="Select Timezone"
+                #timeLists="ngModel"
+                [ngClass]="{ 'is-invalid': basicForm.submitted && timeLists.errors }"
+              >
+                <ng-option [value]="event.id" *ngFor="let event of timezones; let i = index">
+                  {{ event.text + " " + event.utc }}
+                </ng-option>
+              </ng-select>
+              <div *ngIf="basicForm.submitted && timeLists.errors" class="invalid-feedback">
+                <div *ngIf="timeLists.errors['required']">Please Select Type</div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-4">
+            <div class="form-group mb-3">
+              <label for="validationCustomTimezone" class="form-label">Category</label>
+              <ng-select
+                [closeOnSelect]="true"
+                [clearable]="false"
+                bindLabel="text"
+                bindValue="text"
+                [(ngModel)]="basic.eventCategoryId"
+                name="cat"
+                [multiple]="false"
+                [required]="true"
+                placeholder="Select Category"
+                #Category="ngModel"
+                [ngClass]="{ 'is-invalid': basicForm.submitted && Category.errors }"
+              >
+                <ng-option [value]="cat.id" *ngFor="let cat of categories; let i = index">
+                  {{ cat.category }}
+                </ng-option>
+              </ng-select>
+              <div *ngIf="basicForm.submitted && Category.errors" class="invalid-feedback">
+                <div *ngIf="Category.errors['required']">Please Select Category</div>
+              </div>
+            </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md">
+            <div class="form-group mb-3">
+              <label for="validationCustom01" class="form-label">Event Summary <span class="opt">(Optional)</span></label>
+              <textarea
+                autocomplete="false"
+                type="text"
+                class="form-control extra-width-event"
+                id="desc"
+                placeholder="Enter the Summary"
+                [(ngModel)]="basic.eventSummary"
+                cols="30"
+                rows="10"
+                name="summary"
+                maxlength="1000"
+              ></textarea>
+              <span class="opt-limit">Max character limit : 1000</span>
+            </div>
+          </div>
+        </div>
+        <div class="error" *ngIf="errorMessage">
+          <p class="error-class-backend-basic"><i class="fa-solid fa-circle-exclamation"></i> {{ errorMessage }}.</p>
+        </div>
+        <div class="row d-flex justify-content-end mb-2 mt-4">
+          <!-- <div class="col-md-3 reset">
+            <button type="submit" class="btn_reset">Reset</button>
+          </div> -->
+          <div class="col-md-6 d-flex justify-content-end">
+            <!-- <button type="button" class="btn_add-ticket">
+              Reset  <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+            </button> -->
+            <button type="submit" class="btn_mythree">
+              Save & Next <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+            </button>
+          </div>
+          
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- <input type="datetime-local" id="birthdaytime" name="birthdaytime"  [(ngModel)]="basic.eventStartDate"
+              name="eventStart"
+              [min]="todayDate"
+              [min]="myToday"
+              #eventStarts="ngModel"
+              [ngClass]="{ 'is-invalid': basicForm.submitted && eventStarts.errors }"
+              required>
+              {{basic.eventStartDate}} -->
+<!-- <div class="col-md-4 mt-4 notes">
+            <p><b>Note </b> : <b>Private Privacy</b> : Piro Space won’t show your events as open events.</p>
+            <p><b> Public Privacy</b> : Piro Space will show your events as open events and anyone can register for the event.</p>
+          </div> -->
+
+

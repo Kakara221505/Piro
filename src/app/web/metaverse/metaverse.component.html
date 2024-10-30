@@ -1,0 +1,265 @@
+<ngx-spinner bdColor="rgb(255,255,255,1)" size="large" color="#33cc94" type="ball-scale-multiple"></ngx-spinner>
+<div *ngIf="showContent">
+  <div class="container-fluid relative">
+    <div class="background-video">
+      <video autoplay muted loop onloadedmetadata="this.muted = true" oncanplay="this.play()" class="video-play">
+        <!-- <source type="video/mp4" src="../../assets/video/bg_video.mov" /> -->
+      </video>
+    </div>
+    <div class="container py-1 banner-area">
+      <nav class="navbar navbar-expand-lg mt-2">
+        <div class="container-fluid">
+          <img src="../../assets/images/pswhitelogo.svg" alt="" class="piro-img" (click)="imgClick()" />
+          <!-- <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button> -->
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <!-- <li class="nav-item dropdown mx-2">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Products
+            </a>
+            <ul class="dropdown-menu" >
+              <li><a class="dropdown-item" href="#">Piro</a></li>
+              <li><a class="dropdown-item" href="#">Piro action</a></li>
+            </ul>
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link active" href="#">Pricing</a>
+          </li> -->
+              <li class="nav-item mx-2">
+                <button type="button" class="btn btn-log-green mx-2" (click)="loginScreen()">Login</button>
+              </li>
+              <li class="nav-item mx-2">
+                <button type="button" class="btn btn-log-white" (click)="signupScreen()">Sign Up</button>
+              </li>
+              <!-- <li class="nav-item mx-2">
+            <button type="button" class="btn btn-host">Sign Up</button>
+          </li> -->
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div class="heading-page">
+        <div class="row">
+          <div class="col-md-6">
+            <p class="heading-font">Host <span class="heading-color">Virtual Events,</span> in Metaverse.</p>
+            <div class="join-team py-4">
+              <div class="row">
+                <div class="trio-img col-md-2">
+                  <img src="../../assets/images/3 people.png" alt="" class="img-3" />
+                </div>
+                <div class="col-md-7 people">
+                  <p class="join-text">Join with <b>your people/team </b>and start the immersive experience.</p>
+                </div>
+              </div>
+            </div>
+            <div class="heading-buttons d-flex py-3">
+              <a target="_blank">
+              <button type="button" class="btn btn-host" (click)="signupScreen()">Host An Event</button>
+            </a>
+              <button type="button" class="btn btn-book-white mx-2" (click)="bookDemo()">Book A Demo</button>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <!-- <img src="../../assets/images/Hero section imag.png" alt="" class="hero-img" /> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- disablepictureinpicture disableremoteplayback playsinline bpreload="metadata" -->
+
+  <div class="compaines-trusted">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2 company-text">
+          <p>Trusted by companies of all sizes</p>
+        </div>
+
+        <div class="col-md-10">
+          <div class="h-100">
+            <div class="container rounded">
+              <div class="slider">
+                <div class="logos">
+                  <img src="../../assets/images/Monkhub-logo.svg" alt="" />
+                  <img src="../../assets/images/Aidus.svg" alt="" class="mx-5" />
+                  <img src="../../assets/images/BitHappier.svg" alt="" class="mx-5" />
+                  <img src="../../assets/images/Pwc.svg" alt="" class="mx-5" />
+                  <img src="../../assets/images/Monkhub-logo.svg" alt="" class="mx-5"/>
+                  <img src="../../assets/images/Aidus.svg" alt="" class="mx-5" />
+                  <img src="../../assets/images/BitHappier.svg" alt="" class="mx-5" />
+                  <img src="../../assets/images/Pwc.svg" alt="" class="mx-5" />
+                  <img src="../../assets/images/Monkhub-logo.svg" alt="" class="mx-5"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="virtual-back">
+    <div class="container virtual-cont">
+      <div class="virtual-occasion">
+        <h2 class="Virtual-text">Virtual Worlds For Every Occasion</h2>
+      </div>
+      <div class="d-flex justify-content-center">
+        <p class="virtual-para">
+          Explore the Immersive experience of our virtual spaces where you can plan events tailored to the occasion.
+        </p>
+      </div>
+      <div class="row event-rows py-3">
+        <div class="col-md-4 d-flex justify-content-center">
+          <div class="card ">
+            <div class="imgs">
+              <img src="../../assets/images/Seminars&conferences (1).png" class="card-img-top" alt="..." />
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Seminars & Conferences</h5>
+              <p class="card-text">
+                Have fun hosting your seminars and conferences in a virtual world, enabling an immersive experience for your
+                teammates and guests.
+              </p>
+              <!-- <a href="#" class="card-link">See More <i class="fa-solid fa-arrow-right"></i></a> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 d-flex justify-content-center">
+          <div class="card">
+            <div class="imgs">
+              <img src="../../assets/images/Meetups (1).png" class="card-img-top" alt="..." />
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Meetups</h5>
+              <p class="card-text">
+                Host virtual meetups at Piro Space venues to build everlasting communities over the internet.
+              </p>
+              <!-- <a href="#" class="card-link">See More <i class="fa-solid fa-arrow-right"></i></a> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 d-flex justify-content-center">
+          <div class="card">
+            <div class="imgs">
+              <img src="../../assets/images/Product launch (1).png" class="card-img-top" alt="..." />
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Product Launch</h5>
+              <p class="card-text">Launch your product in the metaverse with us and engage the right audience.</p>
+              <!-- <a href="#" class="card-link">See More <i class="fa-solid fa-arrow-right"></i></a> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row event-rows py-3">
+        <div class="col-md-4 d-flex justify-content-center">
+          <div class="card">
+            <div class="imgs">
+              <img src="../../assets/images/Town halls (1).png" class="card-img-top" alt="..." />
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Town Halls</h5>
+              <p class="card-text">
+                Organize town halls at Piro Space to keep your team up to date on important information and engage in two-way
+                dialogue with people.
+              </p>
+              <!-- <a href="#" class="card-link">See More <i class="fa-solid fa-arrow-right"></i></a> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 d-flex justify-content-center">
+          <div class="card">
+            <div class="imgs">
+              <img src="../../assets/images/Music concert (1).png" class="card-img-top" alt="..." />
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Music Concert</h5>
+              <p class="card-text">
+                Immerse yourself in the virtual Musical encounter in our virtual space, getting a thrilling experience altogether
+                with varied audiences.
+              </p>
+              <!-- <a href="#" class="card-link">See More <i class="fa-solid fa-arrow-right"></i></a> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 d-flex justify-content-center">
+          <div class="card">
+            <div class="imgs">
+              <img src="../../assets/images/Business expos (1).png" class="card-img-top" alt="..." />
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Business Expos</h5>
+              <p class="card-text">
+                Host your Business Expos, Seminars, Talks, and workshops for your attendees in a more intuitive way in our virtual
+                space.
+              </p>
+              <!-- <a href="#" class="card-link">See More <i class="fa-solid fa-arrow-right"></i></a> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row py-3">
+        <div class="col-md-4 d-flex justify-content-center">
+          <div class="card">
+            <div class="imgs">
+              <img src="../../assets/images/Team get together (1).png" class="card-img-top" alt="..." />
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Team Get Together</h5>
+              <p class="card-text">
+                Allow your team to experience a brand-new way of engaging and rejoicing together in our fascinating virtual space.
+              </p>
+              <!-- <a href="#" class="card-link">See More <i class="fa-solid fa-arrow-right"></i></a> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 d-flex justify-content-center">
+          <div class="card">
+            <div class="imgs">
+              <img src="../../assets/images/Festival celebrations (1).png" class="card-img-top" alt="..." />
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Festival Celebrations</h5>
+              <p class="card-text">
+                Why flee from festival celebrations with your people when you can relax and soak in the ambiance of festivities in
+                our virtual world?
+              </p>
+              <!-- <a href="#" class="card-link">See More <i class="fa-solid fa-arrow-right"></i></a> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 d-flex justify-content-center">
+          <div class="card">
+            <div class="imgs">
+              <img src="../../assets/images/Virtual party (1).png" class="card-img-top" alt="..." />
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Parties</h5>
+              <p class="card-text">
+                Enable the carefree spirit in you to surface by partying in our virtual space with your near and dear ones.
+              </p>
+              <!-- <a href="#" class="card-link">See More <i class="fa-solid fa-arrow-right"></i></a> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-key-features></app-key-features>
+  <app-event-management></app-event-management>
+  <!-- <app-case-studies></app-case-studies> -->
+  <app-book-demo></app-book-demo>
+  <app-footer></app-footer>
+</div>

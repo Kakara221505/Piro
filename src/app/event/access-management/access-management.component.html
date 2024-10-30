@@ -1,0 +1,752 @@
+<div class="row boxs">
+  <h4 class="access-title">Access Management</h4>
+  <p>Customize the access of your attendees.</p>
+  <hr />
+  <form autocomplete="off" [formGroup]="accessForm" class="forms">
+    <div class="row">
+      <div class="col-md use">
+        <div class="anyone">
+          <div class="form-check">
+            <input
+              (click)="myFunction()"
+              class="form-check-input"
+              type="radio"
+              name="acessType"
+              value="OPEN"
+              formControlName="acessType"
+              [checked]="eventData?.acessType === 'OPEN'"
+              [(ngModel)]="acessType"
+              required
+            /><span> Open access</span>
+            <p class="link">Anyone with the link can join the event space.</p>
+          </div>
+          <div class="row" [ngStyle]="{ display: openStyle }">
+            <!-- <div class="col-md-4 d-flex justify-content-center mb-4">
+            <button type="button" class="btn_mythree" (click)="copyLink()">
+              Copy Link <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+            </button>
+          </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md use">
+        <div class="password">
+          <div class="form-check">
+            <input
+              (click)="myFunction1()"
+              type="radio"
+              class="form-check-input"
+              name="acessType"
+              value="PASSWORD_PROTECTED"
+              formControlName="acessType"
+              [checked]="eventData?.acessType === 'PASSWORD_PROTECTED'"
+              [(ngModel)]="acessType"
+              required
+            />
+            <span> Password Protected Access</span>
+            <p class="link">Generate the password for the access your event.</p>
+          </div>
+          <div class="evnts" [ngStyle]="{ display: passwordStyle }">
+            <div class="row event">
+              <div class="col-lg-6">
+                <div class="passwords">
+                  <div class="input-group">
+                    <input
+                      [type]="fieldTextType ? 'text' : 'password'"
+                      class="form-control"
+                      id="fname"
+                      name="fname"
+                      placeholder="Enter Password"
+                      formControlName="password"
+                      maxlength="16"
+                      [(ngModel)]="password"
+                    />
+                    <div class="input-group-append">
+                      <span class="input-group-text">
+                        <i
+                          class="fa"
+                          [ngClass]="{
+                            'fa-eye-slash': !fieldTextType,
+                            'fa-eye': fieldTextType
+                          }"
+                          (click)="toggleFieldTextType()"
+                        ></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="passwordRequired" class="error-class-backend pass-error mt-2">
+                <div>Enter Password for Protected Access</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md">
+                <div class="spac">
+                  <p><b>Note : </b>If this field is blank anyone with the link can enter the space.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md use">
+        <div class="email">
+          <div class="form-check">
+            <input
+              (click)="myFunction2()"
+              class="form-check-input"
+              name="acessType"
+              type="radio"
+              value="EMAIL_AND_OTP"
+              formControlName="acessType"
+              [checked]="eventData?.acessType === 'EMAIL_AND_OTP'"
+              [(ngModel)]="acessType"
+              required
+            />
+
+            <span> Email & OTP Based Access</span>
+            <p class="link">
+              Share the access based on email and OTP. An OTP will be send to their email, on entering which the user will be
+              granted access to the space.
+            </p>
+          </div>
+          <div class="row" [ngStyle]="{ display: emailStyle }">
+            <div class="col-md-9 domains">
+              <h6>Whitlist Email Domain</h6>
+              <form #otpForm="ngForm" (ngSubmit)="otpForm.form.valid && addDomains(otpForm)">
+                <div class="domain">
+                  <div class="row">
+                    <div class="col-lg-7">
+                      <div class="form-group">
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="staticEmail"
+                          placeholder="@ anyone with.domain name can enter "
+                          autocomplete="false"
+                          [(ngModel)]="whiteListEmailDomain"
+                          name="whitelist"
+                          id="whitelist"
+                          #emails="ngModel"
+                          required
+                          [ngClass]="{ 'is-invalid': otpForm.submitted && emails.errors }"
+                          [pattern]="regex"
+                          (keyup)="keyFunc($event)"
+                        />
+                        <div *ngIf="otpForm.submitted && emails.errors" class="invalid-feedback">
+                          <div *ngIf="emails.errors['required']">Enter Email For whitelist Domain</div>
+                          <div *ngIf="emails.errors['pattern']">Enter Valid Domain</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-2">
+                      <button class="btn_save">Add</button>
+                    </div>
+                    <p class="error-class-backend mt-2 mb-0" *ngIf="errorMessageDomain">
+                      <i class="fa-solid fa-circle-exclamation"></i> {{ errorMessageDomain }}.
+                    </p>
+                  </div>
+                </div>
+              </form>
+
+              <div class="row">
+                <h6 class="org-head">WHITLISTED DOMAINS</h6>
+                <div class="details">
+                  <div class="row mb-2" *ngFor="let org of domains; let i = index">
+                    <div class="col-md-10 colors-domains">
+                      <div class="row">
+                        <div class="col-md d-flex">
+                          <p style="margin-bottom: 0.2rem">
+                            {{ org.whiteListEmailDomain }}
+                          </p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-2 colors-icon-del">
+                          <div class="icon">
+                            <button class="icon-pens" (click)="deleteDomains(org.id)">
+                              <i class="fa-sharp fa-solid fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="note">
+                <p><b>Note : </b> All people who can verify they have an email ending in domain can enter.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="row mt-3">
+    <div class="col-md use">
+      <div class="register">
+        <div class="form-check">
+          <input
+            (click)="anyone()"
+            class="form-check-input"
+            name="acessType"
+            type="radio"
+            value="REGISTRATION"
+            formControlName="acessType"
+            [checked]="eventData?.acessType === 'REGISTRATION'"
+            [(ngModel)]="acessType"
+            required
+          />
+          <span> Registration Based Access</span>
+          <p class="link">
+            Anyone who Register themeself can access the event. They will recieve the event link after Registration
+          </p>
+        </div>
+        <div class="container" [ngStyle]="{ display: registrationStyle }">
+          <div class="details mt-5">
+            <div class="row mb-3" *ngFor="let org of tickets; let i = index">
+              <div class="col-md-2 dates">
+                <div class="row">
+                  <p class="text-type">Ticket Type</p>
+
+                  <b class="ticket-type">{{ org.ticketType }}</b>
+                </div>
+              </div>
+              <div class="col-md-5 colors">
+                <div class="row">
+                  <div class="col-md d-flex">
+                    <p class="para-name-ticket">
+                      <span> {{ org.ticketName }}</span>
+                    </p>
+                  </div>
+                  <div class="col-md-2 colors-icon">
+                    <div class="icon">
+                      <button class="icon-del" (click)="deleteAccessTickets(org.id)">
+                        <i class="fa-sharp fa-solid fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md d-flex tickets-info">
+                    <p class="marg">
+                      {{ org.noOfTickets }} Tickets <span class="ver-line">| </span> {{ org.ticketPrice }}
+                      <span class="ver-line"> | </span> {{ org.visibilty }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="box">
+            <div class="row tabss">
+              <h6 class="type-ticket">Select Ticket Type</h6>
+            </div>
+            <div class="row options mt-2">
+              <ul class="nav nav-pills mb-3 tabss" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link active"
+                    id="pills-home-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#pills-home"
+                    type="button"
+                    role="tab"
+                    aria-controls="pills-home"
+                    aria-selected="true"
+                  >
+                    Paid
+                  </button>
+                </li>
+                <li class="nav-item mx-2" role="presentation">
+                  <button
+                    class="nav-link"
+                    id="pills-profile-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#pills-profile"
+                    type="button"
+                    role="tab"
+                    aria-controls="pills-profile"
+                    aria-selected="false"
+                  >
+                    Free
+                  </button>
+                </li>
+              </ul>
+              <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                  <div class="form-submit">
+                    <form autocomplete="off" #paidForm="ngForm" (ngSubmit)="paidForm.form.valid && addPaidForm(paidForm)">
+                      <div class="row mt-1">
+                        <div class="col-md-6">
+                          <div class="form-group mb-3">
+                            <label for="validationCustom01" class="form-label">Ticket Name</label>
+                            <input
+                              autocomplete="false"
+                              type="text"
+                              class="form-control extra-width"
+                              id="tickets"
+                              placeholder="Enter Ticket Name "
+                              [(ngModel)]="regisForm.ticketName"
+                              name="ticket"
+                              #TicketName="ngModel"
+                              required
+                              [ngClass]="{ 'is-invalid': paidForm.submitted && TicketName.errors }"
+                            />
+                            <div *ngIf="paidForm.submitted && TicketName.errors" class="invalid-feedback">
+                              <div *ngIf="TicketName.errors['required']">Ticket name is Required</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <div class="form-group mb-3">
+                            <label for="validationCustom01" class="form-label">Available Quantity</label>
+                            <input
+                              autocomplete="false"
+                              type="number"
+                              class="form-control extra-width"
+                              id="quant"
+                              placeholder="Enter Quantity "
+                              [(ngModel)]="regisForm.noOfTickets"
+                              name="tickets"
+                              #quants="ngModel"
+                              required
+                              [ngClass]="{ 'is-invalid': paidForm.submitted && quants.errors }"
+                            />
+                            <div *ngIf="paidForm.submitted && quants.errors" class="invalid-feedback">
+                              <div *ngIf="quants.errors['required']">Quantity is Required</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group mb-2">
+                            <label for="validationCustom01" class="form-label">Ticket Price</label>
+                            <input
+                              autocomplete="false"
+                              type="number"
+                              class="form-control extra-width"
+                              id="price"
+                              placeholder="Price *"
+                              [(ngModel)]="regisForm.ticketPrice"
+                              name="price"
+                              #prices="ngModel"
+                              required
+                              [ngClass]="{ 'is-invalid': paidForm.submitted && prices.errors }"
+                            />
+                            <div *ngIf="paidForm.submitted && prices.errors" class="invalid-feedback">
+                              <div *ngIf="prices.errors['required']">Price is Required</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mt-3">
+                        <div class="col-md-6">
+                          <div class="form-group mb-3">
+                            <label for="validationCustom01" class="form-label">Sales Start Date & Time</label>
+                            <input
+                              [owlDateTimeTrigger]="dt"
+                              [owlDateTime]="dt"
+                              class="form-control"
+                              placeholder="Select Date & Time"
+                              [(ngModel)]="regisForm.salesStartDate"
+                              name="dates1"
+                              [min]="todayDate"
+                              #salesStartDate="ngModel"
+                              required
+                              [ngClass]="{ 'is-invalid': paidForm.submitted && salesStartDate.errors }"
+                            />
+                            <owl-date-time #dt></owl-date-time>
+                            <div *ngIf="paidForm.submitted && salesStartDate.errors" class="invalid-feedback">
+                              <div *ngIf="salesStartDate.errors['required']">Start Date & Time is Required</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group mb-3">
+                            <label for="validationCustom01" class="form-label">Sales End Date & Time</label>
+                            <input
+                              [owlDateTime]="dt1"
+                              [owlDateTimeTrigger]="dt1"
+                              placeholder="Select Date & Time"
+                              class="form-control"
+                              [(ngModel)]="regisForm.salesEndDate"
+                              name="dates2"
+                              [min]="todayDate"
+                              #endsDates="ngModel"
+                              required
+                              [ngClass]="{ 'is-invalid': paidForm.submitted && endsDates.errors }"
+                            />
+                            <owl-date-time #dt1></owl-date-time>
+                            <div *ngIf="paidForm.submitted && endsDates.errors" class="invalid-feedback">
+                              <div *ngIf="endsDates.errors['required']">End Date & Time is Required</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mt-3">
+                        <h6>ADVANCE SETTINGS</h6>
+                        <div class="col-md-4">
+                          <div class="form-group mb-3">
+                            <label for="validationCustom01" class="form-label">Visibility</label>
+                            <select class="form-select" id="validation00" [(ngModel)]="regisForm.visibilty" name="dates2">
+
+                              <option value="" disabled>Choose...</option>
+                              <option value="HIDDEN">HIDDEN</option>
+                              <option value="CUSTOM SCHEDULE">CUSTOM SCHEDULE</option>
+                              <option value="VISIBLE">VISIBLE</option>
+                              <option value="HIDDEN WHEN NOT ON SALE">HIDDEN WHEN NOT ON SALE</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="error-class-backend" *ngIf="errorMessagePaid">
+                        <i class="fa-solid fa-circle-exclamation"></i> {{ errorMessagePaid }}.
+                      </p>
+                      <div class="row adds">
+                        <div class="col-md-4">
+                          <button type="submit" class="btn_add-ticket">
+                            Add Ticket <i class="fa fa-spinner fa-spin" *ngIf="imgloadingPaid"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                  <div class="form-submit">
+                    <form autocomplete="off" #freeForm="ngForm" (ngSubmit)="freeForm.form.valid && addFreeForm(freeForm)">
+                      <div class="row mt-4">
+                        <div class="col-md-6">
+                          <div class="form-group mb-3">
+                            <label for="validationCustom01" class="form-label">Ticket Name</label>
+                            <input
+                              autocomplete="false"
+                              type="text"
+                              class="form-control extra-width"
+                              id="free-ticket"
+                              placeholder="Enter Ticket Name "
+                              [(ngModel)]="regisForm.ticketName"
+                              name="ticket"
+                              #TicketName="ngModel"
+                              required
+                              [ngClass]="{ 'is-invalid': freeForm.submitted && TicketName.errors }"
+                            />
+                            <div *ngIf="freeForm.submitted && TicketName.errors" class="invalid-feedback">
+                              <div *ngIf="TicketName.errors['required']">Ticket name is Required</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <div class="form-group mb-3">
+                            <label for="validationCustom01" class="form-label">Available Quantity</label>
+                            <input
+                              autocomplete="false"
+                              type="number"
+                              class="form-control extra-width"
+                              id="available-quant"
+                              placeholder="Enter Quantity "
+                              [(ngModel)]="regisForm.noOfTickets"
+                              name="tickets"
+                              #quants="ngModel"
+                              required
+                              [ngClass]="{ 'is-invalid': freeForm.submitted && quants.errors }"
+                            />
+                            <div *ngIf="freeForm.submitted && quants.errors" class="invalid-feedback">
+                              <div *ngIf="quants.errors['required']">Quantity is Required</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mt-3">
+                        <div class="col-md-6">
+                          <div class="form-group mb-3">
+                            <label for="validationCustom01" class="form-label">Sales Start Date & Time</label>
+                            <input
+                              [owlDateTimeTrigger]="dt2"
+                              [owlDateTime]="dt2"
+                              class="form-control"
+                              placeholder="Select Date & Time"
+                              [(ngModel)]="regisForm.salesStartDate"
+                              name="dates1"
+                              [min]="todayDate"
+                              #salesStartDate="ngModel"
+                              required
+                              [ngClass]="{ 'is-invalid': freeForm.submitted && salesStartDate.errors }"
+                            />
+                            <owl-date-time #dt2></owl-date-time>
+                            <div *ngIf="freeForm.submitted && salesStartDate.errors" class="invalid-feedback">
+                              <div *ngIf="salesStartDate.errors['required']">Start Date & Time is Required</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group mb-3">
+                            <label for="validationCustom01" class="form-label">Sales End Date & Time</label>
+                            <input
+                              [owlDateTime]="dt3"
+                              [owlDateTimeTrigger]="dt3"
+                              placeholder="Select Date & Time"
+                              class="form-control"
+                              [(ngModel)]="regisForm.salesEndDate"
+                              name="dates2"
+                              [min]="todayDate"
+                              #endsDates="ngModel"
+                              required
+                              [ngClass]="{ 'is-invalid': freeForm.submitted && endsDates.errors }"
+                            />
+                            <owl-date-time #dt3></owl-date-time>
+                            <div *ngIf="freeForm.submitted && endsDates.errors" class="invalid-feedback">
+                              <div *ngIf="endsDates.errors['required']">End Date & Time is Required</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mt-3">
+                        <h6>ADVANCE SETTINGS</h6>
+                        <div class="col-md-4">
+                          <div class="form-group mb-3">
+                            <label for="validationCustom01" class="form-label">Visibility</label>
+                            <select class="form-select" id="validationCustom04" [(ngModel)]="regisForm.visibilty" name="dates2">
+
+                              <option value="" disabled>Choose...</option>
+                              <option value="HIDDEN">HIDDEN</option>
+                              <option value="CUSTOM SCHEDULE">CUSTOM SCHEDULE</option>
+                              <option value="VISIBLE">VISIBLE</option>
+                              <option value="HIDDEN WHEN NOT ON SALE">HIDDEN WHEN NOT ON SALE</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="error-class-backend" *ngIf="errorMessageFree">
+                        <i class="fa-solid fa-circle-exclamation"></i> {{ errorMessageFree }}.
+                      </p>
+                      <div class="row adds">
+                        <div class="col-md-4">
+                          <button type="submit" class="btn_add-ticket">
+                            Add Ticket <i class="fa fa-spinner fa-spin" *ngIf="imgloadingFree"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  
+
+    <!-- nft start -->
+    <div class="row mt-3">
+      <div class="col-md use">
+        <div class="nft">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              (click)="myFunction3()"
+              name="acessType"
+              type="radio"
+              value="NFT_BASED"
+              formControlName="acessType"
+              [checked]="eventData?.acessType === 'NFT_BASED'"
+              [(ngModel)]="acessType"
+              required
+            />
+            <span> NFT Based Access</span>
+            <p class="link">
+              Anyone who Registers themselves can access the event.They will receive the event link after registration.
+            </p>
+            <div class="row" [ngStyle]="{ display: nftStyle }">
+              <h6 class="ticketUpdate">Select NFT Ticket Type (Need to update content here)</h6>
+              <form #nftForm="ngForm" (ngSubmit)="nftForm.form.valid && addNft(nftForm)">
+                <div class="row">
+                  <div class="col-md-3 existing">
+                    <button type="button" value="Existing_Nft_Collection">Existing NFT collection</button>
+                  </div>
+                  <!-- <div class="col-md-3 existing">
+            <button type="button">Create your own NFTs</button>
+          </div>
+          <div class="col-md-3 existing">
+            <button type="button">Pre-generated NFTs</button>
+          </div> -->
+                </div>
+                <div class="row">
+                  <div class="row blockchain">
+                    <div class="col-md-6" ngModelGroup="nftDataForm">
+                      <label class="label" for="blockchain">Choose Blockchain</label> <br />
+                      <select
+                        class="form-select"
+                        [(ngModel)]="nftDataForm.blockChain"
+                        #blockChain="ngModel"
+                        name="choose"
+                        id="cooose"
+                        [ngClass]="{ 'is-invalid': nftForm.submitted && blockChain.errors }"
+                        required
+                      >
+                        <option value="" disabled selected>Select Blockchain</option>
+                        <option value="POLYGON">POLYGON</option>
+                      </select>
+                      <div *ngIf="nftForm.submitted && blockChain.errors" class="invalid-feedback">
+                        <div *ngIf="blockChain.errors['required']">Please select blockchain</div>
+                      </div>
+                    </div>
+                    <div class="col-md-6" ngModelGroup="nftDataForm">
+                      <label class="label" for="smart">Smart Contract Address</label><br />
+                      <input
+                        class="form-control extra-width"
+                        type="text"
+                        [(ngModel)]="nftDataForm.contractAddress"
+                        #contractAddress="ngModel"
+                        [ngClass]="{ 'is-invalid': nftForm.submitted && contractAddress.errors }"
+                        name="contractAddress"
+                        id=""
+                        placeholder="Enter Smart Address"
+                        required
+                      />
+                      <div *ngIf="nftForm.submitted && contractAddress.errors" class="invalid-feedback">
+                        <div *ngIf="contractAddress.errors['required']">Smart Contact Address is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="moralisMessage">
+                    <div class="col-md-3"><h6 class="ticketUpdate">Name</h6><label>{{moralisName}}</label></div>
+                    <!-- <div class="col-md-3"><h6 class="ticketUpdate">Symbol</h6><label>{{symbol}}</label></div> -->
+                  </div>
+                  <div class="row blockchain">
+                    <!-- <div class="col-md">
+            <h5 class="collection">Choose collection Type</h5>
+            <div class="checkbox">
+            <div class="pleaseChoose">
+              <input
+              class="cooseCollection form-check-input"
+              name="acessType"
+              type="radio"
+              required
+            />
+            <span class="cooseCollection">ERC-721</span>
+            </div>
+            <div class="pleaseChoose">
+              <input
+              class="cooseCollection form-check-input"
+              name="acessType"
+              type="radio"
+              required
+            />
+            <span class="cooseCollection" >ERC-1155</span>
+            </div>
+             </div>
+          </div> -->
+                    <div class="col-md">
+                      <h5 class="collection">Choose Valid Token IDs</h5>
+                      <div class="checkbox">
+                        <div class="pleaseChoose" >
+                          <input class="cooseCollection form-check-input"
+                                 name="tokenId"
+                                 value="All"
+                                 [(ngModel)]="nftDataForm.tokenId"
+                                 #tokenId="ngModel"
+                                 type="radio"
+                                 required />
+                          <span class="cooseCollection">All</span>
+                        </div>
+                        <div class="pleaseChoose" >
+                          <input class="cooseCollection form-check-input"
+                                 name="tokenId"
+                                 value="Enter_Range"
+                                 [(ngModel)]="nftDataForm.tokenId"
+                               
+                                 #tokenId="ngModel"
+                                 type="radio"
+                                 required />
+                          <span class="cooseCollection">Enter Range</span>
+                        </div>
+                        <div class="pleaseChoose" >
+                          <input class="cooseCollection form-check-input"
+                                 name="tokenId"
+                                 [(ngModel)]="nftDataForm.tokenId"
+                                 #tokenId="ngModel"
+                                 value="UPLOAD_CSV"
+                                 type="radio"
+                                 required />
+                          <span class="cooseCollection">Upload csv</span>
+                        </div>
+                        
+                        <div *ngIf="nftForm.submitted && tokenId.errors" class="invalid-feedback">
+                          <div *ngIf="tokenId.errors['required']">Token ID  is required</div>
+                        </div>
+                        
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p class="error-class-backend" *ngIf="errorMessageFree">
+                  <i class="fa-solid fa-circle-exclamation"></i> {{ errorMessageFree }}.
+                </p>
+              
+                <div class="row">
+                  <div class="col-md-3 existing1">
+                    <button type="submit" class="btn_add-ticket">
+                      Add <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- <div class="row">
+          <div class="col-md-3 existing1">
+         
+            <button type="submit">
+              Save <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+            </button>
+          </div>
+          </div> -->
+                <!-- <div class="pleaseChoose">
+          <input
+          class="Own form-check-input"
+          name="acessType"
+          type="radio"
+          required
+        />
+        <span class="Own">Use your own Art for NFT tickets</span>
+        </div>
+        <div class="pleaseChoose">
+          <input
+          class="Own form-check-input"
+          name="acessType"
+          type="radio"
+          required
+        />
+        <span class="Own">Generate New Art for NFT tickets</span>
+        </div> -->
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- nft End -->
+    <div class="row d-flex justify-content-end mt-5">
+      <p class="error-msg" [ngStyle]="{ display: errorStyle }" *ngIf="accessForm.controls['acessType'].errors?.['required']">
+        <i class="fa-solid fa-circle-exclamation"></i> Please select any option above!
+      </p>
+      <!-- <div class="reset col-md-3">
+      <button type="reset" class="my_reset" style="cursor: pointer">Reset</button>
+    </div> -->
+      <div class="col-md-4 d-flex justify-content-end">
+        <button type="button" class="btn_myfour" (click)="save()">
+          Save & Next <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

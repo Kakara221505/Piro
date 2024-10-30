@@ -1,0 +1,192 @@
+<div class="row mx-0">
+  <div class="col-md-6">
+    <div class="row py-4">
+      <div class="col-md-2"></div>
+      <div class="col-md-10 piroImg">
+        <img src="../../assets/images/PiroSpacelogo.svg" alt="" class="piro-img" (click)="imgClick()" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-10" [ngStyle]="{ display: formStyle }">
+        <!-- <div class="backButton">
+          <p class="back"> <i class="fa-solid fa-chevron-left"  style="font-size: 0.73em;"></i> Back</p>
+        </div> -->
+        <div class="col-md">
+          <p class="host-event">Login into your account</p>
+        </div>
+
+        <div class="col-md-7">
+          <div class="form-submit">
+            <form autocomplete="off" [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-lg-12 flex-class">
+                  <div class="form-group mb-3">
+                    <input
+                      autocomplete="false"
+                      type="email"
+                      class="form-control extra-width"
+                      placeholder="Enter your email address *"
+                      formControlName="email"
+                      data-toggle="tooltip"
+                      data-trigger="hover"
+                      data-placement="top"
+                      required
+                      data-original-title=""
+                      title=""
+                      pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                      [email]="true"
+                      (keyup)="keyFunc($event)"
+                    />
+
+                    <div class="email-error mt-1" *ngIf="submitted && f['email'].invalid">
+                      <p *ngIf="f['email'].errors && f['email'].errors['required']" class="erros-valid">
+                        <i class="fa-solid fa-circle-exclamation"></i> Email is required
+                      </p>
+                      <p *ngIf="f['email'].errors?.['email']" class="erros-valid">
+                        <i class="fa-solid fa-circle-exclamation"></i> Enter a valid Email Address
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <p class="error-class-backend" *ngIf="errorMessage">
+                  <i class="fa-solid fa-circle-exclamation"></i> {{ errorMessage }}
+                </p>
+              </div>
+              <div class="row">
+                <div class="col-md flex-class">
+                  <div class="form-actions">
+                    <button type="submit" class="btn_mythree" [disabled]="btnState">
+                      Continue<i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-7 strike">
+          <span>OR</span>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="login-para">
+              <p>Login with your social media account or email address</p>
+            </div>
+          </div>
+        </div>
+        <div class="row socialIconsShow">
+          <div class="col google">
+            <button type="button" class="btn btn-google d-flex">
+              <img src="../../assets/images/google.png" alt="" class="mx-1" /> Google
+            </button>
+          </div>
+          <div class="col facbook">
+            <button type="button" class="btn btn-facebook d-flex">
+              <img src="../../assets/images/facebook.png" alt="" class="mx-1" /> Facebook
+            </button>
+          </div>
+        </div>
+        <div class="col-md-7 strike">
+          <span>OR</span>
+        </div>
+        <div class="row metapara">
+          <div class="col-md-12">
+            <div class="login-para connect">
+              <p>Connect with your MetaMask Wallet</p>
+            </div>
+          </div>
+        </div>
+        <div class="row socialIconsShow">
+          <div class="col metamask">
+            <button type="button" class="btn btn-metamask d-flex" (click)="meetaMask()">
+              <img src="../../../assets/images/metramask.png" alt="" class="mx-1"/>
+              <span>Connect with MetaMask</span>
+            </button>
+          </div>
+        </div>
+        <div class="not-account-para">
+          <p>Don't have an account? <a href="signup" class="create-link">Create one</a></p>
+        </div>
+      </div>
+      <div class="col-md-10 otpShows" [ngStyle]="{ display: otpStyle }">
+        <div>
+          <p class="back" (click)="getBack()"><i class="fa-solid fa-chevron-left"></i> Back</p>
+        </div>
+        <div>
+          <p class="otp-para">Received a verification code?</p>
+          <p class="otp-text">
+            We've sent an otp on your registered email address <br /><b>{{ emails }}</b> . Enter the 6-digit code.
+          </p>
+        </div>
+        <div class="col-md-11 mt-5">
+          <form autocomplete="off" [formGroup]="otpForm" (ngSubmit)="loginOtpVerify()">
+            <div class="form-group otp">
+              <ng-otp-input
+                (onInputChange)="onOtpChange($event)"
+                formControlName="emailOtp"
+                ngDefaultControl
+                [config]="{ length: 6, allowNumbersOnly: true }"
+                (keyup)="keyFuncOtp($event)"
+                
+              >
+              </ng-otp-input>
+              <div class="mt-1" *ngIf="submitted && o['emailOtp'].invalid">
+                <p *ngIf="o['emailOtp'].errors && o['emailOtp'].errors['required']" class="erros-valid">
+                  <i class="fa-solid fa-circle-exclamation"></i> Please Enter 6 Digit Code.
+                </p>
+              </div>
+
+              <p class="not-otp-para">Didn't receive the code? <a class="create-link-resend" (click)="resendOtp()">Resend</a></p>
+            </div>
+            <p class="error-class-backend-1" *ngIf="errorMessageVerify">
+              <i class="fa-solid fa-circle-exclamation"></i> {{ errorMessageVerify }}
+            </p>
+            <div class="form-actions">
+              <button type="submit" class="btn_mythree" [disabled]="btnState2">
+                Login <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 desktopImg px-0">
+    <img src="../../assets/images/Signin.png" alt="" class="demo-img" />
+  </div>
+
+
+
+  <div class="">
+    <div class="container iPadImg">
+      <img src="../../assets/images/Signin.png" alt="" class="demo-img" />
+    </div>
+  </div>
+</div>
+
+<!-- popup -->
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{ display: displayStyleModel }">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content2">
+      <div class="row">
+        <div class="col-md-12 success">
+          <div class="img-success">
+            <img src="../../../assets/images/polygon.webp" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-body para">
+        <p class="contact">You are not connected to Polygon Testnet, please switch your network to continue</p>
+      </div>
+      <div class="btn-done">
+        <button type="button" class="btn btn-down" (click)="handleSwitchChain()">
+          <span class="metamask"> Switch Network and Sign</span></button>
+      </div>
+      
+    </div>
+  </div>
+</div>

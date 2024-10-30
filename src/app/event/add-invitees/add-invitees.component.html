@@ -1,0 +1,381 @@
+<div class="row boxs">
+  <div class="">
+    <h4 class="invite-title">Add Invitees</h4>
+    <p>Add the invitees for your event.</p>
+  </div>
+  <hr />
+  <div class="row">
+    <ul class="nav nav-pills" id="pills-tab" role="tablist">
+      <li class="nav-item mx-2" role="presentation">
+        <button
+          class="nav-link active"
+          id="pills-home-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-home"
+          type="button"
+          role="tab"
+          aria-controls="pills-home"
+          aria-selected="true"
+        >
+          Add Manually
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="pills-profile-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-profile"
+          type="button"
+          role="tab"
+          aria-controls="pills-profile"
+          aria-selected="false"
+        >
+          Bulk Upload(CSV)
+        </button>
+      </li>
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+      <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+        <div class="row mt-4">
+          <div class="heading">
+            <p>Add the invitees by adding their Name and Email address.</p>
+          </div>
+          <form autocomplete="off" #addInvitees="ngForm" (ngSubmit)="addInvitees.form.valid && addInvite(addInvitees)">
+            <div class="row">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group mb-3">
+                    <input
+                      autocomplete="false"
+                      type="text"
+                      class="form-control extra-width"
+                      placeholder="Invitee Name *"
+                      [(ngModel)]="roles.userName"
+                      data-toggle="tooltip"
+                      data-trigger="hover"
+                      data-placement="top"
+                      required
+                      data-original-title=""
+                      title=""
+                      name="namess"
+                      #userNamess="ngModel"
+                      [ngClass]="{ 'is-invalid': addInvitees.submitted && userNamess.errors }"
+                      maxlength="15"
+                    />
+                    <div *ngIf="addInvitees.submitted && userNamess.errors" class="invalid-feedback">
+                      <div *ngIf="userNamess.errors['required']">Invitee Name is required</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group mb-3">
+                    <input
+                      autocomplete="false"
+                      type="email"
+                      class="form-control extra-width"
+                      placeholder="Enter your Email Address *"
+                      [(ngModel)]="roles.email"
+                      data-toggle="tooltip"
+                      data-trigger="hover"
+                      data-placement="top"
+                      required
+                      data-original-title=""
+                      title=""
+                      pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                      [email]="true"
+                      name="emails"
+                      #userEmails="ngModel"
+                      [ngClass]="{ 'is-invalid': addInvitees.submitted && userEmails.errors }"
+                      (keyup)="keyFunc($event)"
+                    />
+                    <div *ngIf="addInvitees.submitted && userEmails.errors" class="invalid-feedback">
+                      <div *ngIf="userEmails.errors['required']">Email is required</div>
+                      <div *ngIf="userEmails.errors['pattern']">Enter Valid Email</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p class="error-class-backend" *ngIf="errorMessage">
+                <i class="fa-solid fa-circle-exclamation"></i> {{ errorMessage }}.
+              </p>
+              <div class="row">
+                <div class="col-md-6 adds">
+                  <button type="submit" class="btn_mythree">
+                    Add Invitees <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="row mt-4">
+              <h6 class="org-head">Added Attendees</h6>
+              <div class="details">
+                <div class="row mb-2 mt-2" *ngFor="let org of attendes; let i = index">
+                  <div class="col-md-4 colors">
+                    <p style="margin-bottom: 0rem">
+                      <b> {{ org.fullName }}</b>
+                    </p>
+                    <p>{{ org.email }}</p>
+                  </div>
+                  <div class="col-md-1 colors-del">
+                    <div class="icon">
+                      <p data-bs-toggle="modal" data-bs-target="#staticBackdropOrg" (click)="deleteAttende(org.fullName, org.id)">
+                        <i class="fa-sharp fa-solid fa-trash"></i>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p *ngIf="noTotalsAttendes === 0" class="notFound mt-2">There’re No Attendees Added!</p>
+            </div> -->
+            <div class="row mt-4">
+              <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link panding active" id="pills-attendes-tab pills-pending-tab" data-bs-toggle="pill" data-bs-target="#pills-attendes" type="button" role="tab" aria-controls="pills-attendes" aria-selected="true">Added Attendees</button>
+                </li>
+                <li class="nav-item mx-3" role="presentation" >
+                  <button class="nav-link panding" id="pills-pending-tab csv " data-bs-toggle="pill" data-bs-target="#pills-pending" type="button" role="tab" aria-controls="pills-pending" aria-selected="false">Pending Approval</button>
+                </li>
+
+              </ul>
+              <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-attendes" role="tabpanel" aria-labelledby="pills-attendes-tab">
+                  <div class="details">
+                    <div class="row mb-2 mt-2" *ngFor="let org of attendes; let i = index">
+                      <div class="col-md-6 colors">
+                        <p style="margin-bottom: 0rem">
+                          <b> {{ org.fullName }}</b>
+                        </p>
+                        <p>{{ org.email }}</p>
+                      </div>
+                      <div class="col-md-1 colors-del">
+                        <div class="icon">
+                          <p data-bs-toggle="modal" data-bs-target="#staticBackdropOrg" (click)="deleteAttende(org.fullName, org.id)">
+                            <i class="fa-sharp fa-solid fa-trash"></i>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="row views-all" *ngIf="noTotalsAttendes !== 0 && noTotalsAttendes > 3">
+                    <div class="col-md-5 d-flex justify-content-center">
+                      <button class="btn_joins" data-bs-toggle="modal" data-bs-target="#attendes">View All</button>
+                    </div>
+                  </div> -->
+                  <p *ngIf="noTotalsAttendes === 0" class="notFound mt-2">There’re No Attendees Added!</p>
+                </div>
+                <div class="tab-pane fade" id="pills-pending" role="tabpanel" aria-labelledby="pills-pending-tab">
+                  <div class="details">
+                    <div class="row mb-2 mt-2" *ngFor="let org of pendingLists; let i = index">
+                      <div class="col-md-6 colors">
+                        <p style="margin-bottom: 0rem">
+                          <b> {{ org.userName }}</b>
+                        </p>
+                        <p>{{ org.userEmail }}</p>
+                      </div>
+                      <!-- <div class="col-md-1 colors-del">
+                        <div class="icon">
+                          <p data-bs-toggle="modal" data-bs-target="#staticBackdropOrg" (click)="deleteAttende(org.fullName, org.id)">
+                            <i class="fa-sharp fa-solid fa-trash"></i>
+                          </p>
+                        </div>
+                      </div> -->
+
+                      <div class="col-md-1 colors-del">
+                        <div class="icon">
+                          <i class="fa-sharp fa-solid fa-check"></i> 
+                          <p class="approve" data-bs-toggle="modal" data-bs-target="#staticBackdropOrg1" (click)="approvedAttende('APPROVED', org.id)">
+                            Approved
+                          </p>
+                          </div>
+                          </div>
+                          <div class="col-md-1 colors-del">
+                            <div class="icon">
+                              <i class="fa-sharp fa-solid fa-times "></i>
+                          <p class="decline" data-bs-toggle="modal" data-bs-target="#staticBackdropOrg" (click)="approvedAttende(org.fullName, org.id)">
+                            Decline
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <p *ngIf="noPendingElement === 0" class="notFound mt-2">There’re No Request!</p>
+                </div>
+
+              </div>
+            </div>
+            <hr class="mt-4" />
+
+            <div class="row">
+              <form #eventreminderForm="ngForm" (ngSubmit)="eventreminderForm.form.valid && saveInvitees(eventreminderForm)">
+                <div class="heading">
+                  <h4 class="invite-title">Event Reminder</h4>
+                  <p>Send reminder to all guests just before the event.</p>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group mb-3">
+                      <select
+                        class="form-select"
+                        id="validationCustomAccess"
+                        required
+                        [(ngModel)]="reminder.eventReminderId"
+                        name="eventRemineders"
+                        #remindersEvent="ngModel"
+                        [ngClass]="{ 'is-invalid': eventreminderForm.submitted && remindersEvent.errors }"
+                      >
+                        <option disabled value="null" selected>Select Event Reminder</option>
+                        <option [value]="reminder.id" *ngFor="let reminder of reminders; let i = index">
+                          {{ reminder.eventReminder | titlecase }}
+                        </option>
+                      </select>
+                      <div *ngIf="eventreminderForm.submitted && remindersEvent.errors" class="invalid-feedback">
+                        <div *ngIf="remindersEvent.errors['required']">Please Select Event Reminder</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row d-flex justify-content-end mb-2">
+                  <!-- <div class="col-md-3 reset">
+                  <button type="submit" class="btn_reset" >Reset</button>
+                </div> -->
+                  <div class="col-md-4 d-flex justify-content-end">
+                    <button type="submit" class="btn_myfour">
+                      Save & Next <i class="fa fa-spinner fa-spin" *ngIf="imgloading1"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+        <form>
+          <div class="row mt-4">
+            <div class="heading">
+              <p>Add the invitees by uploading the list.</p>
+            </div>
+            <div class="row mt-2 box">
+              <div class="col-md-8 upload-section">
+                <!-- <div class="head">
+                  <h5 class="mt-2">Upload CSV file.</h5>
+                </div> -->
+                <div class="col-md-12 mt-4 mb-4" style="text-align: center">
+                  <i class="fa fa-upload" aria-hidden="true"></i>
+                  <p><a class="head" (click)="fileUploadi.click()">Upload CSV file.</a></p>
+                  <input
+                    style="display: none"
+                    type="file"
+                    (change)="handleFileInput1($event)"
+                    #fileUploadi
+                    id="files"
+                    accept=".csv"
+                  />
+                  <!-- <p *ngIf="uploadImgs" ><i class="fa fa-spinner fa-spin"></i> Uploading ...</p> -->
+
+                  <!-- <input type="file" id="files" accept=".csv" #fileInput1 name="file" (change)="handleFileInput($event)" /> -->
+                </div>
+              </div>
+              <div class="col-md-3"></div>
+            </div>
+            <p class="error-class-backend mt-2" *ngIf="errorMessageCsv">
+              <i class="fa-solid fa-circle-exclamation"></i> {{ errorMessageCsv }}.
+            </p>
+            <p class="mt-2"><b>Note:</b> 1st column should be your name and second should be your email address.</p>
+          </div>
+          <hr class="mt-4" />
+          <div class="row">
+            <form #eventreminderForm="ngForm" (ngSubmit)="eventreminderForm.form.valid">
+              <div class="heading">
+                <h4 class="invite-title">Event Reminder</h4>
+                <p>Send reminder to all guests just before the event.</p>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group mb-3">
+                    <select
+                      class="form-select"
+                      id="validationCustomAccess"
+                      required
+                      [(ngModel)]="reminder.eventReminderId"
+                      name="eventRemineders"
+                      #remindersEvent="ngModel"
+                      [ngClass]="{ 'is-invalid': eventreminderForm.submitted && remindersEvent.errors }"
+                    >
+                      <option disabled value="null" selected>Select Event Reminder</option>
+                      <option [value]="reminder.id" *ngFor="let reminder of reminders; let i = index">
+                        {{ reminder.eventReminder | titlecase }}
+                      </option>
+                    </select>
+                    <div *ngIf="eventreminderForm.submitted && remindersEvent.errors" class="invalid-feedback">
+                      <div *ngIf="remindersEvent.errors['required']">Please Select Event Reminder</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <div class="row d-flex justify-content-end mb-2">
+              <!-- <div class="col-md-3 reset">
+              <button type="submit" class="btn_reset" style="cursor: pointer">Reset</button>
+            </div> -->
+              <div class="col-md-4 d-flex justify-content-end">
+                <button type="submit" class="btn_myfour" (click)="saveReminder()">
+                  Save & Next <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="staticBackdropOrg"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body delete">
+        Are You sure you want to remove <b>{{ confirmMessage }}</b> from Invitees list?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary yes" data-bs-dismiss="modal" (click)="yes()">Yes, Remove It</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="staticBackdropOrg1"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body delete">
+        Are You sure you want to approve this invitees ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary yes" data-bs-dismiss="modal" (click)="yes1()">Yes, Remove It</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

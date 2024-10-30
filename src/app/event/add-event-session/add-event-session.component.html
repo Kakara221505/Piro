@@ -1,0 +1,727 @@
+<!-- If user has no sessions -->
+<div class="container boxs" *ngIf="pageAction == 'no-session'">
+  <div class="row">
+    <h4 class="event-title">Add Event Sessions</h4>
+    <p class="sessions">You can add different sessions for your events and assign different speaker accordingly.</p>
+  </div>
+  <hr class="lines" />
+  <div class="row">
+    <div class="details">
+      <div class="row mt-5">
+        <div class="col-md-12 mt-4">
+          <div class="logo">
+            <img src="../../assets/images/asession.png" alt="" class="session-img" />
+          </div>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-md-12 d-flex justify-content-center">
+          <p class="session-text">You don’t have any sessions yet, If you want to add sessions in your event, click on <b>Add Session</b> button.</p>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <button type="button" class="btn_add" (click)="addEvents()">
+            Add Session <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+          </button>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-end mt-5">
+        <!-- <div class="col-md-3 reset">
+          <button type="submit" class="btn_reset">Reset</button>
+        </div> -->
+        <div class="col-md-4">
+          <button type="submit" class="btn_mythree" (click)="publish2()">
+            Preview & Publish <i class="fa fa-spinner fa-spin" *ngIf="imgloadingPub"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- If user has no session end -->
+
+<!-- Session list -->
+<div class="container boxs" *ngIf="pageAction == 'session-list'">
+  <div class="row">
+    <h4 class="event-title">Add Event Sessions</h4>
+    <p class="sessions">You can add different sessions for your events and assign different speaker accordingly.</p>
+  </div>
+  <hr class="lines" />
+  <div class="details mt-5">
+    <div class="row mb-4" *ngFor="let org of sessions; let i = index">
+      <div class="row">
+        <div class="col-md-3 dates">
+          <div class="row mt-3">
+            <div class="dates">
+              <p class="dates">{{ org.startSession | date : "MMM" }} {{ org.startSession | date : "d" }}</p>
+            </div>
+            <div class="time">
+              <p class="dates-time">{{ org.startSession | date : "shortTime" }} - {{ org.endSession | date : "shortTime" }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8 colors">
+          <div class="row">
+            <div class="col-md d-flex">
+              <p class="org-title">
+                <b> {{ org.title }}</b>
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md d-flex">
+              <p class="marg">{{ org.fullName }} <span class="opt-1">|</span> Stage {{ org.stages }}</p>
+            </div>
+            <div class="col-md-2 colors-icon">
+              <div class="dropdown">
+                <button
+                  class="btn dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton1"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a class="dropdown-item" (click)="editSession(org.id)">Edit</a></li>
+                  <li><a class="dropdown-item" (click)="deleteSession(org.id)">Delete</a></li>
+                </ul>
+              </div>
+
+              <!-- <i class="fa fa-ellipsis-v" aria-hidden="true"></i> -->
+              <div class="icon">
+                <i class="bi bi-three-dots-vertical"></i>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 d-flex descriptions">
+              <p class="emails">{{ org.sessionDescription }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <button class="add_session" (click)="addMore()">+ Add More Session</button>
+    </div>
+    <div class="row d-flex justify-content-end mt-5">
+      <div class="col-md-3 reset">
+        <button type="submit" class="btn_reset">Reset</button>
+      </div>
+      <div class="col-md-4 reset">
+        <button type="submit" class="btn_mythree" (click)="publish()">
+          Preview & Publish <i class="fa fa-spinner fa-spin" *ngIf="imgloadingPub"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Session list end -->
+
+<!-- Add new session -->
+<div class="container boxs" *ngIf="pageAction == 'session-add'">
+  <div class="row">
+    <h4 class="event-title">Add Event Sessions</h4>
+    <p class="sessions">You can add different sessions for your events and assign different speaker accordingly.</p>
+  </div>
+  <hr class="lines" />
+  <div class="row mt-5">
+    <h4 class="event-title">Event Sessions</h4>
+  </div>
+  <div class="row">
+    <form autocomplete="off" #addSessionForm="ngForm" (ngSubmit)="addSessionForm.form.valid && Save(addSessionForm)">
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <div class="form-group mb-3">
+            <label for="validationCustom01" class="form-label">Session Title</label>
+            <input
+              autocomplete="false"
+              type="text"
+              class="form-control extra-width"
+              id="session-title"
+              placeholder="Enter Session Title"
+              [(ngModel)]="addSession.title"
+              required
+              name="title"
+              #titles="ngModel"
+              [ngClass]="{ 'is-invalid': addSessionForm.submitted && titles.errors }"
+              maxlength="50"
+            />
+            <span class="opt-limit">Max character limit : 50</span>
+            <div *ngIf="addSessionForm.submitted && titles.errors" class="invalid-feedback">
+              <div *ngIf="titles.errors['required']">Session Title is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="validationCustom01" class="form-label">Session Start Date & Time</label>
+          <div class="timers">
+            <div class="form-group mb-3 extra-group margin-group">
+              <input
+                [owlDateTimeTrigger]="dt"
+                [owlDateTime]="dt"
+                class="form-control"
+                placeholder="Select Start Date"
+                [(ngModel)]="addSession.sessionStartDate"
+                name="sessionStart"
+                #sessionstarts="ngModel"
+                [ngClass]="{ 'is-invalid': addSessionForm.submitted && sessionstarts.errors }"
+                required
+                [min]="myToday"
+              
+                (dateTimeChange)="onStartChange($event)"
+              />
+              <!-- [min]="eventStartDate" -->
+              <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+              <div *ngIf="addSessionForm.submitted && sessionstarts.errors" class="invalid-feedback">
+                <div *ngIf="sessionstarts.errors['required']"> Start Date is required</div>
+              </div>
+            </div>
+            <div class="form-group mb-3 extra-group">
+              <ng-select
+                [selectableGroup]="true"
+                [closeOnSelect]="false"
+                bindLabel="name"
+                bindValue="id"
+                [(ngModel)]="sessionStartTime"
+                [multiple]="false"
+                name="sessionStartTime"
+                placeholder="Select Start Time"
+                [required]="true"
+                #startTime="ngModel"
+                [clearable]="false"
+                [closeOnSelect]="true"
+                [ngClass]="{ 'is-invalid': addSessionForm.submitted && startTime.errors }"
+                (ngModelChange)="onSelected($event)"
+
+              >
+                <ng-option [value]="times.value" *ngFor="let times of timers; let i = index">
+                  {{ times.name }}
+                </ng-option>
+              </ng-select>
+              <div *ngIf="addSessionForm.submitted && startTime.errors" class="invalid-feedback">
+                <div *ngIf="startTime.errors['required']">Select Start Time</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="validationCustom01" class="form-label">Session End Date & Time </label>
+          <div class="timers">
+            <div class="form-group mb-3 extra-group margin-group">
+              <input
+                [owlDateTime]="dt1"
+                [owlDateTimeTrigger]="dt1"
+                placeholder="Select End Date"
+                class="form-control"
+                [(ngModel)]="addSession.sessionEndDate"
+                name="sessionEndDate"
+                #endDtimes="ngModel"
+                [ngClass]="{ 'is-invalid': addSessionForm.submitted && endDtimes.errors }"
+                required
+                [max]="eventEndDate"
+                [min]="eventStartDate"
+                (dateTimeChange)="onStartChange2($event)"
+              />
+              <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+              <div *ngIf="addSessionForm.submitted && endDtimes.errors" class="invalid-feedback">
+                <div *ngIf="endDtimes.errors['required']">End Date is required</div>
+              </div>
+            </div>
+            <div class="form-group mb-3 extra-group">
+              <ng-select
+                [selectableGroup]="true"
+                [closeOnSelect]="false"
+                bindLabel="name"
+                bindValue="id"
+                [(ngModel)]="sessionEndTime"
+                [multiple]="false"
+                name="sessionEndTime"
+                placeholder="Select End Time"
+                [required]="true"
+                #endMinutes="ngModel"
+                [clearable]="false"
+                [closeOnSelect]="true"
+                [ngClass]="{ 'is-invalid': addSessionForm.submitted && endMinutes.errors }"
+              >
+                <ng-option [value]="" disabled selected >Choose End Time </ng-option>
+                <ng-option [value]="times.values" *ngFor="let times of timerEnd; let i = index">
+                  {{ times.name }}
+                </ng-option>
+              </ng-select>
+              <div *ngIf="addSessionForm.submitted && endMinutes.errors" class="invalid-feedback">
+                <div *ngIf="endMinutes.errors['required']">Select End Time</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label for="validationCustom01" class="form-label">Select: Speaker & Stages </label>
+            <ng-select
+              [selectableGroup]="true"
+              [closeOnSelect]="false"
+              bindLabel="name"
+              bindValue="id"
+              [multiple]="true"
+              name="stages"
+              placeholder="Select Speakers"
+              [required]="true"
+              [(ngModel)]="userEventId"
+              name="speaker"
+              #users="ngModel"
+              [ngClass]="{ 'is-invalid': addSessionForm.submitted && users.errors }"
+              required
+            >
+              <ng-option [value]="speaker.id" *ngFor="let speaker of speakers; let i = index">
+                {{ speaker.fullName }}
+              </ng-option>
+            </ng-select>
+            <div *ngIf="addSessionForm.submitted && users.errors" class="invalid-feedback">
+              <div *ngIf="users.errors['required']">Please Select Speaker</div>
+            </div>
+          </div>
+
+          <p class="add-speaker-more" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Add More Speakers</p>
+        </div>
+        <!-- <div class="col-md-2 assign">
+          <b>Assign To</b>
+        </div> -->
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label for="validationCustom01" class="form-label mt-3"></label>
+            <select
+              class="form-select"
+              id="validationCustom05"
+              [(ngModel)]="addSession.stages"
+              required
+              placeholder="Select Stage"
+              name="Stage"
+              #stagess="ngModel"
+              [ngClass]="{ 'is-invalid': addSessionForm.submitted && stagess.errors }"
+            >
+              <option value="" disabled selected>Select Stage</option>
+              <option [value]="i + 1" *ngFor="let list of listofStages; let i = index">
+                {{ list }}
+              </option>
+            </select>
+            <div *ngIf="addSessionForm.submitted && stagess.errors" class="invalid-feedback">
+              <div *ngIf="stagess.errors['required']">Please Select Stages</div>
+            </div>
+          </div>
+        </div>
+        <p class="notes"><b>Note: </b> You can add more then one speaker for an event</p>
+        <!-- <div class="col-md-2 addBtn">
+          <button type="button" class="btn_add" (click)="addEvents()">Add</button>
+        </div> -->
+      </div>
+
+      <!-- <div class="row mt-4">
+        <h6 class="org-head">Added Speakers</h6>
+      </div> -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group mb-3">
+            <label for="validationCustom01" class="form-label">Session Description <span class="opt">(Optional)</span> </label>
+            <textarea
+              autocomplete="false"
+              type="text"
+              class="form-control extra-width-event"
+              id="session-desc"
+              placeholder="Enter Description"
+              [(ngModel)]="addSession.sessionDescription"
+              cols="30"
+              rows="10"
+              name="sesionDesc"
+              maxlength="100"
+            ></textarea>
+            <span class="opt-limit">Max character limit : 100</span>
+          </div>
+        </div>
+      </div>
+      <div class="error" *ngIf="errorMessage">
+        <p class="error-class-backend-basic"><i class="fa-solid fa-circle-exclamation"></i> {{ errorMessage }}.</p>
+      </div>
+      <div class="row d-flex justify-content-end mb-2">
+        <div class="col-md-2 reset mx-3">
+          <button type="submit" class="btn_reset" (click)="cancelUpdateSessionBack()">Cancel</button>
+        </div>
+        <div class="col-md-4 add-sesion">
+          <button type="submit" class="btn_mythree_add">Add Session <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Add new session end -->
+
+<!-- Update session form -->
+<div class="container boxs" *ngIf="pageAction == 'session-update'">
+  <div class="row">
+    <h4 class="event-title">Update Event Sessions</h4>
+    <p class="sessions">You can add different sessions for your events and assign different speaker accordingly.</p>
+  </div>
+  <hr class="lines" />
+  <!-- <div class="row mt-5">
+    <h4>Event Sessions</h4>
+  </div> -->
+  <div class="row mt-4">
+    <form
+      autocomplete="off"
+      #updateSessionForm="ngForm"
+      (ngSubmit)="updateSessionForm.form.valid && upateSession(updateSessionForm)"
+    >
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <div class="form-group mb-3">
+            <label for="validationCustom01" class="form-label">Session Title</label>
+            <input
+              autocomplete="false"
+              type="text"
+              class="form-control extra-width"
+              id="update-title"
+              placeholder="Enter Session Title *"
+              [(ngModel)]="updateSession.title"
+              name="titless"
+              #titles="ngModel"
+              maxlength="50"
+            />
+            <span class="opt-limit">Max character limit : 50</span>
+            <div *ngIf="updateSessionForm.submitted && titles.errors" class="invalid-feedback">
+              <div *ngIf="titles.errors['required']">Sesion Title is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="validationCustom01" class="form-label">Session Start Date & Time</label>
+          <div class="timers">
+            <div class="form-group mb-3 extra-group margin-group">
+              <input
+                [owlDateTimeTrigger]="dt"
+                [owlDateTime]="dt"
+                class="form-control"
+                placeholder="Session Start Date"
+                [(ngModel)]="updateSession.sessionStartDate"
+                name="sessionStart"
+                #sessionstarts="ngModel"
+                [ngClass]="{ 'is-invalid': updateSessionForm.submitted && sessionstarts.errors }"
+                required
+                (dateTimeChange)="onStartChange($event)"
+              />
+              <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+            </div>
+            <div class="form-group mb-3 extra-group">
+              <ng-select
+                [selectableGroup]="true"
+                [closeOnSelect]="false"
+                bindLabel="name"
+                bindValue="id"
+                [(ngModel)]="updateSession.sessionStartTime"
+                [multiple]="false"
+                name="sessionStartTime"
+                placeholder="Start Time"
+                [required]="true"
+                #startTime="ngModel"
+                [clearable]="false"
+                [closeOnSelect]="true"
+                [ngClass]="{ 'is-invalid': updateSessionForm.submitted && startTime.errors }"
+                (ngModelChange)="onSelected($event)"
+              >
+                <ng-option [value]="times.value" *ngFor="let times of timers; let i = index">
+                  {{ times.name }}
+                </ng-option>
+              </ng-select>
+              <div *ngIf="updateSessionForm.submitted && startTime.errors" class="invalid-feedback">
+                <div *ngIf="startTime.errors['required']">Select Start Time</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="validationCustom01" class="form-label">Session End Date & Time </label>
+          <div class="timers">
+            <div class="form-group mb-3 extra-group margin-group">
+              <input
+                [owlDateTime]="dt1"
+                [owlDateTimeTrigger]="dt1"
+                placeholder="Session End Date"
+                class="form-control"
+                [(ngModel)]="updateSession.sessionEndDate"
+                name="sessionEndDate"
+                #endDtimes="ngModel"
+                [ngClass]="{ 'is-invalid': updateSessionForm.submitted && endDtimes.errors }"
+                required
+                [min]="endDate"
+                [value]="endDate"
+                (dateTimeChange)="onStartChange2($event)"
+              />
+              <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+            </div>
+            <div class="form-group mb-3 extra-group">
+              <ng-select
+                [selectableGroup]="true"
+                [closeOnSelect]="false"
+                bindLabel="name"
+                bindValue="id"
+                [(ngModel)]="updateSession.sessionEndTime"
+                [multiple]="false"
+                name="sessionEndTime"
+                placeholder="End Time"
+                [required]="true"
+                #endMinutes="ngModel"
+                [clearable]="false"
+                [closeOnSelect]="true"
+                [ngClass]="{ 'is-invalid': updateSessionForm.submitted && endMinutes.errors }"
+              >
+                <ng-option [value]="times.values" *ngFor="let times of timerEnd; let i = index">
+                  {{ times.name }}
+                </ng-option>
+              </ng-select>
+              <div *ngIf="updateSessionForm.submitted && endMinutes.errors" class="invalid-feedback">
+                <div *ngIf="endMinutes.errors['required']">Select End Time</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label for="validationCustom01" class="form-label">Select: Speaker & Stages </label>
+            <ng-select
+              [selectableGroup]="true"
+              [closeOnSelect]="false"
+              bindLabel="name"
+              bindValue="id"
+              [multiple]="false"
+              name="stages"
+              placeholder="Select Speakers"
+              [(ngModel)]="userEventId"
+              name="speaker"
+              #users="ngModel"
+              [ngClass]="{ 'is-invalid': updateSessionForm.submitted && users.errors }"
+              [disabled]="true"
+            >
+              <ng-option [value]="speaker.id" *ngFor="let speaker of speakers; let i = index">
+                {{ speaker.fullName }}
+              </ng-option>
+            </ng-select>
+            <div *ngIf="updateSessionForm.submitted && users.errors" class="invalid-feedback">
+              <div *ngIf="users.errors['required']">Please Select Speaker</div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-md-2 assign">
+          <b>Assign To</b>
+        </div> -->
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label for="validationCustom01" class="form-label mt-3"></label>
+            <select
+            class="form-select"
+            id="validationCustom05"
+            [(ngModel)]="updateSession.stages"
+            required
+            placeholder="Select Stage"
+            name="Stage"
+            #stagess="ngModel"
+            [ngClass]="{ 'is-invalid': updateSessionForm.submitted && stagess.errors }"
+          >
+            <option value="" disabled selected>Select Stage</option>
+            <option [value]="i + 1" *ngFor="let list of listofStages; let i = index">
+              {{ list }}
+            </option>
+          </select>
+            <div *ngIf="updateSessionForm.submitted && stagess.errors" class="invalid-feedback">
+              <div *ngIf="stagess.errors['required']">Please Select Stages</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="col-md-2 addBtn">
+          <button type="button" class="btn_add" (click)="addEvents()">Add</button>
+        </div> -->
+      </div>
+      <!-- <div class="row mt-4">
+        <h6 class="org-head">Added Speakers</h6>
+      </div> -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group mb-3">
+            <label for="validationCustom01" class="form-label">Session Description <span class="opt">(Optional)</span> </label>
+            <textarea
+              autocomplete="false"
+              type="text"
+              class="form-control extra-width-event"
+              id="upadate-desc"
+              placeholder="Enter Description"
+              [(ngModel)]="updateSession.sessionDescription"
+              name="summary"
+              data-toggle="tooltip"
+              data-trigger="hover"
+              data-placement="top"
+              cols="30"
+              rows="10"
+              maxlength="100"
+            ></textarea>
+            <span class="opt-limit">Max character limit : 100</span>
+          </div>
+        </div>
+      </div>
+      <p class="error-class-backend-basic" *ngIf="errorMessage">
+        <i class="fa-solid fa-circle-exclamation"></i> {{ errorMessage }}.
+      </p>
+      <div class="row d-flex justify-content-end mb-2">
+        <div class="col-md-2 reset">
+          <button type="button" class="btn_reset" (click)="cancelUpdateSessionBack()">Cancel</button>
+        </div>
+        <div class="col-md-4 update-1">
+          <button type="submit" class="btn_mythree_update">
+            Update <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Update session form end -->
+
+<div
+  class="modal fade"
+  id="exampleModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Speaker</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form autocomplete="off" #addSpeakerForm="ngForm" (ngSubmit)="addSpeakerForm.form.valid && addMoreSpeakers(addSpeakerForm)">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group mb-3">
+                <input
+                  autocomplete="false"
+                  type="text"
+                  class="form-control extra-width"
+                  placeholder="Enter Speaker Name *"
+                  [(ngModel)]="roles.userName"
+                  data-toggle="tooltip"
+                  data-trigger="hover"
+                  data-placement="top"
+                  required
+                  data-original-title=""
+                  title=""
+                  name="names"
+                  #userNames="ngModel"
+                  [ngClass]="{ 'is-invalid': addSpeakerForm.submitted && userNames.errors }"
+                />
+                <div *ngIf="addSpeakerForm.submitted && userNames.errors" class="invalid-feedback">
+                  <div *ngIf="userNames.errors['required']">Speaker Name is required</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group mb-3">
+                <input
+                  autocomplete="false"
+                  type="email"
+                  class="form-control extra-width"
+                  placeholder="Enter Email Address *"
+                  [(ngModel)]="roles.email"
+                  data-toggle="tooltip"
+                  data-trigger="hover"
+                  data-placement="top"
+                  required
+                  data-original-title=""
+                  title=""
+                  pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                  name="emails"
+                  #userEmails="ngModel"
+                  [ngClass]="{ 'is-invalid': addSpeakerForm.submitted && userEmails.errors }"
+                />
+                <div *ngIf="addSpeakerForm.submitted && userEmails.errors" class="invalid-feedback">
+                  <div *ngIf="userEmails.errors['required']">Email is required</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group mb-3">
+                <ng-select
+                  [selectableGroup]="true"
+                  [closeOnSelect]="false"
+                  bindLabel="name"
+                  bindValue="id"
+                  [(ngModel)]="stagesAlloted"
+                  [multiple]="true"
+                  name="stages"
+                  placeholder="Select Stages *"
+                  class=""
+                  [required]="true"
+                  #userStages="ngModel"
+                  [ngClass]="{ 'is-invalid': addSpeakerForm.submitted && userStages.errors }"
+                >
+                <ng-option [value]="i + 1" *ngFor="let list of listofStages; let i = index">
+                  {{ list }}
+                </ng-option>
+                </ng-select>
+                <div *ngIf="addSpeakerForm.submitted && userStages.errors" class="invalid-feedback">
+                  <div *ngIf="userStages.errors['required']">Stages is required</div>
+                </div>
+              </div>
+              <p class="notes"><b>Note:</b> You can select More than one stages</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group mb-3">
+                <input
+                  autocomplete="false"
+                  type="text"
+                  class="form-control extra-width"
+                  placeholder="Designation/Bio (optional)"
+                  [(ngModel)]="roles.description"
+                  data-toggle="tooltip"
+                  data-trigger="hover"
+                  data-placement="top"
+                  data-original-title=""
+                  title=""
+                  name="bio"
+                />
+              </div>
+            </div>
+          </div>
+          <p class="error-class-backend" *ngIf="errorMessageOrg">
+            <i class="fa-solid fa-circle-exclamation"></i> {{ errorMessageOrg }}.
+          </p>
+          <div class="row mt-2">
+            <div class="col-md-12">
+              <button type="submit" class="btn_addspeakers" data-bs-dismiss="modal" >
+                Add Speaker <i class="fa fa-spinner fa-spin" *ngIf="imgloading2"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

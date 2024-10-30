@@ -1,0 +1,81 @@
+<div class="row">
+  <div class="col-md">
+    <div class="container">
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-10 mt-4">
+                <h2 class="event-head">Update your Event’s Space</h2>
+                <p class="event-para">Please select any of the pre-build templates of spaces where you can update your event.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="scrools">
+          <div class="row event-rows"  *ngIf="!contentLoaded">
+            <div class="col-md-4" *ngFor="let line of [0,1,2];">
+              <div class="card" >
+                <div class="loader" >
+                  <ngx-skeleton-loader
+                  [theme]="{
+                    width: '100%',
+                    'border-radius': '0',
+                    height: '200px',
+                    'margin-bottom': '10px'
+                  }"
+                ></ngx-skeleton-loader>
+                <ngx-skeleton-loader
+                [theme]="{
+                  width: '100%',
+                  'border-radius': '0',
+                  height: '15px',
+                  'margin-bottom': '10px'
+                }"
+              ></ngx-skeleton-loader>
+              <ngx-skeleton-loader
+              [theme]="{
+                width: '100%',
+                'border-radius': '0',
+                height: '15px',
+                'margin-bottom': '10px'
+              }"
+            ></ngx-skeleton-loader>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row event-rows py-3 mb-3" *ngIf="contentLoaded">
+            <div class="col-md-4 d-flex justify-content-center" *ngFor="let choose of chooseEvent; let i = index">
+              <div class="card mb-3" (click)="onCLickImg(choose.id)" [ngClass]="select === choose.id ? 'card-active card' : 'card'">
+                <div class="imgs">
+                  <img [src]="choose.defaultVenueImageUrl" class="card-img-top" alt="..." *ngIf="choose.defaultVenueImageUrl !== null" />
+                  <img [src]="imgVenues" class="card-img-top" alt="..." *ngIf="choose.defaultVenueImageUrl === null" />
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{ choose.venueName }}</h5>
+                  <!-- <div class="info">
+                    <p class="view">3D View</p>
+                    <p class="detail">Details -></p>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row fixed-row-bottom">
+        <div class="row d-flex justify-content-end mt-4 chooseEventButton" *ngIf="contentLoaded">
+          <div class="col-md-3 reset">
+            <button type="submit" class="btn_reset" (click)="cancel()">Cancel</button>
+          </div>
+          <div class="col-md-2 reset">
+            <button type="submit" class="btn_mythree" (click)="Save()">Continue <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

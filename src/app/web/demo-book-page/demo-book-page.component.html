@@ -1,0 +1,152 @@
+<div class="row mx-0">
+  <div class="col-md-6">
+    <div class="row py-4">
+      <div class="col-md-2"></div>
+      <div class="col-md-10 piroImg">
+        <img src="../../assets/images/PiroSpacelogo.svg" alt="" class="piro-img" (click)="imgClick()" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-10">
+        <!-- <div>
+          <p class="back"> <i class="fa-solid fa-chevron-left"></i> Back</p>
+        </div> -->
+        <div>
+          <p class="book-text">Book A Demo</p>
+          <!-- <hr class="underline" /> -->
+        </div>
+        <div>
+          <p class="host-event">Are you interested in hosting your own event?</p>
+        </div>
+        <div class="host-para">
+          <p>Provide us below details and our sales team will get in touch with you.</p>
+        </div>
+        <div class="col-md-5">
+          <div class="form-submit">
+            <form autocomplete="off" [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-md-12 d-none mb-2">
+
+                </div>
+                <div class="col-lg-12">
+                  <div class="form-group mb-3">
+                    <input
+                      autocomplete="false"
+                      type="text"
+                      class="form-control extra-width"
+                      id="name"
+                      placeholder="Name *"
+                      formControlName="name"
+                      data-toggle="tooltip"
+                      data-trigger="hover"
+                      data-placement="top"
+                      required
+                      data-original-title=""
+                      title=""
+                    />
+                    <div class="mt-1" *ngIf="f['name'].touched && f['name'].invalid">
+                      <p *ngIf="f['name'].errors && f['name'].errors['required']" class="error">Name is required</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-12">
+                  <div class="form-group mb-3">
+                    <input
+                      autocomplete="false"
+                      type="email"
+                      class="form-control extra-width"
+                      placeholder="Email Address*"
+                      formControlName="email"
+                      data-toggle="tooltip"
+                      data-trigger="hover"
+                      data-placement="top"
+                      required
+                      data-original-title=""
+                      title=""
+                      pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"
+                      [email]="true"
+                    />
+
+                    <div class="mt-1" *ngIf="f['email'].touched && f['email'].invalid">
+                      <p *ngIf="f['email'].errors && f['email'].errors['required']" class="error">Email is required</p>
+                      <p *ngIf="f['email'].errors?.['pattern']" class="error">Enter A Valid Email</p>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="tele">
+                    <ngx-intl-tel-input
+                      [cssClass]="'form-control mb-1'"
+                      [preferredCountries]="preferredCountries"
+                      [enableAutoCountrySelect]="false"
+                      [enablePlaceholder]="true"
+                      [searchCountryFlag]="true"
+                      [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                      [selectFirstCountry]="false"
+                      [selectedCountryISO]="CountryISO.India"
+                      [selectFirstCountry]="selectFirstCountry"
+                      [phoneValidation]="true"
+                      [separateDialCode]="separateDialCode"
+                      (ngModelChange)="onChange($event)"
+                      formControlName="phone"
+                      required
+                    >
+                    </ngx-intl-tel-input>
+
+                  </div>
+                  <div *ngIf="f['phone'].touched && f['phone'].invalid">
+                    <p *ngIf="f['phone'].errors && f['phone'].errors['required']" class="error">Phone is required</p>
+                  </div>
+                  <div *ngIf="submitted && f['phone'].errors && !f['phone'].errors['required']">
+                    <p *ngIf="f['phone'].errors && f['phone'].invalid" class="error">Please enter valid phone number
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="form-actions mt-3">
+                <button type="submit" class="btn_mythree">
+                  Submit <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 desktopImg px-0">
+    <!--<img src="../../assets/images/mewBookMeImg.jpg" alt="" class="demo-img" />-->
+  </div>
+  <div class="">
+    <div class="container iPadImg">
+      <img src="../../assets/images/Signin.png" alt="" class="demo-img" />
+    </div>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{ display: displayStyle }">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="row">
+        <div class="col-md-12 success">
+          <div class="img-success">
+            <img src="../../assets/images/IconArtwork.jpg" alt="" width="100%" />
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-body para">
+        <p class="contact">Thank You for contacting us</p>
+        <p>
+          Your submission has been received. One of our representative from sales team will get in touch with you shortly for further assistance.
+        </p>
+      </div>
+      <div class="btn-done">
+        <button type="button" class="btn btn-down" (click)="closePopup()">Done</button>
+      </div>
+    </div>
+  </div>
+</div>

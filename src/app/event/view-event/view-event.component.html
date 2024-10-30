@@ -1,0 +1,618 @@
+<div class="row heads">
+  <div class="col-md-6">
+    <img src="../../assets/images/PiroSpacelogo.svg" alt="" />
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <p class="back" (click)="back()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</p>
+    </div>
+    <div class="col-md-4 event-details">
+      <h4 class="detail-cap">Preview Event Details</h4>
+    </div>
+
+    <div class="col-md-4 publish-btn">
+      <button type="button" class="btn_joins">Copy Link</button>
+      <button type="submit" class="btn-register" (click)="editEvents()">Edit Event</button>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-md">
+      <div class="box-3">
+        <div class="row mt-1">
+          <div class="col-md-1">
+            <img src="../../assets/images/Basic-icons-view.svg" alt="" class="speaker-icon" />
+          </div>
+          <div class="col-md-5">
+            <p class="title-head-basic">Basic Details</p>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-md-4 size-img">
+            <img [src]="imgVenue || events?.defaultVenueImage" alt="" class="img-place" />
+          </div>
+          <div class="col-md">
+            <div class="row">
+              <p class="para-first">By Team Piro Space</p>
+            </div>
+            <div class="row">
+              <h2 class="book-title">{{ events?.title }}</h2>
+            </div>
+            <div class="row">
+              <p class="book-date">
+                {{ events?.startDate | date : "mediumDate" }}, {{ events?.startDate | date : "shortTime" }} -
+                {{ events?.endDate | date : "shortTime" }} (IST) onwards
+              </p>
+            </div>
+            <p class="attend">
+              {{ events?.maxAttendees }} Attendes <span class="slash">|</span> {{ events?.eventTypeName }}
+              <span class="slash">|</span> {{ events?.privacyType }}
+            </p>
+            <!-- <div class="row">
+              <div class="col-md-7 d-flex align-items-end">
+
+              </div>
+              <div class="col-md">
+                <p class="share-text">Share With Friends</p>
+                <div class="footer-social-icon social-icons">
+                  <a href="https://www.instagram.com/piro.space/?hl=en" class="icon-svg insta" target="_blank">
+                    <img src="../../assets/images/Instagram-set.svg" alt="" class="icon-set" />
+                  </a>
+                  <a href="https://t.me/+jjVAe288iMk5YmE9" class="icon-svg mx-2" target="_blank">
+                    <img src="../../assets/images/Telegram-set.svg" alt="" class="icon-set" />
+                  </a>
+                  <a href="https://www.linkedin.com/company/pirospace/" class="icon-svg" target="_blank">
+                    <img src="../../assets/images/Linkedin-set.svg" alt="" class="icon-set" />
+                  </a>
+                  <a href="https://www.facebook.com/PiroSpace" class="icon-svg mx-2" target="_blank">
+                    <img src="../../assets/images/Facebook-set.svg" alt="" class="icon-set" />
+                  </a>
+                  <a href="https://twitter.com/PiroSpace" class="icon-svg" target="_blank">
+                    <img src="../../assets/images/Twitter-set.svg" alt="" class="twit" />
+                  </a>
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-2" *ngIf="events?.eventSummary">
+    <div class="col-md">
+      <div class="summary-box">
+        <h5 class="event-summary">Event Summary</h5>
+        {{ events?.eventSummary }}
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <div class="box-1">
+        <div class="row mt-2">
+          <div class="col-md-1">
+            <img src="../../assets/images/Manage space-icons-view.svg" alt="" class="speaker-icon" />
+          </div>
+          <div class="col-md mx-4">
+            <p class="title-head">Manage Space</p>
+          </div>
+        </div>
+        <div class="row">
+          <h6 class="heading-2">SELECTED TEMPLATE</h6>
+          <p class="venuename">{{ events?.venueName }}</p>
+        </div>
+        <div class="row mt-3">
+          <h6 class="heading-2">UPLOADED IMAGES</h6>
+          <div class="">
+            <div class="row img">
+              <ol class="unorder-img">
+                <li *ngFor="let item of events?.bannerList; let i = index" class="mx-2 mb-3">
+                  <div class="row" *ngIf="i < 4">
+                    <img [src]="item.eventBannerUrl || item.defaultBannerUrl" alt="" height="120px" width="120px" />
+                  </div>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div class="row views-all">
+          <button class="btn_joins" data-bs-toggle="modal" data-bs-target="#bannersList">View All</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="box-1">
+        <div class="row mt-2">
+          <div class="col-md-1">
+            <img src="../../assets/images/Access-icons-view.svg" alt="" class="speaker-icon" />
+          </div>
+          <div class="col-md mx-4">
+            <p class="title-head">Access Management</p>
+          </div>
+        </div>
+        <div class="row">
+          <h6 class="heading-2">EVENT ACCESS TYPE</h6>
+          <p class="accestype">{{ events?.acessType }} ACCESS</p>
+        </div>
+        <div class="row padding-box">
+          <p *ngIf="events?.acessType === 'PASSWORD_PROTECTED'" class="domains mb-2"> {{ events?.password }}</p>
+          <ul *ngIf="events?.acessType === 'EMAIL_AND_OTP'">
+            <h6 class="heading-2">WHITLISTED DOMAINS</h6>
+            <li *ngFor="let item of events.eventWhiteListDomains" class="domains mb-2">
+              {{ item.whiteListEmailDomain }}
+            </li>
+          </ul>
+          <!-- <div class="row d-flex justify-content-center">
+            <button class="btn_joins">View All</button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <div class="box-7">
+        <div class="row mt-2">
+          <div class="col-md-1">
+            <img src="../../assets/images/Organisers-icons-view.svg" alt="" class="speaker-icon" />
+          </div>
+          <div class="col-md-5 mx-4">
+            <p class="title-head">Organizers</p>
+          </div>
+        </div>
+        <div class="row mt-4 padding-box">
+          <div class="box-speaker mb-3" *ngFor="let org of organizers.slice(0, 2); let i = index">
+            <div class="row ">
+              <div class="col-md info-detail">
+                <div class="row">
+                  <p class="speaker-head">{{ org.fullName }}</p>
+                </div>
+                <p class="stage-email">{{ org.email }}</p>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="noTotalsOrganizer === 0" class="nofound-imgs">
+            <img src="../../assets/images/Organiser illustration.png" alt="" width="80%" >
+            <p  class="notFound " >There’re no Organisers for this event</p>
+            <button type="button" class="btn_joins mt-2" (click)="editDataRole()" >Add Organisers</button>
+          </div>
+        </div>
+        <div class="row views-all" *ngIf="noTotalsOrganizer !== 0  && noTotalsOrganizer > 2">
+          <button class="btn_joins" data-bs-toggle="modal" data-bs-target="#orgainzers">View All</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="box-7">
+        <div class="row mt-2">
+          <div class="col-md-1">
+            <img src="../../assets/images/Speakers-icons-view.svg" alt="" class="speaker-icon" />
+          </div>
+          <div class="col-md-5 mx-4">
+            <p class="title-head">Speakers</p>
+          </div>
+        </div>
+        <div class="row mt-4 padding-box">
+          <div class="box-speaker mb-3" *ngFor="let org of speakers.slice(0,2); let i = index">
+            <div class="row">
+              <div class="col-md info-detail">
+                <div class="row">
+                  <p class="speaker-head">{{ org.fullName }}</p>
+                </div>
+                <p class="stage-email"> Stage {{ org.stagesAllocated }} <span class="opt-1">|</span> {{ org.email }} </p>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="noTotalSpeakers === 0" class="nofound-imgs">
+            <img src="../../assets/images/Speaker illustration.png" alt="" width="80%" >
+            <p  class="notFound " >There’re no Speakers for this event</p>
+            <button type="button" class="btn_joins mt-2" (click)="editDataRole()" >Add Speaker</button>
+          </div>
+        </div>
+        <div class="row views-all" *ngIf="noTotalSpeakers !== 0 && noTotalSpeakers > 2">
+          <button class="btn_joins" data-bs-toggle="modal" data-bs-target="#speakers">View All</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="row mt-4 mb-4">
+    <div class="col-md-6">
+      <div class="box-2">
+        <div class="row mt-2">
+          <div class="col-md-1">
+            <img src="../../assets/images/sessions-icons-view.svg" alt="" class="speaker-icon" />
+          </div>
+          <div class="col-md-7 mx-4">
+            <p class="title-head-1">Sessions</p>
+          </div>
+        </div>
+        <div class="row mt-1 padding-box">
+          <div class="details mt-2" *ngFor="let org of sessions; let i = index">
+            <div class="mb-4">
+              <div class="row" *ngIf="i < 2">
+                <div class="col-md-3 dates">
+                  <div class="row mt-3">
+                    <div class="dates">
+                      <p class="dates">{{ org.startSession | date : "MMM" }} {{ org.startSession | date : "d" }}</p>
+                    </div>
+                    <div class="time">
+                      <p class="dates-time">
+                        {{ org.startSession | date : "shortTime" }} - {{ org.endSession | date : "shortTime" }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-9 colors">
+                  <div class="row">
+                    <div class="col-md d-flex">
+                      <p class="session-title">
+                        <b> {{ org.title }}</b>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md d-flex">
+                      <p class="marg">{{ org.fullName }} <span class="opt-1">|</span> Stage {{ org.stages }}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md d-flex">
+                      <p class="desc">
+                        {{ org.sessionDescription }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="noTotalSession === 0" class="nofound-img">
+          <img src="../../assets/images/Sessions illustration.png" alt="" width="80%" >
+          <p  class="notFound mt-3" >There’re no Session for this event</p>
+          <button type="button" class="btn_joins mt-2" (click)="editDataSessioin()" >Add Session</button>
+        </div>
+        <div class="row views-all" *ngIf="noTotalSession !== 0 ">
+          <button class="btn_joins" data-bs-toggle="modal" data-bs-target="#sessions">View All</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="box-2">
+        <div class="row mt-2">
+          <div class="col-md-1">
+            <img src="../../assets/images/Invitations-icons-view.svg" alt="" class="speaker-icon" />
+          </div>
+          <div class="col-md-5 mx-4">
+            <p class="title-head">Invitations</p>
+          </div>
+        </div>
+        <h6 class="heading-2" *ngIf="noTotalsAttendes !== 0">INVITED ATTENDEES</h6>
+        <div class="row mt-2 padding-box">
+          <div class="box-attend mb-3" *ngFor="let org of attendes.slice(0,3); let i = index">
+            <div class="row">
+              <div class="col-md info-detail">
+                <div class="row">
+                  <p class="speaker-head">{{ org.fullName }}</p>
+                </div>
+                <p class="stage-email">{{ org.email }}</p>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="noTotalsAttendes === 0" class="nofound-img">
+            <img src="../../assets/images/Invitees illustration.png" alt="" width="80%" >
+            <p  class="notFound mt-4" >There’re no Attendes for this event</p>
+            <button type="button" class="btn_joins mt-2" (click)="editDataAttede()" >Add Attendes</button>
+          </div>
+
+        </div>
+        <div class="row views-all" *ngIf="noTotalsAttendes !== 0 && noTotalsAttendes > 3">
+          <button class="btn_joins" data-bs-toggle="modal" data-bs-target="#attendes">View All</button>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-md-6">
+      <div class="box-1">
+        <div class="detail">
+          <div class="row">
+            <p class="org-title">Organizer Details</p>
+          </div>
+          <div class="row">
+            <img src="../../assets/images/PiroSpacelogo.svg" alt="" class="piro-img" />
+          </div>
+          <div class="row">
+            <p class="org-para">
+              Piro Space is a decentralized Metaverse where you can host your virtual events and enjoy an immersive experience
+            </p>
+          </div>
+          <div class="row iocns-social">
+            <div class="col-md">
+              <div class="footer-social-icon social-icons">
+                <a href="https://www.instagram.com/piro.space/?hl=en" class="icon-svg insta" target="_blank">
+                  <img src="../../assets/images/FB-Black.svg" alt="" class="icon-set" />
+                </a>
+                <a href="https://t.me/+jjVAe288iMk5YmE9" class="icon-svg mx-3" target="_blank">
+                  <img src="../../assets/images/Linkedin-black.svg" alt="" class="icon-set" />
+                </a>
+                <a href="https://www.linkedin.com/company/pirospace/" class="icon-svg" target="_blank">
+                  <img src="../../assets/images/Website-black.svg" alt="" class="icon-set" />
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-4 d-flex justify-content-center">
+            <button class="btn_common">Follow</button>
+            <button class="btn_common mx-3">Learn More</button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <!-- <div class="col-md-6">
+      <div class="box-2">
+        <div class="detail">
+          <div class="row">
+            <p class="org-title">More events by Piro Space</p>
+          </div>
+          <div class="row">
+            <div class="col-md-5">
+              <div class="card">
+                <img src="../../assets/images/Business expo.jpg" class="card-img-top " alt="..." />
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="card-title">Book Fair</h5>
+                    </div>
+                    <div class="col d-flex justify-content-end">
+                      <i class="fas fa-heart" [ngClass]="{ active: isActive }" (click)="onClick()"></i>
+                    </div>
+                  </div>
+
+                  <p class="card-text-1">Monday, Dec 20, 2022 | 8:00 PM(IST) onwards</p>
+                  <p class="card-text-2">Meeting & Networking</p>
+                  <p class="card-text-3">Paid - $2.00 <span class="ticketper">(per ticket)</span></p>
+                  <div class="row mb-2">
+                    <div class="col-md-5">
+                      <p class="piro"><i class="fa fa-user" aria-hidden="true"></i> By Piro Space</p>
+                      <p class="piro"><i class="fa-solid fa-heart"></i> Likes</p>
+                    </div>
+                    <div class="col-md-7 regis">
+                      <button class="btn-register" >Get Tickets</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row d-flex justify-content-center mt-4">
+            <button class="btn_common">See All</button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>
+<app-footer></app-footer>
+
+<!-- View Attendes Modal -->
+<div
+  class="modal fade"
+  id="attendes"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="attendesLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="attendesLabel">Complete list of Attendees</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row mt-2 padding-box">
+          <div class="box-attend mb-3" *ngFor="let org of attendes | paginate
+          : {
+              itemsPerPage: tableSize,
+              currentPage: page,
+              totalItems: totalElement
+            }; let i = index">
+            <div class="row">
+              <div class="col-md info-detail">
+                <div class="row">
+                  <p class="speaker-head">{{ org.fullName }}</p>
+                </div>
+                <p class="stage-email">{{ org.email }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end mt-3" *ngIf="attendes?.length > 0">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="page = $event; onTableDataChange()">
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View Orgainzers Modal -->
+<div
+  class="modal fade"
+  id="orgainzers"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="orgainzersLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orgainzersLabel">Complete list of Organizers</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row mt-2 padding-box">
+          <div class="box-speaker mb-3" *ngFor="let org of organizers | paginate
+          : {
+              itemsPerPage: tableSizeOrg,
+              currentPage: pageOrg,
+              totalItems: totalElementOrg
+            }; let i = index">
+            <div class="row">
+              <div class="col-md info-detail">
+                <div class="row">
+                  <p class="speaker-head">{{ org.fullName }}</p>
+                </div>
+                <p class="stage-email">{{ org.email }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end mt-3" *ngIf="organizers?.length > 0">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="page = $event; onTableDataChangeOrg()">
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View speakers Modal -->
+<div
+  class="modal fade"
+  id="speakers"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="speakersLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="speakersLabel">Complete list of Speakers</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row mt-2 padding-box">
+          <div class="box-speaker mb-3" *ngFor="let org of speakers
+          | paginate
+          : {
+              itemsPerPage: tableSizeSpk,
+              currentPage: pageSpk,
+              totalItems: totalElementSpk
+            }; let i = index">
+            <div class="row">
+              <div class="col-md info-detail">
+                <div class="row">
+                  <p class="speaker-head">{{ org.fullName }}</p>
+                </div>
+                <p class="stage-email">Stage {{ org.stagesAllocated }} <span class="opt-1">|</span>  {{ org.email }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end mt-3" *ngIf="speakers?.length > 0">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="page = $event; onTableDataChangeSpk()">
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View SESSION Modal -->
+<div
+  class="modal fade"
+  id="sessions"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="sessionsLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sessionsLabel">Complete list of Sessions</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row mt-2 padding-box">
+          <div class="details mt-2" *ngFor="let org of sessions; let i = index">
+            <div class="mb-2">
+              <div class="row">
+                <div class="col-md-3 dates-modal">
+                  <div class="row mt-3">
+                    <div class="dates">
+                      <p class="dates">{{ org.startSession | date : "MMM" }} {{ org.startSession | date : "d" }}</p>
+                    </div>
+                    <div class="time">
+                      <p class="dates-time-modal">
+                        {{ org.startSession | date : "shortTime" }} - {{ org.endSession | date : "shortTime" }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-9 colors">
+                  <div class="row">
+                    <div class="col-md d-flex">
+                      <p class="session-title">
+                        <b> {{ org.title }}</b>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md d-flex">
+                      <p class="marg">{{ org.fullName }} <span class="opt-1">|</span> Stage {{ org.stages }}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md d-flex">
+                      <p class="desc">
+                        {{ org.sessionDescription }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View Uploaded Modal -->
+<div
+  class="modal fade"
+  id="bannersList"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="bannersListLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sessionsLabel">Complete list of Uploaded Banners</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row py-3">
+          <div class="col-md-3 d-flex justify-content-center mx-3 mb-3" *ngFor="let item of events?.bannerList; let i = index">
+            <img [src]="item.eventBannerUrl || item.defaultBannerUrl" alt="" height="150px" width="150px"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

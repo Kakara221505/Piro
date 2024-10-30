@@ -1,0 +1,1049 @@
+<div class="row heads">
+  <div class="col-md-6">
+    <img src="../../assets/images/PiroSpacelogo.svg" alt="" />
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <p class="back" (click)="back()"><i class="fas fa-angle-left" aria-hidden="true"></i> Back</p>
+    </div>
+    <!-- <div class="col-md-4 event-details">
+      <h4 class="detail-cap">Event Details</h4>
+    </div> -->
+  </div>
+  <div class="row mt-2">
+    <div class="col-md">
+      <div class="box-3">
+        <div class="row mt-1">
+          <div class="col-md-1">
+            <img src="../../assets/images/Basic-icons-view.svg" alt="" class="speaker-icon" />
+          </div>
+          <div class="col-md-5">
+            <p class="title-head-basic">Basic Details</p>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-md-4 size-img">
+            <img [src]="events?.defaultVenueImage" class="img-place" alt="..." *ngIf="events?.defaultVenueImage !== null" />
+            <img [src]="imgVenue" class="img-place" alt="..." *ngIf="events?.defaultVenueImage === null" />
+            <!-- <img [src]="imgVenue || events?.defaultVenueImage" alt="" class="img-place" /> -->
+          </div>
+          <div class="col-md">
+            <div class="row">
+              <p class="para-first">By Team Piro Space</p>
+            </div>
+            <div class="row">
+              <h2 class="book-title">{{ events?.title }}</h2>
+            </div>
+            <div class="row">
+              <p class="book-date">
+                {{ events?.utcStartDate | date : "mediumDate" }} {{ events?.utcStartDate | date : "shortTime" }} - {{ events?.utcEndDate | date : "mediumDate" }}
+                {{ events?.utcEndDate | date : "shortTime" }} UTC onwards
+              </p>
+              <!-- <p class="book-date">
+                {{ events?.localStartDate | date : "mediumDate" }} {{ events?.localStartDate | date : "shortTime" }} -  {{ events?.localEndDate | date : "mediumDate" }}
+                {{ events?.localEndDate | date : "shortTime" }} onwards
+              </p> -->
+            </div>
+            <p class="attend">
+              {{ events?.maxAttendees }} Attendes <span class="slash">|</span> {{ events?.eventTypeName }}
+              <span class="slash">|</span> {{ events?.privacyType }}
+            </p>
+            <div class="row">
+              <div class="col-md-7">
+                <p
+                  class="timer"
+                  *ngIf="
+                    registerData?.registrationStatus === 'PENDING' &&
+                    registerData?.registerd == true &&
+                    registerData?.accessType == 'EMAIL_AND_OTP' &&
+                    registerData?.liveStatus === false
+                  "
+                >
+                  Request Pending
+                </p>
+                <!-- <p class="registerd" *ngIf="all.registrationStatus === 'APPROVED' && all.registered == true && all.accessType == 'OPEN'">Registered</p> -->
+                <p
+                  class="timer"
+                  *ngIf="
+                    registerData?.registrationStatus === 'PENDING' &&
+                    registerData?.registerd == true &&
+                    registerData?.accessType == 'PASSWORD_PROTECTED' &&
+                    registerData?.liveStatus === false
+                  "
+                >
+                  Request Pending
+                </p>
+                <p
+                  class="timer"
+                  *ngIf="
+                    registerData?.registrationStatus === 'APPROVED' &&
+                    registerData?.registerd == true &&
+                    registerData?.accessType == 'OPEN' &&
+                    registerData?.liveStatus === false
+                  "
+                >
+                  Registered
+                </p>
+                <p
+                  class="timer"
+                  *ngIf="
+                    registerData?.registrationStatus === 'INVITED' &&
+                    registerData?.registerd == true &&
+                    registerData?.accessType == 'OPEN' &&
+                    registerData?.liveStatus === false
+                  "
+                >
+                  Registered
+                </p>
+                <button
+                  type="button"
+                  class="btn-register"
+                  [routerLink]="['/join/', registerData?.identifier]"
+                  *ngIf="
+                    registerData?.registrationStatus === 'APPROVED' &&
+                    registerData?.registerd === true &&
+                    registerData?.accessType === 'OPEN' &&
+                    registerData?.liveStatus === true
+                  "
+                >
+                  Join
+                </button>
+                <button
+                  type="button"
+                  class="btn-register"
+                  *ngIf="
+                    registerData?.registrationStatus === 'APPROVED' &&
+                    registerData?.registerd === true &&
+                    registerData?.accessType === 'PASSWORD_PROTECTED' &&
+                    registerData?.liveStatus === true
+                  "
+                >
+                  Join
+                </button>
+                <p
+                  class="timer"
+                  *ngIf="
+                    registerData?.registrationStatus === 'APPROVED' &&
+                    registerData?.registerd == true &&
+                    registerData?.accessType == 'PASSWORD_PROTECTED' &&
+                    registerData?.liveStatus === false
+                  "
+                >
+                  Registered
+                </p>
+                <!-- <p
+                class="registerd"
+                *ngIf="
+                  all.registrationStatus === 'PENDING' && all.registered == true && all.accessType == 'PASSWORD_PROTECTED'
+                "
+              >
+                Request Pending
+              </p> -->
+                <!-- <p class="registerd" *ngIf="all.registrationStatus === 'APPROVED' && all.registered == true && all.accessType == 'PASSWORD_PROTECTED'">Registered</p> -->
+                <button
+                  class="btn-register"
+                  data-bs-toggle="modal"
+                  data-bs-target="#passwordAccess"
+                  *ngIf="
+                    registerData?.registerd == false &&
+                    registerData?.accessType == 'PASSWORD_PROTECTED' &&
+                    registerData?.registrationStatus === 'APPROVED'
+                  "
+                  (click)="getId(registerData?.eventId)"
+                >
+                  Enter Password
+                </button>
+                <button
+                  class="btn-register"
+                  data-bs-toggle="modal"
+                  data-bs-target="#openRegistration"
+                  *ngIf="registerData?.registerd == false && registerData?.accessType == 'OPEN'"
+                  (click)="getId(registerData?.eventId)"
+                >
+                  Register Now
+                </button>
+                <button
+                  class="btn-register"
+                  data-bs-toggle="modal"
+                  data-bs-target="#requestAccess"
+                  *ngIf="registerData?.registerd == false && registerData?.accessType == 'PASSWORD_PROTECTED'"
+                  (click)="getId(registerData?.eventId)"
+                >
+                  Request Access
+                </button>
+                <button
+                  class="btn-register"
+                  data-bs-toggle="modal"
+                  data-bs-target="#requestAccessOtp"
+                  *ngIf="registerData?.registerd == false && registerData?.accessType == 'EMAIL_AND_OTP'"
+                  (click)="getId(registerData?.eventId)"
+                >
+                  Request Access
+                </button>
+              </div>
+              <div class="col-md">
+                <p class="share-text">Share With Friends</p>
+                <div class="footer-social-icon social-icons">
+                  <a href="https://www.instagram.com/piro.space/?hl=en" class="icon-svg insta" target="_blank">
+                    <img src="../../assets/images/Instagram-set.svg" alt="" class="icon-set" />
+                  </a>
+                  <a href="https://t.me/+jjVAe288iMk5YmE9" class="icon-svg mx-2" target="_blank">
+                    <img src="../../assets/images/Telegram-set.svg" alt="" class="icon-set" />
+                  </a>
+                  <a href="https://www.linkedin.com/company/pirospace/" class="icon-svg" target="_blank">
+                    <img src="../../assets/images/Linkedin-set.svg" alt="" class="icon-set" />
+                  </a>
+                  <a href="https://www.facebook.com/PiroSpace" class="icon-svg mx-2" target="_blank">
+                    <img src="../../assets/images/Facebook-set.svg" alt="" class="icon-set" />
+                  </a>
+                  <a href="https://twitter.com/PiroSpace" class="icon-svg" target="_blank">
+                    <img src="../../assets/images/Twitter-set.svg" alt="" class="twit" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-2" *ngIf="events?.eventSummary">
+    <div class="col-md">
+      <div class="summary-box">
+        <h5 class="event-summary">Event Summary</h5>
+        {{ events?.eventSummary }}
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4 mb-4">
+    <div class="col-md-6">
+      <div class="box-2">
+        <div class="row mt-2">
+          <div class="col-md-1">
+            <img src="../../assets/images/sessions-icons-view.svg" alt="" class="speaker-icon" />
+          </div>
+          <div class="col-md-7 mx-4">
+            <p class="title-head-1">Sessions</p>
+          </div>
+        </div>
+        <div class="row mt-1 padding-box">
+          <div class="details mt-2" *ngFor="let org of sessions; let i = index">
+            <div class="mb-4">
+              <div class="row" *ngIf="i < 2">
+                <div class="col-md-3 dates">
+                  <div class="row mt-3">
+                    <div class="dates">
+                      <p class="dates">{{ org.startSession | date : "MMM" }} {{ org.startSession | date : "d" }}</p>
+                    </div>
+                    <div class="time">
+                      <p class="dates-time">
+                        {{ org.startSession | date : "shortTime" }} - {{ org.endSession | date : "shortTime" }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-9 colors">
+                  <div class="row">
+                    <div class="col-md d-flex">
+                      <p class="session-title">
+                        <b> {{ org.title }}</b>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md d-flex">
+                      <p class="marg">{{ org.fullName }} <span class="opt-1">|</span> Stage {{ org.stages }}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md d-flex">
+                      <p class="desc">
+                        {{ org.sessionDescription }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="noTotalSession === 0" class="nofound-img">
+          <img src="../../assets/images/Sessions illustration.png" alt="" width="80%" />
+          <p class="notFound mt-3">There’re no Session for this event</p>
+        </div>
+        <div class="row views-all" *ngIf="noTotalSession !== 0">
+          <button class="btn_joins" data-bs-toggle="modal" data-bs-target="#sessions">View All</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="box-2">
+        <div class="detail">
+          <div class="row">
+            <p class="org-title">Organizer Details</p>
+          </div>
+          <div class="row mt-4 piroImg">
+            <img src="../../assets/images/PiroSpacelogo.svg" alt="" class="piro-img" />
+          </div>
+          <div class="row mt-4 piroImg">
+            <p class="org-para">
+              Piro Space is a decentralized Metaverse where you can host your virtual events and enjoy an immersive experience
+            </p>
+          </div>
+          <div class="row iocns-social">
+            <div class="col-md">
+              <div class="footer-social-icon social-icons">
+                <a href="https://www.instagram.com/piro.space/?hl=en" class="icon-svg insta" target="_blank">
+                  <img src="../../assets/images/FB-Black.svg" alt="" class="icon-set" />
+                </a>
+                <a href="https://t.me/+jjVAe288iMk5YmE9" class="icon-svg mx-3" target="_blank">
+                  <img src="../../assets/images/Linkedin-black.svg" alt="" class="icon-set" />
+                </a>
+                <a href="https://www.linkedin.com/company/pirospace/" class="icon-svg" target="_blank">
+                  <img src="../../assets/images/Website-black.svg" alt="" class="icon-set" />
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-5 d-flex justify-content-center LearnMore">
+            <button class="btn_common">Follow</button>
+            <button class="btn_common mx-3">Learn More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4 mb-5">
+    <div class="col-md-6">
+      <div class="box-7">
+        <div class="row mt-2">
+          <div class="col-md-1">
+            <img src="../../assets/images/Organisers-icons-view.svg" alt="" class="speaker-icon" />
+          </div>
+          <div class="col-md-5 mx-4">
+            <p class="title-head">Organizers</p>
+          </div>
+        </div>
+        <div class="row mt-4 padding-box">
+          <div class="box-speaker mb-3" *ngFor="let org of organizers.slice(0, 2); let i = index">
+            <div class="row">
+              <div class="col-md info-detail">
+                <div class="row">
+                  <p class="speaker-head">{{ org.fullName }}</p>
+                </div>
+                <p class="stage-email">{{ org.email }}</p>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="noTotalsOrganizer === 0" class="nofound-imgs">
+            <img src="../../assets/images/Organiser illustration.png" alt="" width="80%" />
+            <p class="notFound">There’re no Organisers for this event</p>
+          </div>
+        </div>
+        <div class="row views-all" *ngIf="noTotalsOrganizer !== 0 && noTotalsOrganizer > 2">
+          <button class="btn_joins" data-bs-toggle="modal" data-bs-target="#orgainzers">View All</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="box-7">
+        <div class="row mt-2">
+          <div class="col-md-1">
+            <img src="../../assets/images/Speakers-icons-view.svg" alt="" class="speaker-icon" />
+          </div>
+          <div class="col-md-5 mx-4">
+            <p class="title-head">Speakers</p>
+          </div>
+        </div>
+        <div class="row mt-4 padding-box">
+          <div class="box-speaker mb-3" *ngFor="let org of speakers.slice(0, 2); let i = index">
+            <div class="row">
+              <div class="col-md info-detail">
+                <div class="row">
+                  <p class="speaker-head">{{ org.fullName }}</p>
+                </div>
+                <p class="stage-email">Stage {{ org.stagesAllocated }} <span class="opt-1">|</span> {{ org.email }}</p>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="noTotalSpeakers === 0" class="nofound-imgs">
+            <img src="../../assets/images/Speaker illustration.png" alt="" width="80%" />
+            <p class="notFound">There’re no Speakers for this event</p>
+          </div>
+        </div>
+        <div class="row views-all" *ngIf="noTotalSpeakers !== 0 && noTotalSpeakers > 2">
+          <button class="btn_joins" data-bs-toggle="modal" data-bs-target="#speakers">View All</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
+
+<!-- View Attendes Modal -->
+<div
+  class="modal fade"
+  id="attendes"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="attendesLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="attendesLabel">Complete list of Attendees</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row mt-2 padding-box">
+          <div
+            class="box-attend mb-3"
+            *ngFor="
+              let org of attendes
+                | paginate
+                  : {
+                      itemsPerPage: tableSize,
+                      currentPage: page,
+                      totalItems: totalElement
+                    };
+              let i = index
+            "
+          >
+            <div class="row">
+              <div class="col-md info-detail">
+                <div class="row">
+                  <p class="speaker-head">{{ org.fullName }}</p>
+                </div>
+                <p class="stage-email">{{ org.email }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end mt-3" *ngIf="attendes?.length > 0">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="page = $event; onTableDataChange()">
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View Orgainzers Modal -->
+<div
+  class="modal fade"
+  id="orgainzers"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="orgainzersLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orgainzersLabel">Complete list of Organizers</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row mt-2 padding-box">
+          <div
+            class="box-speaker mb-3"
+            *ngFor="
+              let org of organizers
+                | paginate
+                  : {
+                      itemsPerPage: tableSizeOrg,
+                      currentPage: pageOrg,
+                      totalItems: totalElementOrg
+                    };
+              let i = index
+            "
+          >
+            <div class="row">
+              <div class="col-md info-detail">
+                <div class="row">
+                  <p class="speaker-head">{{ org.fullName }}</p>
+                </div>
+                <p class="stage-email">{{ org.email }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end mt-3" *ngIf="organizers?.length > 0">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="page = $event; onTableDataChangeOrg()">
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View speakers Modal -->
+<div
+  class="modal fade"
+  id="speakers"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="speakersLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="speakersLabel">Complete list of Speakers</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row mt-2 padding-box">
+          <div
+            class="box-speaker mb-3"
+            *ngFor="
+              let org of speakers
+                | paginate
+                  : {
+                      itemsPerPage: tableSizeSpk,
+                      currentPage: pageSpk,
+                      totalItems: totalElementSpk
+                    };
+              let i = index
+            "
+          >
+            <div class="row">
+              <div class="col-md info-detail">
+                <div class="row">
+                  <p class="speaker-head">{{ org.fullName }}</p>
+                </div>
+                <p class="stage-email">Stage {{ org.stagesAllocated }} <span class="opt-1">|</span> {{ org.email }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end mt-3" *ngIf="speakers?.length > 0">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="page = $event; onTableDataChangeSpk()">
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View SESSION Modal -->
+<div
+  class="modal fade"
+  id="sessions"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="sessionsLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sessionsLabel">Complete list of Sessions</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row mt-2 padding-box">
+          <div class="details mt-2" *ngFor="let org of sessions; let i = index">
+            <div class="mb-2">
+              <div class="row">
+                <div class="col-md-3 dates-modal">
+                  <div class="row mt-3">
+                    <div class="dates">
+                      <p class="dates">{{ org.startSession | date : "MMM" }} {{ org.startSession | date : "d" }}</p>
+                    </div>
+                    <div class="time">
+                      <p class="dates-time-modal">
+                        {{ org.startSession | date : "shortTime" }} - {{ org.endSession | date : "shortTime" }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-9 colors">
+                  <div class="row">
+                    <div class="col-md d-flex">
+                      <p class="session-title">
+                        <b> {{ org.title }}</b>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md d-flex">
+                      <p class="marg">{{ org.fullName }} <span class="opt-1">|</span> Stage {{ org.stages }}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md d-flex">
+                      <p class="desc">
+                        {{ org.sessionDescription }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View Uploaded Modal -->
+<div
+  class="modal fade"
+  id="bannersList"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="bannersListLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sessionsLabel">Complete list of Uploaded Banners</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row py-3">
+          <div class="col-md-3 d-flex justify-content-center mx-3 mb-3" *ngFor="let item of events?.bannerList; let i = index">
+            <img [src]="item.eventBannerUrl || item.defaultBannerUrl" alt="" height="150px" width="150px" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="requestAccess" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" [ngStyle]="{ display: passwordModal }">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/password-access.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">One Last Step</h3>
+          </div>
+          <div class="">
+            <p class="pass-text">If you already have password, please enter it below</p>
+          </div>
+          <div class="">
+            <form #passwordFrom="ngForm" (ngSubmit)="passwordFrom.form.valid && savePassworAccess(passwordFrom)">
+              <div class="row d-flex justify-content-center">
+                <div class="col-md-6">
+                  <div class="form-group mb-3">
+                    <input
+                      autocomplete="false"
+                      type="password"
+                      class="form-control extra-width"
+                      id="pass"
+                      placeholder="Enter Password"
+                      [(ngModel)]="password"
+                      required
+                      name="password"
+                      #passwords="ngModel"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <button class="btn-registernow" type="submit">Register Now</button>
+                </div>
+                <div class="error-show" *ngIf="errorMessage">
+                  <p class="error-class-backend"><i class="fa-solid fa-circle-exclamation"></i> {{ errorMessage }}.</p>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="">
+            <div class="col-md strike">
+              <span>OR</span>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center mt-4 mb-4">
+            <div class="col-md-4">
+              <button class="btn-registernow" data-bs-toggle="modal" data-bs-target="#passwordPending" (click)="requestAccess()">
+                Request Access
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-dialog modal-dialog-centered modal-lg" [ngStyle]="{ display: passwordRegistrationModal }">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/successful-registration.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">Registration Successful!</h3>
+          </div>
+          <div class="">
+            <p class="pending-text">
+              Thank you for showing interest in attending this event. It’s been added in your calendar You can see further details
+              of it in <b class="bold">My Events</b> section
+            </p>
+          </div>
+          <div class="d-flex justify-content-center mt-4 mb-5">
+            <div class="col-md-4 mx-3">
+              <button class="btn-not" data-bs-dismiss="modal">Explore More Events</button>
+            </div>
+            <div class="col-md-4">
+              <button class="btn-registernow" data-bs-dismiss="modal" (click)="gotToEvents()">Go to My Events</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="passwordAccess"
+  data-bs-backdrop="static"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel4"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/password-access.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">Request Approved!</h3>
+          </div>
+          <div class="">
+            <p class="pass-text-received">Please enter the password you’ve received</p>
+          </div>
+          <div class="">
+            <form action="">
+              <div class="row d-flex justify-content-center">
+                <div class="col-md-6">
+                  <div class="form-group mb-3">
+                    <input
+                      autocomplete="false"
+                      type="password"
+                      class="form-control extra-width"
+                      id="requestPassword"
+                      placeholder="Enter Password"
+                      [(ngModel)]="password"
+                      required
+                      name="requestPass"
+                      #reqPass="ngModel"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <button class="btn-registernow">Register Now</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="d-flex justify-content-center mt-4 mb-5">
+            <div class="col-md-4 mx-3">
+              <button class="btn-not" data-bs-dismiss="modal">Explore More Events</button>
+            </div>
+            <div class="col-md-4">
+              <button class="btn-registernow" data-bs-dismiss="modal">Go to My Events</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="passwordPending"
+  data-bs-backdrop="static"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel3"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/password-access.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">Request Sent Successfully!</h3>
+          </div>
+          <div class="">
+            <p class="pending-text">
+              Your request has been shared with the organiser. Upon request approval, you will be notified and this event will be
+              added to your calendar / <b class="bold">My Events</b> Section.
+            </p>
+          </div>
+          <div class="d-flex justify-content-center mt-4 mb-5">
+            <div class="col-md-4">
+              <button class="btn-not" data-bs-dismiss="modal">Explore More Events</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="registrationSuccess"
+  data-bs-backdrop="static"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel2"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/password-access.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">Registration Successful!</h3>
+          </div>
+          <div class="">
+            <p class="pending-text">
+              Thank you for showing interest in attending this event. It’s been added in your calendar You can see further details
+              of it in <b class="bold">My Events</b> section
+            </p>
+          </div>
+          <div class="d-flex justify-content-center mt-4 mb-5">
+            <div class="col-md-4">
+              <button class="btn-registernow">Go to My Events</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Open Registration Modal -->
+<div
+  class="modal fade"
+  id="openRegistration"
+  data-bs-backdrop="static"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg" [ngStyle]="{ display: firstModal }">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/open-registration.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">Event Registration</h3>
+          </div>
+          <div class="">
+            <p class="register-text">Are you sure you want to Register for this Event?</p>
+          </div>
+          <div class="d-flex justify-content-center mt-4 mb-5">
+            <div class="col-md-4 mx-3">
+              <button class="btn-not" data-bs-dismiss="modal">No, not now</button>
+            </div>
+            <div class="col-md-4">
+              <button class="btn-registernow" (click)="proceed()">Yes, Proceed</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-dialog modal-dialog-centered modal-lg" [ngStyle]="{ display: secondModal }">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/successful-registration.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">Registration Successful!</h3>
+          </div>
+          <div class="">
+            <p class="pending-text">
+              Thank you for showing interest in attending this event. It’s been added in your calendar You can see further details
+              of it in <b class="bold">My Events</b> section
+            </p>
+          </div>
+          <div class="d-flex justify-content-center mt-4 mb-5">
+            <div class="col-md-4 mx-3">
+              <button class="btn-not" data-bs-dismiss="modal">Explore More Events</button>
+            </div>
+            <div class="col-md-4">
+              <button class="btn-registernow" data-bs-dismiss="modal" (click)="gotToEvents()">Go to My Events</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Approval Pending modal -->
+<div
+  class="modal fade"
+  id="approvalPending"
+  data-bs-backdrop="static"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel3"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/password-access.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">Request Approval pending!</h3>
+          </div>
+          <div class="">
+            <p class="pending-text">
+              Your request has been shared with the organiser. Upon request approval, you will be notified and this event will be
+              added to your calendar / <b class="bold">My Events</b> Section.
+            </p>
+          </div>
+        </div>
+        <div class="">
+          <div class="col-md strike">
+            <span>OR</span>
+          </div>
+        </div>
+        <div class="">
+          <p class="already-text">If you already have password, please enter it below</p>
+        </div>
+        <div class="">
+          <form action="">
+            <div class="row d-flex justify-content-center">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <input
+                    autocomplete="false"
+                    type="password"
+                    class="form-control extra-width"
+                    id="pandingPass"
+                    placeholder="Enter Password"
+                    [(ngModel)]="password"
+                    required
+                    name="password"
+                    #passwords="ngModel"
+                  />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <button class="btn-registernow">Register Now</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--OTP modal-->
+<div class="modal fade" id="requestAccessOtp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" [ngStyle]="{ display: passwordModal }">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/password-access.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">One Last Step</h3>
+          </div>
+          <div class="d-flex justify-content-center mt-4 mb-4">
+            <div class="col-md-4">
+              <button class="btn-registernow" data-bs-toggle="modal" data-bs-target="#passwordPending" (click)="requestAccess()">
+                Request Access
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-dialog modal-dialog-centered modal-lg" [ngStyle]="{ display: passwordRegistrationModal }">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/successful-registration.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">Registration Successful!</h3>
+          </div>
+          <div class="">
+            <p class="pending-text">
+              Thank you for showing interest in attending this event. It’s been added in your calendar You can see further details
+              of it in <b class="bold">My Events</b> section
+            </p>
+          </div>
+          <div class="d-flex justify-content-center mt-4 mb-5">
+            <div class="col-md-4 mx-3">
+              <button class="btn-not" data-bs-dismiss="modal">Explore More Events</button>
+            </div>
+            <div class="col-md-4">
+              <button class="btn-registernow" data-bs-dismiss="modal" (click)="gotToEvents()">Go to My Events</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

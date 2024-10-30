@@ -1,0 +1,28 @@
+.choose-option{
+  background-color: #f6f6f6;
+  padding: 2rem;
+}
+
+.back{
+  color: #33cc94;
+  font-weight: 500;
+}
+
+.form-check-input:checked{
+  border-color: #33cc94 !important;
+  background-color: #33cc94 !important;
+}
+
+.form-control {
+  background-color: #f2f2f2 !important;
+  height: 50px;
+}
+
+.form-control:focus {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+.form-group {
+  border-radius: 4px;
+}

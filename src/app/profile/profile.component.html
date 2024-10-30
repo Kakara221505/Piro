@@ -1,0 +1,365 @@
+<div class="row">
+  <div class="col-md-2">
+    <app-sidenav></app-sidenav>
+  </div>
+  <div class="col-md">
+    <div class="first">
+      <div class="row headers mt-4">
+        <app-header></app-header>
+      </div>
+
+      <div class="row tops-title">
+        <div class="col-md-10 mt-4">
+          <h2 class="account-head">My Profile</h2>
+          <p class="account-para">Manage your personal details, Avatar settings, chats and your favourite space & events.</p>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <ul class="nav nav-pills mb-3 tabss" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              id="pills-home-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-home"
+              type="button"
+              role="tab"
+              aria-controls="pills-home"
+              aria-selected="true"
+            >
+              Profile Details
+            </button>
+          </li>
+          <li class="nav-item mx-3" role="presentation">
+            <button
+              class="nav-link"
+              id="pills-profile-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-profile"
+              type="button"
+              role="tab"
+              aria-controls="pills-profile"
+              aria-selected="false"
+            >
+              Avatar Settings
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="pills-contact-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-contact"
+              type="button"
+              role="tab"
+              aria-controls="pills-contact"
+              aria-selected="false"
+            >
+              Chats
+            </button>
+          </li>
+          <li class="nav-item mx-3" role="presentation">
+            <button
+              class="nav-link"
+              id="pills-favourite-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-favourite"
+              type="button"
+              role="tab"
+              aria-controls="pills-favourite"
+              aria-selected="false"
+            >
+              Favourites
+            </button>
+          </li>
+          <li class="nav-item mx-3" role="presentation">
+            <button
+              class="nav-link"
+              id="pills-nft-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-nft"
+              type="button"
+              role="tab"
+              aria-controls="pills-nft"
+              aria-selected="false"
+            >
+              NFT Wallet
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+          <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+            <div class="row mt-4">
+              <h4 class="address-title">Permanent Address</h4>
+              <form autocomplete="off" #profileForm="ngForm" class="forms-sample">
+                <div class="row mt-3">
+                  <div class="col-md-6">
+                    <div class="form-group mb-3">
+                      <label for="validationCustom01" class="form-label">Name</label>
+                      <input
+                        autocomplete="false"
+                        type="text"
+                        class="form-control extra-width"
+                        id="name"
+                        placeholder="Enter Name"
+                        [(ngModel)]="profile.fullName"
+                        required
+                        name="names"
+                        #fulname="ngModel"
+                        [ngClass]="{ 'is-invalid': profileForm.submitted && fulname.errors }"
+                      />
+                      <div *ngIf="profileForm.submitted && fulname.errors" class="invalid-feedback">
+                        <div *ngIf="fulname.errors['required']">Name is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group mb-3">
+                      <label for="validationCustom01" class="form-label">Contact</label>
+                      <div class="tele mb-3">
+                        <ngx-intl-tel-input
+                          [cssClass]="'form-control '"
+                          [preferredCountries]="preferredCountries"
+                          [enableAutoCountrySelect]="false"
+                          [enablePlaceholder]="true"
+                          [searchCountryFlag]="true"
+                          [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                          [selectFirstCountry]="false"
+                          [selectedCountryISO]="CountryISO.India"
+                          [selectFirstCountry]="selectFirstCountry"
+                          [phoneValidation]="true"
+                          [separateDialCode]="separateDialCode"
+                          (ngModelChange)="onChange($event)"
+                          [(ngModel)]="profile.phone"
+                          required
+                          name="conatct"
+                          #phones="ngModel"
+                          [ngClass]="{ 'is-invalid': profileForm.submitted && phones.errors }"
+                        >
+                        </ngx-intl-tel-input>
+                      </div>
+                      <div *ngIf="profileForm.submitted && phones.errors" class="invalid-feedback">
+                        <div *ngIf="phones.errors['required']">Phone is required</div>
+                      </div>
+
+                      <div *ngIf="profileForm.submitted && phones.invalid">
+                        <p class="erros-valid"><i class="fa-solid fa-circle-exclamation"></i> Please enter valid phone number</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-6">
+                    <div class="form-group mb-3">
+                      <label for="validationCustom01" class="form-label">Email</label>
+                      <input
+                        type="email"
+                        class="form-control extra-width"
+                        id="email"
+                        [(ngModel)]="profile.email"
+                        required
+                        name="emails"
+                        #email="ngModel"
+                        readonly
+                        disabled="true"
+                      />
+                      <!-- <div *ngIf="profileForm.submitted && fulname.errors" class="invalid-feedback">
+                        <div *ngIf="fulname.errors['required']">Name is required</div>
+                      </div> -->
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group mb-3">
+                      <label for="validationCustom01" class="form-label">Country</label>
+                      <select
+                        class="form-select"
+                        aria-label="Default select example"
+                        [(ngModel)]="profile.countryId"
+                        required
+                        name="countryone"
+                        #countriesList="ngModel"
+                        [ngClass]="{ 'is-invalid': profileForm.submitted && countriesList.errors }"
+                      >
+                        <option selected disabled value="">Select Country</option>
+                        <option *ngFor="let country of countries" [value]="country.id">{{ country.countryName }}</option>
+                      </select>
+                      <div *ngIf="profileForm.submitted && countriesList.errors" class="invalid-feedback">
+                        <div *ngIf="countriesList.errors['required']">Country is required</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-6">
+                    <div class="form-group mb-3">
+                      <label for="validationCustom01" class="form-label"
+                        >Company/Organization <span class="opt">(Optional)</span></label
+                      >
+                      <input
+                        autocomplete="false"
+                        type="text"
+                        class="form-control extra-width"
+                        id="name"
+                        placeholder="Enter Company/Organization"
+                        [(ngModel)]="profile.organization"
+                        name="coapnies"
+                        #comapnies="ngModel"
+                        [ngClass]="{ 'is-invalid': profileForm.submitted && comapnies.errors }"
+                      />
+                      <div *ngIf="profileForm.submitted && comapnies.errors" class="invalid-feedback">
+                        <div *ngIf="comapnies.errors['required']">Company is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group mb-3">
+                      <label for="validationCustom01" class="form-label"
+                        >Address Line 1 <span class="opt">(Optional)</span></label
+                      >
+                      <input
+                        autocomplete="false"
+                        type="text"
+                        class="form-control extra-width"
+                        id="name"
+                        placeholder="Enter Address Line 1"
+                        [(ngModel)]="profile.addressLine1"
+                        name="line1"
+                        #address1="ngModel"
+                        [ngClass]="{ 'is-invalid': profileForm.submitted && address1.errors }"
+                      />
+                      <div *ngIf="profileForm.submitted && address1.errors" class="invalid-feedback">
+                        <div *ngIf="address1.errors['required']">Address Line 1 is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="col-md-6">
+                    <div class="form-group mb-3">
+                      <label for="validationCustom01" class="form-label">Address Line 2</label>
+                      <input
+                        autocomplete="false"
+                        type="text"
+                        class="form-control extra-width"
+                        id="name"
+                        placeholder="Enter Address Line 2"
+                        [(ngModel)]="profile.addressLine2"
+                        required
+                        name="line2"
+                        #address2="ngModel"
+                        [ngClass]="{ 'is-invalid': profileForm.submitted && address2.errors }"
+                      />
+                      <div *ngIf="profileForm.submitted && address2.errors" class="invalid-feedback">
+                        <div *ngIf="address2.errors['required']">Address Line 2 is required</div>
+                      </div>
+                    </div>
+                  </div> -->
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-12">
+                    <div class="form-group mb-3">
+                      <label for="validationCustom01" class="form-label">About <span class="opt">(Optional)</span></label>
+                      <textarea
+                        autocomplete="false"
+                        type="text"
+                        class="form-control extra-width form-heights"
+                        id="name"
+                        placeholder="Enter About you"
+                        [(ngModel)]="profile.about"
+                        name="about"
+                        #abouts="ngModel"
+                        cols="60"
+                        rows="50"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-4 mb-4">
+                  <div class="col-md-9"></div>
+                  <div class="col-md-3 changes">
+                    <button type="submit" class="btn_event" (click)="updateUser(profileForm)">
+                      Save Changes <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <div class="row profile">
+              <div class="accounts">
+                <div class="col-md-12">
+                  <img src="../../assets/images/avator-select.png" alt="" class="event-img" />
+                </div>
+                <div class="col-md-12 mt-3 mb-4">
+                  <b class="event-box-para">This is your existing Avatar. You can keep it as it is or can customize it further</b>
+                  <!-- <p class="event-bold">
+                      During an event you can group chat with other attendees, you can see the chat transcript here.
+                    </p> -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+            <div class="row profile">
+              <div class="accounts">
+                <div class="col-md-12">
+                  <img src="../../assets/images/Chats.svg" alt="" class="event-img" />
+                </div>
+                <div class="col-md-12 mt-3 mb-4">
+                  <b class="event-box-para">There's no conversation transcript at the moment</b>
+                  <p class="event-bold">
+                    During an event you can group chat with other attendees, you can see the chat transcript here
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="pills-favourite" role="tabpanel" aria-labelledby="pills-favourite-tab">
+            <div class="row profile">
+              <div class="accounts">
+                <div class="col-md-12">
+                  <img src="../../assets/images/chats-webpack.png" alt="" width="11%" class="event-img" />
+                </div>
+                <div class="col-md-12 mt-3 mb-4">
+                  <b class="event-box-para">There’s nothing here yet</b>
+                  <p class="event-bold">You can add events as your favourites and can visit them from here</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="pills-nft" role="tabpanel" aria-labelledby="pills-nft-tab">
+            <div class="row profile">
+              <div class="accounts">
+                <div class="col-md-12">
+                  <img src="../../assets/images/wallet (1) 1.svg" alt="" width="11%" class="wallet image" />
+                </div>
+                <div class="col-md-12 mt-3 mb-4">
+                  <b class="event-box-para">Wallet is not connected</b>
+                  <p class="event-bold">Please connect your NFT wallet to view your NFTs</p>
+                </div>
+                <div class="col-md-12 mt-3 mb-4">
+                  <button class="btn_mythree" >Connect Wallet</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="tab-pane fade" id="pills-nft" role="tabpanel" aria-labelledby="pills-nft-tab">
+            <div class="row profile">
+              <div class="accounts">
+                <div class="col-md-12">
+                  <img src="../../assets/images/metramask.png" alt="" width="11%" class="wallet image" />
+                </div>
+                <div class="col-md-12 mt-3 mb-4">
+                  <b class="event-box-para">MetaMask Wallet is connected</b>
+                </div>
+                <div class="col-md-12 mt-3 mb-4">
+                  <p>WALLET ADDRESS</p>
+                  <input type="text">
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

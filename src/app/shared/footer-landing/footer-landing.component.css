@@ -1,0 +1,230 @@
+body {
+  background: #f6f6f6;
+}
+
+.text-small {
+  font-size: 0.9rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+a:hover,
+a:focus {
+  text-decoration: none;
+}
+
+.form-control {
+  background: #f6f6f6;
+}
+
+.form-control:focus {
+  background: #f6f6f6;
+}
+
+footer {
+  background: #f6f6f6;
+}
+
+.text-lists {
+  font-size: 1.2rem;
+  line-height: 2;
+}
+
+.btn-host {
+  background-color: #33cc94;
+  color: white;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+}
+
+.footer-cont {
+  padding-top: 2rem;
+}
+
+.footer-para {
+  margin-left: 0.4rem;
+}
+
+.book-demo {
+  font-weight: 550;
+}
+
+.box-email {
+  height: 3rem;
+}
+.list-social {
+  display: flex;
+  justify-content: center;
+}
+
+.free-color {
+  color: #33cc94;
+}
+
+.social-icons {
+  width: 65%;
+}
+@media only screen and (max-width: 600px) {
+  .social-icons {
+    margin-top: 2rem;
+  }
+
+  .list-social {
+    display: flex;
+    justify-content: flex-start;
+  }
+  .insta{
+    margin-left: 0rem !important;
+  }
+
+
+}
+
+.btn_mythree {
+  background: #33cc94;
+  padding: 0px 30px !important;
+  border: 1px solid #33cc94 !important;
+  -webkit-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  display: inline-block;
+  width: 100%;
+  color: #ffffff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 2px;
+  height: 40px;
+}
+/* .btn_mythree:hover {
+  color: #33cc94;
+  background: #ffffff;
+} */
+/* .form-control {
+  height: 40px;
+} */
+.tele {
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+  background: #f6f6f6;
+  padding: 0px;
+}
+
+.extra-width {
+  width: 23rem;
+}
+::ng-deep .iti input,
+::ng-deep .iti input[type="text"],
+::ng-deep .iti input[type="tel"]:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  background-color: #f6f6f6;
+  width: 100%;
+}
+
+.form-control:focus {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+.form-group {
+  border-radius: 4px;
+}
+
+.iti--allow-dropdown input,
+.iti--allow-dropdown input[type="tel"] {
+  border: none !important;
+}
+
+.form-actions {
+  width: 23rem;
+}
+
+.icon-set {
+  width: 7%;
+}
+
+::ng-deep .iti--allow-dropdown input,
+::ng-deep .iti--allow-dropdown input[type="text"],
+::ng-deep .iti--allow-dropdown input[type="tel"],
+::ng-deep .iti--separate-dial-code input,
+::ng-deep .iti--separate-dial-code input[type="text"],
+::ng-deep .iti--separate-dial-code input[type="tel"] {
+  height: 35px !important;
+}
+
+
+@media only screen and (max-width: 1024px) {
+  .extra-width {
+    width: 19.5rem;
+  }
+  .form-actions {
+    width: 19.5rem;
+  }
+  .tele {
+    padding: 0px !important;
+  }
+}
+
+.contact{
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+.para{
+  text-align: center;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.btn-done{
+  text-align: center;
+}
+
+.img-success{
+  width: 11%;
+}
+
+.btn-down {
+  background-color: #33cc94;
+  color: white;
+  font-weight: 500;
+  padding: 0.6rem 3rem;
+  margin-bottom: 1rem;
+}
+
+.success{
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+
+.modal{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+}
+
+.icon-svg{
+  margin: 0.5rem
+}
+
+.insta{
+  margin-left: 1rem;
+}
+
+.twit{
+  width: 10%;
+}
+
+.piro-img{
+  cursor: pointer;
+}

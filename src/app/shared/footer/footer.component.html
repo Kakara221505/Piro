@@ -1,0 +1,177 @@
+<footer class="w-100 py-4 flex-shrink-0">
+  <div class="container footer-cont">
+    <div class="row gy-4 gx-5">
+      <div class="col-lg-4 col-md-6">
+        <img src="../../assets/images/PiroSpacelogo.svg" alt="" class="mb-2" />
+        <p class="small text-muted footer-para">
+          Piro Space is a decentralized Metaverse where you can host your virtual events and enjoy an immersive experience
+        </p>
+      </div>
+      <div class="col-lg-4 col-md-5">
+        <h5 class="text-black mb-3 footer-widget-heading">Contact Info</h5>
+        <!-- <h3 class="footer-widget-heading">Contact Info</h3> -->
+        <!-- <div class="row">
+          <div class="col-lg-4 col-md-1">
+            <i class="fas fa-map-marker-alt" style="padding-left: 30px"></i>
+          </div>
+          <div class="col-lg-4 col-md-11" style="padding-left: 35px">
+            B-3/281, CHITRAKOOT, JAIPUR, VAISHALI NAGAR, JAIPUR, Rajasthan 302021
+          </div>
+        </div> -->
+        <ul class="footer-contact">
+          <li>
+            <i class="fas fa-map-marker-alt free-color"></i>
+            <a  class="small text-muted mb-0" >B-3/281, CHITRAKOOT, JAIPUR, VAISHALI NAGAR, JAIPUR, Rajasthan 302021</a>
+          </li>
+          <li>
+            <i class="fas fa-envelope free-color"></i>
+            <a  class="small text-muted mb-0"  href="mailto:info@pirospace.com">info@pirospace.com</a>
+          </li>
+          <li>
+            <i class="fas fa-phone-alt free-color"></i>
+            <a  class="small text-muted mb-0" href="tel:+91 9090080015">+91 9090080015</a>
+            
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <h5 class="text-black mb-3 book-demo">Book a <i class="free-color">Free</i> Demo</h5>
+        <div class="form-submit">
+          <form autocomplete="off" [formGroup]="bookForm" (ngSubmit)="bookDemo()">
+            <div class="row">
+              <div class="col-md-12 d-none mb-2"></div>
+              <div class="col-lg-12">
+                <div class="form-group mb-3">
+                  <input
+                    autocomplete="false"
+                    type="text"
+                    class="form-control extra-width"
+                    id="name"
+                    placeholder="Name *"
+                    formControlName="name"
+                    data-toggle="tooltip"
+                    data-trigger="hover"
+                    data-placement="top"
+                    required
+                    data-original-title=""
+                    title=""
+                  />
+                  <div class="mt-1" *ngIf="submitted && f['name'].invalid">
+                    <p *ngIf="f['name'].errors && f['name'].errors['required']" style="color: red">Name is required</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12">
+                <div class="form-group mb-3">
+                  <input
+                    autocomplete="false"
+                    type="email"
+                    class="form-control extra-width"
+                    placeholder="Email *"
+                    formControlName="email"
+                    data-toggle="tooltip"
+                    data-trigger="hover"
+                    data-placement="top"
+                    required
+                    data-original-title=""
+                    title=""
+                    pattern="^(\.[a-zA-Z0-9._%+-]+|[a-zA-Z0-9._%+-]+)@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                    [email]="true"
+                  />
+
+                  <div class="mt-1" *ngIf="submitted && f['email'].invalid">
+                    <p *ngIf="f['email'].errors && f['email'].errors['required']" style="color: red">Email is required</p>
+                    <p *ngIf="f['email'].errors && f['email'].errors['pattern']" style="color: red">Enter A Valid Email</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="tele mb-3 extra-width">
+                  <ngx-intl-tel-input
+                    [cssClass]="'form-control '"
+                    [preferredCountries]="preferredCountries"
+                    [enableAutoCountrySelect]="false"
+                    [enablePlaceholder]="true"
+                    [searchCountryFlag]="true"
+                    [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                    [selectFirstCountry]="false"
+                    [selectedCountryISO]="CountryISO.India"
+                    [selectFirstCountry]="selectFirstCountry"
+                    [phoneValidation]="true"
+                    [separateDialCode]="separateDialCode"
+                    (ngModelChange)="onChange($event)"
+                    name="phone"
+                    formControlName="phone"
+                    required
+                  >
+                  </ngx-intl-tel-input>
+                </div>
+                <div class="mt-1" *ngIf="submitted && f['phone'].invalid">
+                  <p *ngIf="f['phone'].errors && f['phone'].errors['required']" style="color: red">Phone is required</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn_mythree">Submit <i class="fa fa-spinner fa-spin" *ngIf="imgloading"></i></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <hr />
+  </div>
+  <div class="container">
+    <div class="footer-url">
+      <div class="row">
+        <div class="col-md-8">
+          <p class="small text-muted mb-0">&copy; {{ currentYear }} Metaxiom Private Limited. All Rights Reserved.</p>
+        </div>
+        <div class="col-md-4">
+          <div class="footer-social-icon social-icons">
+            <a href="https://www.instagram.com/piro.space/?hl=en" class="icon-svg insta" target="_blank">
+              <img src="../../assets/images/Instagram-set.svg" alt="" class="icon-set" />
+            </a>
+            <a href="https://t.me/+jjVAe288iMk5YmE9" class="icon-svg" target="_blank">
+              <img src="../../assets/images/Telegram-set.svg" alt="" class="icon-set" />
+            </a>
+            <a href="https://www.linkedin.com/company/pirospace/" class="icon-svg" target="_blank">
+              <img src="../../assets/images/Linkedin-set.svg" alt="" class="icon-set" />
+            </a>
+            <a href="https://www.facebook.com/PiroSpace" class="icon-svg" target="_blank">
+              <img src="../../assets/images/Facebook-set.svg" alt="" class="icon-set" />
+            </a>
+            <a href="https://twitter.com/PiroSpace" class="icon-svg" target="_blank">
+              <img src="../../assets/images/Twitter-set.svg" alt="" class="twit" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{ display: displayStyle }">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="row">
+        <div class="col-md-12 success">
+          <div class="img-success">
+            <img src="../../assets/images/IconArtwork.jpg" alt="" width="100%" />
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-body para">
+        <p class="contact">Thank You</p>
+        <p>
+          Your submission has been received. One of our representative from sales team will get in touch with you shortly for
+          further assistance.
+        </p>
+      </div>
+      <div class="btn-done">
+        <button type="button" class="btn btn-down" (click)="closePopup()">Done</button>
+      </div>
+    </div>
+  </div>
+</div>

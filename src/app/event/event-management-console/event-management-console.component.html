@@ -1,0 +1,548 @@
+<div class="row">
+  <div class="col-md-2">
+    <app-sidenav></app-sidenav>
+  </div>
+  <div class="col-md">
+    <div class="first">
+      <div class="row headers mt-4">
+        <app-header></app-header>
+      </div>
+      <div class="mt-4" *ngIf="accessCheck === true && earlyAccessStatus === 'APPROVED'">
+        <div class="row">
+          <div class="col-md-10 mt-4">
+            <h2 class="event-head">Event Management Console</h2>
+            <p class="event-para">Manage all of your events, check and edit event details.</p>
+          </div>
+          <div class="col-md-2 mt-4 createEventButton" *ngIf="accessCheck === true && earlyAccessStatus === 'APPROVED'">
+            <button type="button" class="btn_mythree-3" (click)="addEvents()">Create An Event</button>
+          </div>
+        </div>
+        <div class="row events" [ngStyle]="{ display: displayStyle }">
+          <div class="col-md-12">
+            <img src="../../assets/images/event-conole.png" alt="" class="event-img" />
+          </div>
+          <div class="col-md-12 mt-3 mb-4">
+            <p class="event-box-para">You haven't created any event yet to manage or edit it further.</p>
+            <b class="bold">Try creating one</b>
+          </div>
+          <div class="col-md-12">
+            <button type="button" class="btn_mythree" (click)="addEvents()">Create An Event</button>
+          </div>
+        </div>
+        <div class="row events-list mt-4" [ngStyle]="{ display: listStyle }">
+          <div class="col-md create">
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-profile-tab" data-bs-toggle="pill"
+                  data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                  aria-selected="false" (click)="getListOfPublishEvents()">
+                  Published
+                </button>
+              </li>
+              <li class="nav-item mx-3" role="presentation">
+                <button class="nav-link" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+                  type="button" role="tab" aria-controls="pills-home" aria-selected="true"
+                  (click)="getListOfDraftEvents()">
+                  Drafts
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+              <div class="tab-pane fade show active" id="pills-profile" role="tabpanel"
+                aria-labelledby="pills-profile-tab">
+                <div class="row mt-3 extra" *ngFor="
+                    let publish of publishes
+                      | paginate
+                        : {
+                            itemsPerPage: tableSize1,
+                            currentPage: page,
+                            totalItems: totalElement
+                          };
+                    let i = index
+                  ">
+                  <div class="col-md box">
+                    <div class="row">
+                      <div class="col-md-1 box-green">
+                        <p class="dates-strt">
+                          {{ publish.utcStartDate | date : "MMM" }} <br />
+                          <span class="date-single">{{ publish.utcStartDate | date : "d" }}</span>
+                          {{ publish.utcStartDate | date : "y" }}
+                        </p>
+                      </div>
+                      <div class="col-md-2 paddings">
+                        <h6 class="plan-title">EVENT</h6>
+                        <span class="spans-text">{{ publish.title }}</span>
+                      </div>
+
+                      <div class="col-md-2 paddings">
+                        <h6 class="plan-title">TIME</h6>
+                        <span class="spans-text">{{ publish.localStartDate | date : "shortTime" }} - {{ publish.localEndDate |
+                          date : "shortTime" }}
+                        </span>
+                      </div>
+                      <div class="col-md-2 paddings">
+                        <h6 class="plan-title">ATTENDEES</h6>
+                        <span class="spans-text">{{ publish.attendeeCount }}</span>
+                      </div>
+                      <div class="col-md-2 paddings">
+                        <h6 class="plan-title">STATUS</h6>
+                        <span class="spans-text">{{ publish.eventStatus }}</span>
+                      </div>
+                      <div class="col-md-1 paddings">
+                        <h6 class="plan-title">ORGANIZERS</h6>
+                        <span class="spans-text">{{ publish.organizerCount }}</span>
+                      </div>
+
+                      <div class="col-md-2 paddings-btn">
+                        <div class="row d-flex justify-content-center viewEvents">
+                          <button type="button" class="btn_view" [routerLink]="['../preview-publish', publish.eventId]">
+                            View
+                          </button>
+                          <button type="button" class="btn_joins" (click)="joinEvent(publish.identifier)" 
+                            *ngIf="currentDateTime < publish.utcEndDate">
+                            Join
+                          </button>
+                          <button type="button" class="btn_view_Exp"
+                            *ngIf="currentDateTime > publish.utcEndDate">Expired</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end mt-3" *ngIf="publishes?.length > 0">
+                  <pagination-controls previousLabel="Prev" nextLabel="Next"
+                    (pageChange)="page = $event; onTableDataChange1()">
+                  </pagination-controls>
+                </div>
+                <div class="row events" *ngIf="noPublishEvents === 0">
+                  <div class="col-md-12">
+                    <img src="../../assets/images/event-conole.png" alt="" class="event-img" />
+                  </div>
+                  <div class="col-md-12 mt-3 mb-4">
+                    <p class="event-box-para">There’re no Publish events at the moment.</p>
+                    <b class="bold">You’ll see the complete list when there’ll be any</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tab-pane fade" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="row mt-3 extra" *ngFor="
+                    let draft of drafts
+                      | paginate
+                        : {
+                            itemsPerPage: tableSize,
+                            currentPage: page,
+                            totalItems: totalElementDraft
+                          };
+                    let i = index
+                  ">
+                  <div class="col-md box">
+                    <div class="row">
+                      <div class="col-md-1 box-green">
+                        <p class="dates-strt">
+                          {{ draft.utcStartDate | date : "MMM" }} <br />
+                          <span class="date-single">{{ draft.utcStartDate | date : "d" }}</span>
+                          {{ draft.utcStartDate | date : "y" }}
+                        </p>
+                      </div>
+                      <div class="col-md-2 paddings">
+                        <h6 class="plan-title">EVENT</h6>
+                        <span class="spans-text">{{ draft.title }}</span>
+                      </div>
+
+                      <div class="col-md-2 paddings">
+                        <h6 class="plan-title">TIME</h6>
+                        <span class="spans-text">{{ draft.utcStartDate | date : "shortTime" }} - {{ draft.utcEndDate |
+                          date : "shortTime" }}
+                        </span>
+                      </div>
+                      <div class="col-md-2 paddings">
+                        <h6 class="plan-title">ATTENDEES</h6>
+                        <span class="spans-text">{{ draft.attendeeCount }}</span>
+                      </div>
+                      <div class="col-md-2 paddings">
+                        <h6 class="plan-title">STATUS</h6>
+                        <span class="spans-text">{{ draft.eventStatus }}</span>
+                      </div>
+                      <div class="col-md-1  organizer">
+                        <h6 class="plan-title">ORGANIZERS</h6>
+                        <span class="spans-text">{{ draft.organizerCount }}</span>
+                      </div>
+
+                      <div class="col-md-2 paddings-btn">
+                        <button type="button" class="btn_view" [routerLink]="['../preview-publish', draft.eventId]">
+                          View
+                        </button>
+                        <div class="row d-flex justify-content-center">
+                          <!-- <button type="button" class="btn_view"
+                            [routerLink]="['../view-event', draft.eventId]">View</button> -->
+                          <!-- <button type="button" class="btn_joins" [routerLink]="['../join', draft.identifier]"
+                            *ngIf="currentDateTime < draft.utcEndDate">
+                            Join
+                          </button> -->
+                          <button type="button" class="btn_view_Exp"
+                            *ngIf="currentDateTime > draft.utcEndDate">Expired</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end mt-3" *ngIf="drafts?.length > 0">
+                  <pagination-controls previousLabel="Prev" nextLabel="Next"
+                    (pageChange)="page = $event; onTableDataChange()">
+                  </pagination-controls>
+                </div>
+                <div class="row events" *ngIf="totalElementDraft === 0">
+                  <div class="col-md-12">
+                    <img src="../../assets/images/event-conole.png" alt="" class="event-img" />
+                  </div>
+                  <div class="col-md-12 mt-3 mb-4">
+                    <p class="event-box-para">There’re no Drafts events at the moment.</p>
+                    <b class="bold">You’ll see the complete list when there’ll be any</b>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4" *ngIf="accessCheck === false && earlyAccessStatus === 'NOT_APPLIED'">
+        <div class="row tops-title">
+          <div class="col-md-10 mt-4">
+            <h2 class="event-head">Event Management Console</h2>
+            <p class="event-para">Manage all of your events, check and edit event details.</p>
+          </div>
+        </div>
+        <div class="row extra mb-4">
+          <div class="card getEarly">
+            <div class="col-md-12 text-center">
+              <img src="../../assets/images/dashboard-event.png" alt="" class="img-dash" />
+            </div>
+            <div class="col-md-12 mt-3 mb-4 text-center">
+              <p class="para">You haven’t created any event yet to manage or edit it further</p>
+              <h2 class="host-with-text">Get Early Access to host your event with us</h2>
+              <div class="col-md-12 btns text-center mt-3">
+                <button type="button" class="btn_event_hst" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  (click)="earlyAccess()">
+                  Get Early Access
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--UI change-->
+      <div class="mt-4" *ngIf="accessCheck === false && earlyAccessStatus === 'APPLIED'">
+        <div class="row tops-title">
+          <div class="col-md-10 mt-4">
+            <h2 class="event-head">Event Management Console</h2>
+            <p class="event-para">Manage all of your events, check and edit event details.</p>
+          </div>
+        </div>
+        <div class="row extra mb-4">
+          <div class="card getEarly">
+            <div class="col-md-12 text-center">
+              <img src="../../assets/images/dashboard-event.png" alt="" class="img-dash" />
+            </div>
+            <div class="col-md-12 mt-3 mb-4 text-center">
+              <p class="congratulations">Congratulations!</p>
+              <h2 class="host-with-text">Your Early Access Request has been sent to Admin for approval</h2>
+              <p class="approve"> <span>Note :</span> You'll be able to host your events with us once the request get
+                approved</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- new changes -->
+      <div class="mt-4" *ngIf="accessCheck === false && earlyAccessStatus === 'APPROVED'">
+        <div class="row tops-title">
+          <div class="col-md-10 mt-4">
+            <h2 class="event-head">Event Management Console</h2>
+            <p class="event-para">Manage all of your events, check and edit event details.</p>
+          </div>
+        </div>
+        <div class="row extra mb-4">
+          <div class="card getEarly">
+            <div class="col-md-12 text-center">
+              <img src="../../assets/images/dashboard-event.png" alt="" class="img-dash" />
+            </div>
+            <div class="col-md-12 mt-3 mb-4 text-center">
+              <p class="congratulations">Congratulations!</p>
+              <h2 class="host-with-text">Your Early Access Request has been sent to Admin for approval</h2>
+              <p class="approve"> <span>Note :</span> You'll be able to host your events with us once the request get
+                approved</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4" *ngIf="accessCheck === false && earlyAccessStatus === 'DECLINED'">
+        <div class="row tops-title">
+          <div class="col-md-10 mt-4">
+            <h2 class="event-head">Event Management Console</h2>
+            <p class="event-para">Manage all of your events, check and edit event details.</p>
+          </div>
+        </div>
+        <div class="row extra mb-4">
+          <div class="card getEarly">
+            <div class="col-md-12 text-center">
+              <img src="../../assets/images/dashboard-event.png" alt="" class="img-dash" />
+            </div>
+            <div class="col-md-12 mt-3 mb-4 text-center">
+              <p class="congratulations">Declined!</p>
+              <h2 class="host-with-text">Your Early Access Request has been declined from Admin</h2>
+              <p class="approve"> <span>Note :</span>You have to fill Early Access Request for approval!</p>
+              <div class="col-md-12 btns text-center mt-3">
+                <button type="button" class="btn_event_hst" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  (click)="earlyAccess()">
+                  Get Early Access
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="mt-4" *ngIf="accessCheck === true && earlyAccessStatus === 'APPROVED'">
+        <div class="row tops-title">
+          <div class="col-md-10 mt-4">
+            <h2 class="event-head">Event Management Console</h2>
+            <p class="event-para">Manage all of your events, check and edit event details.</p>
+          </div>
+          <div class="col-md-2 mt-4">
+            <button type="button" class="btn_mythree-3" (click)="addEvents()">Create An Event</button>
+          </div>
+        </div>
+        <div class="row events-list mt-4">
+          <div class="col-md create">
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link active"
+                  id="pills-profile-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#pills-profile"
+                  type="button"
+                  role="tab"
+                  aria-controls="pills-profile"
+                  aria-selected="false"
+                  (click)="getListOfPublishEvents()"
+                >
+                  Published
+                </button>
+              </li>
+              <li class="nav-item mx-3" role="presentation">
+                <button
+                  class="nav-link"
+                  id="pills-home-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#pills-home"
+                  type="button"
+                  role="tab"
+                  aria-controls="pills-home"
+                  aria-selected="true"
+                  (click)="getListOfDraftEvents()"
+                >
+                  Drafts
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+              <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div
+                  class="row mt-3 extra"
+                  *ngFor="
+                    let publish of publishes
+                      | paginate
+                        : {
+                            itemsPerPage: tableSize1,
+                            currentPage: page,
+                            totalItems: totalElement
+                          };
+                    let i = index
+                  "
+                >
+                  <div class="col-md box">
+                    <div class="row">
+                      <div class="col-md-1 box-green">
+                        <p class="dates-strt">
+                          {{ publish.utcStartDate | date : "MMM" }} <br />
+                          <span class="date-single">{{ publish.utcStartDate | date : "d" }}</span>
+                          {{ publish.utcStartDate | date : "y" }}
+                        </p>
+                      </div>
+                      <div class="col-md-2 paddings">
+                        <h6 class="plan-title">EVENT</h6>
+                        <span class="spans-text">{{ publish.title }}</span>
+                      </div>
+
+                      <div class="col-md-2 paddings">
+                        <h6 class="plan-title">TIME</h6>
+                        <span class="spans-text"
+                          >{{ publish.utcEndDate | date : "shortTime" }} - {{ publish.utcEndDate | date : "shortTime" }}
+                        </span>
+                      </div>
+                      <div class="col-md-2 paddings">
+                        <h6 class="plan-title">ATTENDEES</h6>
+                        <span class="spans-text">{{ publish.attendeeCount }}</span>
+                      </div>
+                      <div class="col-md-2 paddings">
+                        <h6 class="plan-title">STATUS</h6>
+                        <span class="spans-text">{{ publish.eventStatus }}</span>
+                      </div>
+                      <div class="col-md-1 paddings">
+                        <h6 class="plan-title">ORGANIZERS</h6>
+                        <span class="spans-text">{{ publish.organizerCount }}</span>
+                      </div>
+
+                      <div class="col-md-2 paddings-btn">
+
+                        <div class="row d-flex justify-content-center viewEvents">
+                          <button type="button" class="btn_view" [routerLink]="['../preview-publish', publish.eventId]">
+                            View
+                          </button>
+                          <button
+                            type="button"
+                            class="btn_joins"
+                            [routerLink]="['/join/', publish.identifier]"
+                            *ngIf="currentDateTime < publish.utcEndDate"
+                          >
+                            Join
+                          </button>
+                          <button type="button" class="btn_view_Exp" *ngIf="currentDateTime > publish.utcEndDate">Expired</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end mt-3" *ngIf="publishes?.length > 0">
+                  <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="page = $event; onTableDataChange1()">
+                  </pagination-controls>
+                </div>
+                <div class="row events" *ngIf="noPublishEvents === 0">
+                  <div class="col-md-12">
+                    <img src="../../assets/images/event-conole.png" alt="" class="event-img" />
+                  </div>
+                  <div class="col-md-12 mt-3 mb-4">
+                    <p class="event-box-para">There’re no Publish events at the moment.</p>
+                    <b class="bold">You’ll see the complete list when there’ll be any</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tab-pane fade" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div
+                  class="row mt-3 extra"
+                  *ngFor="
+                    let draft of drafts
+                      | paginate
+                        : {
+                            itemsPerPage: tableSize,
+                            currentPage: page,
+                            totalItems: totalElementDraft
+                          };
+                    let i = index
+                  "
+                >
+                  <div class="col-md box">
+                    <div class="row">
+                      <div class="col-md-1 box-green">
+                        <p class="dates-strt">
+                          {{ draft.utcStartDate | date : "MMM" }} <br />
+                          <span class="date-single">{{ draft.utcStartDate | date : "d" }}</span>
+                          {{ draft.utcStartDate | date : "y" }}
+                        </p>
+                      </div>
+                      <div class="col-md-2 paddings">
+                        <h6 class="plan-title">EVENT</h6>
+                        <span class="spans-text">{{ draft.title }}</span>
+                      </div>
+
+                      <div class="col-md-2 paddings">
+                        <h6 class="plan-title">TIME</h6>
+                        <span class="spans-text"
+                          >{{ draft.utcStartDate | date : "shortTime" }} - {{ draft.utcEndDate | date : "shortTime" }}
+                        </span>
+                      </div>
+                      <div class="col-md-2 paddings">
+                        <h6 class="plan-title">ATTENDEES</h6>
+                        <span class="spans-text">{{ draft.attendeeCount }}</span>
+                      </div>
+                      <div class="col-md-2 paddings">
+                        <h6 class="plan-title">STATUS</h6>
+                        <span class="spans-text">{{ draft.eventStatus }}</span>
+                      </div>
+                      <div class="col-md-1 paddings">
+                        <h6 class="plan-title">ORGANIZERS</h6>
+                        <span class="spans-text">{{ draft.organizerCount }}</span>
+                      </div>
+
+                      <div class="col-md-2 paddings-btn">
+                        <button type="button" class="btn_view" [routerLink]="['../add-events', draft.eventId , 'basic-details']" >View</button>
+                        <div class="row d-flex justify-content-center">
+                          <button type="button" class="btn_view" [routerLink]="['../view-event', draft.eventId]">View</button>
+                          <button
+                            type="button"
+                            class="btn_joins"
+                            [routerLink]="['../join', draft.identifier]"
+                            *ngIf="currentDateTime < draft.utcEndDate"
+                          >
+                            Join
+                          </button>
+                          <button type="button" class="btn_view_Exp" *ngIf="currentDateTime > draft.utcEndDate">Expired</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end mt-3" *ngIf="drafts?.length > 0">
+                  <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="page = $event; onTableDataChange()">
+                  </pagination-controls>
+                </div>
+                <div class="row events" *ngIf="totalElementDraft === 0">
+                  <div class="col-md-12">
+                    <img src="../../assets/images/event-conole.png" alt="" class="event-img" />
+                  </div>
+                  <div class="col-md-12 mt-3 mb-4">
+                    <p class="event-box-para">There’re no Drafts events at the moment.</p>
+                    <b class="bold">You’ll see the complete list when there’ll be any</b>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+  data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Get Early Access to host your event</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- <p>You can reach us anytime via <span>support@pirospace.com</span></p>  -->
+      </div>
+      <div class="modal-body">
+        <form #getEarlyForm="ngForm">
+          <div class="mb-3" *ngFor="let list of earlyAccessGet; index as i">
+            <!-- <label for="recipient-name" class="col-form-label" hidden>{{ list.id }}</label> -->
+            <label for="recipient-name" class="col-form-label">{{ list.title | titlecase }}</label>
+            <input type="text" class="form-control" name="isAnswers-{{ i }}" placeholder="Enter Your Answer"
+              [(ngModel)]="answers[i]" #answer="ngModel" />
+          </div>
+        </form>
+      </div>
+      <div class="mb-3 modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+        <button type="button" class="btn-getEarly" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal"
+          data-bs-dismiss="modal" (click)="earlyAccessPost(getEarlyForm)">
+          Get Early Access
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

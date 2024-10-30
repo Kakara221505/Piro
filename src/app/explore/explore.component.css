@@ -1,0 +1,521 @@
+.input-group-text {
+  height: 50px;
+  border-radius: 0px;
+  font-size: 16px;
+  background-color: #f2f2f2;
+  float: left;
+}
+
+.main {
+  width: 50%;
+  margin: 50px auto;
+}
+.headers {
+  text-align: end;
+}
+
+.fa-circle-exclamation {
+  color: #eb5757 !important;
+}
+
+.error-show {
+  padding-left: 4rem;
+}
+/* Bootstrap 4 text input with search icon */
+.fa-heart {
+  color: #ccc;
+  font-size: 13px;
+}
+
+.fa-heart.active {
+  color: #33cc94;
+}
+
+.fa-bars {
+  color: #152934 !important;
+}
+.mx-3 {
+  margin-left: 0.5rem !important;
+  margin-right: 0.5rem !important;
+}
+.fa-user {
+  font-size: 13px;
+  color: #33cc94 !important;
+}
+.has-search .form-control {
+  padding-left: 2.375rem;
+  height: 45px;
+  width: 290px !important;
+}
+.card-text-4 {
+  font-size: 13px !important;
+  margin-top: 5px !important;
+}
+.pull-right {
+  margin-left: 40px !important;
+  color: #33cc94;
+  text-shadow: 2px 2px 2px 2px #33cc94;
+}
+.explore-head {
+  font-weight: 700;
+}
+
+.tops-title {
+  margin-top: 2rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 3rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}
+
+.btn-drop {
+  border-color: #aaa;
+  border: 1.18605px solid #c4c4c4;
+  border-radius: 8px;
+  width: 9rem;
+  height: 45px;
+}
+
+.card-body {
+  padding: 0.5rem;
+}
+
+.card-text-1 {
+  font-weight: bold;
+  margin-bottom: 0rem !important;
+  color: #525252;
+  font-size: 0.9rem;
+}
+
+.card-text-2 {
+  font-weight: 400;
+}
+
+.card-text-3 {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 0rem;
+}
+
+.ticketper {
+  font-weight: 300;
+}
+
+.card-img-top {
+  margin-top: 1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  cursor: pointer;
+  height: inherit;
+  width: 100%;
+}
+
+.imgs {
+  height: 180px;
+}
+
+.card {
+  background: #ffffff;
+  box-shadow: 0px 4px 20px rgba(182, 182, 182, 0.25);
+  border-radius: 8px;
+  border: none;
+}
+
+.btn-register {
+  color: white;
+  background-color: #33cc94;
+  border: 1px solid #33cc94 !important;
+  -webkit-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  display: inline-block;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 45px;
+  margin-right: 10px !important;
+  width: 136px !important;
+}
+
+.btn-register:hover {
+  color: #33cc94;
+  background-color: white;
+}
+.piro {
+  /* color: #33cc94; */
+  margin-bottom: 0rem;
+  font-size: 12px !important;
+}
+.explorCard {
+  width: 21.1rem !important;
+}
+.regis {
+  text-align: end;
+}
+
+.tabss {
+  margin-left: 1rem;
+}
+
+.registerd {
+  font-weight: 700;
+  font-size: 14px;
+
+  text-transform: uppercase;
+
+  color: #33cc94;
+}
+
+.nav-pills .nav-link.active {
+  background-color: #e9fff7;
+  padding: 0.6rem;
+  border-color: #33cc94;
+  font-weight: 600;
+  font-size: 17px;
+  color: #33cc94;
+  border-radius: 40px;
+}
+
+.nav-link {
+  color: black;
+  padding: 0.6rem;
+  width: 12rem;
+  border: 1px solid #c4c4c4;
+  border-radius: 40px;
+  background: white;
+}
+
+.tab-content {
+  margin-top: 1rem;
+}
+
+.card-title {
+  font-weight: 700;
+}
+
+.timer {
+  font-size: 12px;
+}
+
+.filter-text {
+  font-weight: 600;
+  font-size: 18px;
+  text-align: center;
+}
+
+.live {
+  position: absolute;
+  top: 6%;
+  left: 9%;
+  color: white;
+  background: #d93025;
+  border-radius: 20px;
+  border: none;
+  width: 5rem;
+  text-align: center;
+  padding: 5px;
+}
+
+.pass-head {
+  font-weight: 600;
+  font-size: 37px;
+  text-align: center;
+  color: #152934;
+}
+
+.pass-text {
+  font-weight: 700;
+  font-size: 20px;
+  text-align: center;
+  color: #525252;
+}
+
+.pass-text-received {
+  font-weight: 700;
+  font-size: 26px;
+  text-align: center;
+  color: #525252;
+}
+
+.register-text {
+  font-weight: 700;
+  font-size: 26px;
+  text-align: center;
+  color: #000000;
+}
+.form-control {
+  height: 50px;
+  border-radius: 0rem !important;
+}
+
+.form-control:focus {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.btn-registernow {
+  color: white;
+  background-color: #33cc94;
+  border: 1px solid #33cc94 !important;
+  -webkit-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  display: inline-block;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 50px;
+  width: 100%;
+}
+
+.btn-registernow:hover {
+  color: #33cc94;
+  background-color: white;
+}
+
+.btn-not {
+  color: #33cc94;
+  background-color: white;
+  border: 1px solid #33cc94 !important;
+  -webkit-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  display: inline-block;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 50px;
+  width: 100%;
+}
+
+.btn-not:hover {
+  color: white;
+  background-color: #33cc94;
+}
+.strike {
+  display: block;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-top: 2rem;
+}
+
+.strike > span {
+  position: relative;
+  display: inline-block;
+}
+
+.strike > span:before,
+.strike > span:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 20rem;
+  height: 1px;
+  background: #c4c4c4;
+}
+
+.strike > span:before {
+  right: 100%;
+  margin-right: 15px;
+}
+
+.strike > span:after {
+  left: 100%;
+  margin-left: 15px;
+}
+
+.explore-text {
+  color: #33cc94;
+  font-weight: 600;
+  font-size: 20px;
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.pending-text {
+  font-weight: 400;
+  font-size: 23px;
+
+  text-align: center;
+
+  color: #000000;
+}
+
+.bold {
+  color: #33cc94;
+  font-weight: 700;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.btn-pending {
+  color: #33cc94;
+  background-color: white;
+  border: none;
+  -webkit-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  display: inline-block;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.pending {
+  display: flex;
+  justify-content: end;
+  align-items: flex-end;
+}
+
+.already-text {
+  font-weight: 700;
+  font-size: 17px;
+  text-align: center;
+  color: #000000;
+}
+
+.modal-title {
+  font-weight: 600;
+  font-size: 28px;
+}
+
+.btn-close {
+  border-radius: 50%;
+  background-color: #33cc94;
+}
+
+.filter-titles {
+  font-weight: 600;
+  font-size: 20px;
+
+  color: #525252;
+}
+
+.form-check {
+  border: 1px solid #33cc94;
+  border-radius: 28px;
+}
+
+.check {
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.form-check-input {
+  border-radius: 50%;
+  border-color: #33cc94;
+}
+.form-check-input:checked {
+  background-color: #33cc94;
+  border-color: #33cc94;
+  border-radius: 50%;
+}
+
+.btn-filter {
+  color: #33cc94;
+  background-color: white;
+  border: 1px solid #33cc94 !important;
+  -webkit-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  display: inline-block;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 45px;
+  width: 18%;
+}
+
+.btn-filter:hover {
+  color: white;
+  background-color: #33cc94;
+}
+
+.btn-clear {
+  color: white;
+  background-color: #33cc94;
+  border: 1px solid #33cc94 !important;
+  -webkit-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  display: inline-block;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 45px;
+  width: 18%;
+}
+
+.btn-loadMore {
+  color: #33cc94;
+  background-color: white;
+  border: 1px solid #33cc94 !important;
+  -webkit-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  display: inline-block;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 45px;
+  width: 100%;
+}
+
+.btn-loadMore:hover {
+  color: white;
+  background-color: #33cc94;
+}
+.btn-clear:hover {
+  color: #33cc94;
+  background-color: white;
+}
+
+.modal-dialog {
+  max-width: 640px;
+}
+
+.modal-xl {
+  max-width: 890px !important;
+}
+
+.form-check-label {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.form-check-input:checked:after .form-checkchecked:after {
+  background-color: #33cc94;
+}
+.profileIcons {
+  margin-right: 40px !important;
+}
+@media only screen and (max-width: 600px) {
+  .first {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    margin-left: 0px !important;
+    margin-right: 30px !important;
+  }
+  .nav-pills .nav-link.active {
+    width: 110px !important;
+  }
+  .nav-link {
+    width: 110px !important;
+  }
+  .btn-loadMore {
+    margin-left: 28px !important;
+  }
+  .explorCard {
+    width: 24.1rem !important;
+  }
+}

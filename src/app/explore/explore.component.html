@@ -1,0 +1,1518 @@
+<div class="row">
+  <div class="col-md-2">
+    <app-sidenav></app-sidenav>
+  </div>
+  <div class="col-md">
+    <div class="first">
+      <div class="row headers mt-4">
+        <app-header></app-header>
+      </div>
+      <div class="row tops-title">
+        <div class="col-md-6 mt-4">
+          <h2 class="explore-head">Our Virtual Events</h2>
+          <p class="explore-para">Have a look of some of our virtually hosted events.</p>
+        </div>
+        <div class="col-md-6 mt-4 d-flex justify-content-end" style="margin-left: -32px;">
+          <form class="w-40" role="search" #searchForm="ngForm">
+            <div class="form-group has-search">
+              <span class="fa fa-search form-control-feedback"></span>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search"
+                (keyup.enter)="addToKeywords()"
+                [(ngModel)]="searchEvent"
+                name="search"
+              />
+            </div>
+          </form>
+          <!-- <div class="dropdown">
+            <button class="btn btn-drop" type="button" data-bs-toggle="modal" data-bs-target="#filterModal">
+              <i class="fa-solid fa-bars"></i> Filter
+            </button>
+          </div> -->
+        </div>
+      </div>
+      <div class="row mt-4">
+        <ul class="nav nav-pills mb-3 tabss" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              id="pills-all-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-all"
+              type="button"
+              role="tab"
+              aria-controls="pills-all"
+              aria-selected="false"
+              (click)="getExploreAll()"
+            >
+              All
+            </button>
+          </li>
+          <li class="nav-item mx-3" role="presentation">
+            <button
+              class="nav-link"
+              id="pills-profile-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-profile"
+              type="button"
+              role="tab"
+              aria-controls="pills-profile"
+              aria-selected="false"
+              (click)="getExploreLive()"
+            >
+              Live
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="pills-contact-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-contact"
+              type="button"
+              role="tab"
+              aria-controls="pills-contact"
+              aria-selected="false"
+              (click)="getExploreUpcoming()"
+            >
+              Trending
+            </button>
+          </li>
+          <!-- <li class="nav-item mx-3" role="presentation">
+            <button
+              class="nav-link"
+              id="pills-home-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-home"
+              type="button"
+              role="tab"
+              aria-controls="pills-home"
+              aria-selected="true"
+              (click)="getExplorePopular()"
+            >
+              Popular
+            </button>
+          </li> -->
+        </ul>
+        <div class="tab-content mb-5" id="pills-tabContent">
+          <div class="tab-pane fade show active" id="pills-all" role="tabpanel" aria-labelledby="pills-all-tab">
+            <div class="row event-rows mt-4" *ngIf="!contentLoaded">
+              <div class="col-md-4" *ngFor="let line of [0, 1, 2]">
+                <div class="card">
+                  <div class="loader">
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '200px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row explores">
+              <div class="card mx-3 mb-4 explorCard" *ngFor="let all of allExplores; let i = index">
+                <div class="imgs">
+                  <div class="live" *ngIf="all.liveStatus === true">Live</div>
+                  <img
+                    src="../../assets/images/Sci fi 2.png"
+                    class="card-img-top"
+                    alt="..."
+                    [routerLink]="['../register', all.eventId]"
+                  />
+                </div>
+                <div class="card-body mt-3">
+                  <div class="row">
+                    <div class="col-md-9">
+                      <h5 class="card-title">{{ all.eventTitle }}</h5>
+                    </div>
+                    <div class="col-md-3">
+                      <i class="fa-solid fa-heart pull-right"></i>
+                    </div>
+                    <!-- <div class="col d-flex justify-content-end">
+                      <i class="fas fa-heart" [ngClass]="{ active: isActive }" (click)="onClick()"></i>
+                    </div> -->
+                  </div>
+
+                  <p class="card-text-1">{{ all.eventStartDate | date : "fullDate" }} {{all.eventStartDate | date : "shortTime" }} onwards</p>
+                  <p class="card-text-4">{{all.eventCategory}}</p>
+                  <p class="card-text-3" *ngIf="all.accessType == 'OPEN'">Open Event</p>
+                  <p class="card-text-3" *ngIf="all.accessType == 'PASSWORD_PROTECTED'">
+                    <!-- Paid - $2.00 <span class="ticketper">(per ticket)</span> -->
+                    Restricted Entry
+                  </p>
+                  <p class="card-text-3" *ngIf="all.accessType == 'EMAIL_AND_OTP'">
+                    Restricted Entry
+                  </p>
+                </div>
+                <div class="card-body">
+                  <div class="row mb-2">
+                    <div class="col-md-6">
+                      <p class="piro"><i class="fa fa-user" aria-hidden="true"></i> By Piro Space</p>
+                      <p class="piro"><i class="fa-solid fa-heart"></i> likes</p>
+                    </div>
+                    <div class="col-md-6 regis">
+                      <!-- <p class="registerd" *ngIf="all.registrationStatus === 'APPROVED' && all.registered == true && all.accessType == 'OPEN'">Registered</p> -->
+                      <p
+                      class="registerd"
+                      *ngIf="
+                        all.registrationStatus === 'PENDING' && all.registered == true && all.accessType == 'EMAIL_AND_OTP'
+                      "
+                    >
+                      Request Pending
+                    </p>
+                    <p
+                        class="timer"
+                        *ngIf="
+                          all.registrationStatus === 'APPROVED' &&
+                          all.registered == true &&
+                          all.accessType == 'EMAIL_AND_OTP' &&
+                          all.liveStatus === false
+                        "
+                      >
+                        <img src="../../assets/images/Timer.svg" alt="" /> Event Havn't Start {{all.eventStartTime}}-{{all.eventEndTime}}
+                      </p>
+                      <p
+                        class="timer"
+                        *ngIf="
+                          all.registrationStatus === 'APPROVED' &&
+                          all.registered == true &&
+                          all.accessType == 'OPEN' &&
+                          all.liveStatus === false
+                        "
+                      >
+                        <img src="../../assets/images/Timer.svg" alt="" /> Event Start Time {{ all.eventStartTime}}
+                      </p>
+                      <!-- {{showHours}},{{showMintues}},{{showSeconds}} -->
+                      <p
+                        class="timer"
+                        *ngIf="
+                          all.registrationStatus === 'INVITED' &&
+                          all.registered == true &&
+                          all.accessType == 'OPEN' &&
+                          all.liveStatus === false
+                        "
+                      >
+                        <img src="../../assets/images/Timer.svg" alt="" /> Event Havn't Start {{all.eventStartTime}}-{{all.eventEndTime}}
+                      </p>
+                      <button
+                        type="button"
+                        class="btn-register"
+                        (click)="joinNow(all.identifier)"
+                        *ngIf="
+                          all.registrationStatus === 'APPROVED' &&
+                          all.registered === true &&
+                          all.accessType === 'OPEN' &&
+                          all.liveStatus === true
+                        "
+                      >
+                        Join Now
+                      </button>
+                      <button
+                        type="button"
+                        class="btn-register"
+                        (click)="joinNow(all.identifier)"
+                                                *ngIf="
+                          all.registrationStatus === 'APPROVED' &&
+                          all.registered === true &&
+                          all.accessType === 'PASSWORD_PROTECTED' &&
+                          all.liveStatus === true &&
+                          all.alreadyMember == true
+                        "
+                      >
+                        Join Now
+                      </button>
+                      <button
+                      type="button"
+                      class="btn-register"
+                      (click)="joinNow(all.identifier)"
+                                            *ngIf="
+                        all.registrationStatus === 'APPROVED' &&
+                        all.registered === true &&
+                        all.accessType === 'EMAIL_AND_OTP' &&
+                        all.liveStatus === true &&
+                        all.alreadyMember == true
+                      "
+                    >
+                      Join Now
+                    </button>
+                      <p
+                        class="timer"
+                        *ngIf="
+                          all.registrationStatus === 'APPROVED' &&
+                          all.registered == true &&
+                          all.accessType == 'PASSWORD_PROTECTED' &&
+                          all.liveStatus === false
+                        "
+                      >
+                        <img src="../../assets/images/Timer.svg" alt="" /> Event Havn't Start {{all.eventStartTime}}-{{all.eventEndTime}}
+                      </p>
+                      <p
+                        class="registerd"
+                        *ngIf="
+                          all.registrationStatus === 'PENDING' && all.registered == true && all.accessType == 'PASSWORD_PROTECTED'
+                        "
+                      >
+                        Request Pending
+                      </p>
+                      <p
+                      class="registerd"
+                      *ngIf="
+                        all.registrationStatus === 'DECLINED' && all.registered == true && all.accessType == 'PASSWORD_PROTECTED'
+                      "
+                    >
+                      Request Pending
+                    </p>
+                      <!-- <p class="registerd" *ngIf="all.registrationStatus === 'APPROVED' && all.registered == true && all.accessType == 'PASSWORD_PROTECTED'">Registered</p> -->
+                      <button
+                        class="btn-register"
+                        data-bs-toggle="modal"
+                        data-bs-target="#passwordAccess"
+                        *ngIf="
+                          all.registered == true &&
+                          all.accessType == 'PASSWORD_PROTECTED' &&
+                          all.registrationStatus === 'APPROVED' &&
+                          all.liveStatus == true &&
+                          all.alreadyMember == false
+                        "
+                        (click)="getId(all.eventId)"
+                      >
+                        Enter Password
+                      </button>
+                      <button
+                        class="btn-register"
+                        data-bs-toggle="modal"
+                        data-bs-target="#openRegistration"
+                        *ngIf="all.registered == false && all.accessType == 'OPEN'"
+                        (click)="getId(all.eventId)"
+                      >
+                        Register Now
+                      </button>
+                      <button
+                        class="btn-register"
+                        data-bs-toggle="modal"
+                        data-bs-target="#requestAccess"
+                        *ngIf="all.registered == false && all.accessType == 'PASSWORD_PROTECTED'"
+                        (click)="getId(all.eventId)"
+                      >
+                        Request Access
+                      </button>
+                      <button
+                        class="btn-register"
+                        data-bs-toggle="modal"
+                        data-bs-target="#requestAccessOtp"
+                        *ngIf="all.registered == false && all.accessType == 'EMAIL_AND_OTP'"
+                        (click)="getId(all.eventId)"
+                      >
+                        Request Access
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="d-flex justify-content-center mt-3" *ngIf="allExplores?.length > 0">
+                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="page = $event; onTableDataChange1()">
+                </pagination-controls>
+              </div> -->
+              <div class="row d-flex justify-content-center">
+                <div class="col-md-2">
+                  <button
+                    class="btn-loadMore"
+                    (click)="showAll()"
+                    [ngStyle]="{ display: formStyle }"
+                    *ngIf="totalAllElements > 12"
+                  >
+                    Load More
+                  </button>
+                </div>
+              </div>
+              <div class="row d-flex justify-content-center" *ngIf="noSearchData === 0">
+                <div class="col-md-6">
+                  <p class="filter-text">There’re no Events at the moment.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <div class="row event-rows mt-4" *ngIf="!contentLoadedExplore">
+              <div class="col-md-4" *ngFor="let line of [0, 1, 2]">
+                <div class="card">
+                  <div class="loader">
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '200px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row explores">
+              <div class="card mx-3 mb-4 explorCard" *ngFor="let live of liveExplores; let i = index">
+                <div class="imgs">
+                  <div class="live">Live</div>
+                  <img
+                    src="../../assets/images/Sci fi 2.png"
+                    class="card-img-top"
+                    alt="..."
+                    [routerLink]="['../register', live.eventId]"
+                  />
+                </div>
+                <div class="card-body mt-3">
+                  <div class="row">
+                    <div class="col-md-9">
+                      <h5 class="card-title">{{ live.eventTitle }}</h5>
+                    </div>
+                    <!-- <div class="col d-flex justify-content-end">
+                      <i class="fas fa-heart" [ngClass]="{ active: isActive }" (click)="onClick()"></i>
+                    </div> -->
+                  </div>
+
+                  <p class="card-text-1">{{ live.eventStartDate | date : "fullDate" }} {{live.eventStartDate | date : "shortTime" }} onwards</p>
+                  <p class="card-text-4">{{live.eventCategory}}</p>
+
+                  <p class="card-text-3" *ngIf="live.accessType == 'OPEN'">Open Event</p>
+                  <p class="card-text-3" *ngIf="live.accessType == 'PASSWORD_PROTECTED'">
+                    <!-- Paid - $2.00 <span class="ticketper">(per ticket)</span> -->
+                    Restricted Entry
+                  </p>
+                  <p class="card-text-3" *ngIf="live.accessType == 'EMAIL_AND_OTP'">
+                    Restricted Entry
+                  </p>
+                </div>
+                <div class="card-body">
+                  <div class="row mb-2">
+                    <div class="col-md-6">
+                      <p class="piro"><i class="fa fa-user" aria-hidden="true"></i> By Piro Space</p>
+                      <p class="piro"><i class="fa-solid fa-heart"></i> Likes</p>
+                    </div>
+                    <div class="col-md-6 regis">
+                      <button class="btn-register" (click)="joinNow(live.identifier)" 
+                      *ngIf="
+                      live.registrationStatus === 'APPROVED' &&
+                      live.registered === true &&
+                      live.accessType === 'OPEN' &&
+                      live.liveStatus === true
+                    ">
+                        Join Now
+                      </button>
+                      <button class="btn-register" data-bs-toggle="modal" data-bs-target="#openRegistration" *ngIf="live.registered == false && live.accessType == 'OPEN'" (click)="getId(live.eventId)">Register Now</button>
+                      <button class="btn-register" data-bs-toggle="modal" data-bs-target="#requestAccess" *ngIf="live.registered == false && live.accessType == 'PASSWORD_PROTECTED'" (click)="getId(live.eventId)">Request Access</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="d-flex justify-content-center mt-3" *ngIf="totalLiveElements > 12">
+                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="page1 = $event; onTableDataChange2()">
+                </pagination-controls>
+              </div> -->
+              <div class="row d-flex justify-content-center">
+                <div class="col-md-2">
+                  <button
+                    class="btn-loadMore"
+                    (click)="showLive()"
+                    [ngStyle]="{ display: liveLoadMoreStyle }"
+                    *ngIf="totalLiveElements > 12"
+                  >
+                    Load More
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+            <div class="row event-rows mt-4" *ngIf="!contentLoadedUpcoming">
+              <div class="col-md-4" *ngFor="let line of [0, 1, 2]">
+                <div class="card">
+                  <div class="loader">
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '200px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row explores">
+              <div class="card mx-3 mb-4 explorCard" *ngFor="let upcome of upcomesExplores; let i = index">
+                <div class="imgs">
+                  <img
+                    src="../../assets/images/Sci fi 2.png"
+                    class="card-img-top"
+                    alt="..."
+                    [routerLink]="['../register', upcome.eventId]"
+                  />
+                </div>
+                <div class="card-body mt-3">
+                  <div class="row">
+                    <div class="col-md-9">
+                      <h5 class="card-title">{{ upcome.eventTitle }}</h5>
+                    </div>
+                    <!-- <div class="col d-flex justify-content-end">
+                      <i class="fas fa-heart" [ngClass]="{ active: isActive }" (click)="onClick()"></i>
+                    </div> -->
+                  </div>
+
+                  <p class="card-text-1">{{ upcome.eventStartDate | date : "fullDate" }} {{upcome.eventStartDate | date : "shortTime" }} onwards</p>
+                  <p class="card-text-4">{{upcome.eventCategory}}</p>
+                  <p class="card-text-3" *ngIf="upcome.accessType == 'OPEN'">Open Event</p>
+                  <p class="card-text-3" *ngIf="upcome.accessType == 'PASSWORD_PROTECTED'">Restricted Entry</p>
+                  <p class="card-text-3" *ngIf="upcome.accessType == 'EMAIL_AND_OTP'">Restricted Entry</p>
+                </div>
+                <div class="card-body">
+                  <div class="row mb-2">
+                    <div class="col-md-6">
+                      <p class="piro"><i class="fa fa-user" aria-hidden="true"></i> By Piro Space</p>
+                      <p class="piro"><i class="fa-solid fa-heart"></i> Likes</p>
+                    </div>
+                    <div class="col-md-6 regis">
+                      <p
+                      class="registerd"
+                      *ngIf="
+                        upcome.registrationStatus === 'PENDING' && upcome.registered == true && upcome.accessType == 'EMAIL_AND_OTP'
+                      "
+                    >
+                      Request Pending
+                    </p>
+                      <!-- <p class="registerd" *ngIf="upcome.registrationStatus === 'APPROVED' && upcome.registered == true && upcome.accessType == 'OPEN'">Registered</p> -->
+                      <p
+                        class="timer"
+                        *ngIf="
+                          upcome.registrationStatus === 'APPROVED' &&
+                          upcome.registered == true &&
+                          upcome.accessType == 'OPEN' &&
+                          upcome.liveStatus === false
+                        "
+                      >
+                        <img src="../../assets/images/Timer.svg" alt="" /> Event Havn't Start  {{upcome.eventStartTime}}-{{upcome.eventEndTime}}
+                      </p>
+                      <p
+                        class="timer"
+                        *ngIf="
+                          upcome.registrationStatus === 'INVITED' &&
+                          upcome.registered == true &&
+                          upcome.accessType == 'OPEN' &&
+                          upcome.liveStatus === false
+                        "
+                      >
+                        <img src="../../assets/images/Timer.svg" alt="" /> Event Havn't Start {{upcome.eventStartTime}}-{{upcome.eventEndTime}}
+                      </p>
+                      <button
+                        type="button"
+                        class="btn-register"
+                       
+                        (click)="joinNow(upcome.identifier)"
+                        *ngIf="
+                          upcome.registrationStatus === 'APPROVED' &&
+                          upcome.registered === true &&
+                          upcome.accessType === 'OPEN' &&
+                          upcome.liveStatus === true
+                        "
+                      >
+                        Join Now
+                      </button>
+                      <button
+                      type="button"
+                      class="btn-register"
+                      (click)="joinNow(upcome.identifier)"
+                      *ngIf="
+                        upcome.registrationStatus === 'APPROVED' &&
+                        upcome.registered === true &&
+                        upcome.accessType === 'PASSWORD_PROTECTED' &&
+                        upcome.liveStatus === true &&
+                        upcome.alreadyMember == true
+                      "
+                    >
+                      Join Now
+                    </button>
+                      <p
+                        class="timer"
+                        *ngIf="
+                          upcome.registrationStatus === 'APPROVED' &&
+                          upcome.registered == true &&
+                          upcome.accessType == 'PASSWORD_PROTECTED' &&
+                          upcome.liveStatus === false
+                        "
+                      >
+                        <img src="../../assets/images/Timer.svg" alt="" /> Event Havn't Start {{upcome.eventStartTime}}-{{upcome.eventEndTime}}
+                      </p>
+                      <p
+                        class="registerd"
+                        *ngIf="
+                          upcome.registrationStatus === 'PENDING' &&
+                          upcome.registered == true &&
+                          upcome.accessType == 'PASSWORD_PROTECTED'
+                        "
+                      >
+                        Request Pending
+                      </p>
+                      <p
+                      class="registerd"
+                      *ngIf="
+                        upcome.registrationStatus === 'DECLINED' && upcome.registered == true && upcome.accessType == 'PASSWORD_PROTECTED'
+                      "
+                    >
+                      Request Pending
+                    </p>
+                      <!-- <p class="registerd" *ngIf="upcome.registrationStatus === 'APPROVED' && upcome.registered == true && upcome.accessType == 'PASSWORD_PROTECTED'">Registered</p> -->
+                      <button
+                        class="btn-register"
+                        data-bs-toggle="modal"
+                        data-bs-target="#passwordAccess"
+                        *ngIf="
+                          upcome.registered == false &&
+                          upcome.accessType == 'PASSWORD_PROTECTED' &&
+                          upcome.registrationStatus === 'APPROVED' &&
+                          upcome.alreadyMember == false &&
+                          upcome.registered == true
+                        "
+                        (click)="getId(upcome.eventId)"
+                      >
+                        Enter Password
+                      </button>
+                      <button
+                        class="btn-register"
+                        data-bs-toggle="modal"
+                        data-bs-target="#openRegistration"
+                        *ngIf="upcome.registered == false && upcome.accessType == 'OPEN'"
+                        (click)="getId(upcome.eventId)"
+                      >
+                        Register Now
+                      </button>
+                      <button
+                        class="btn-register"
+                        data-bs-toggle="modal"
+                        data-bs-target="#requestAccess"
+                        *ngIf="upcome.registered == false && upcome.accessType == 'PASSWORD_PROTECTED'"
+                        (click)="getId(upcome.eventId)"
+                      >
+                        Request Access
+                      </button>
+                       <button
+                        class="btn-register"
+                        data-bs-toggle="modal"
+                        data-bs-target="#requestAccessOtp"
+                        *ngIf="upcome.registered == false && upcome.accessType == 'EMAIL_AND_OTP'"
+                        (click)="getId(upcome.eventId)"
+                      >
+                        Request Access
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="d-flex justify-content-center mt-3" *ngIf="totalUpcomingsElements > 12">
+                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="page2 = $event; onTableDataChange3()">
+                </pagination-controls>
+              </div> -->
+              <div class="row d-flex justify-content-center">
+                <div class="col-md-2">
+                  <button
+                    class="btn-loadMore"
+                    (click)="showUpcoming()"
+                    [ngStyle]="{ display: upcmingLoadMoreStyle }"
+                    *ngIf="totalUpcomingsElements > 12"
+                  >
+                    Load More
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+            <!-- <div class="row event-rows mt-4" *ngIf="!contentLoadedPopular">
+              <div class="col-md-4" *ngFor="let line of [0, 1, 2]">
+                <div class="card">
+                  <div class="loader">
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '200px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                      [theme]="{
+                        width: '100%',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                      }"
+                    ></ngx-skeleton-loader>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+            <div class="row explores">
+              <div class="card" style="width: 20.2rem">
+                <div class="imgs">
+                  <img src="../../assets/images/Sci fi 2.png" class="card-img-top" alt="..." (click)="registerNow()" />
+                </div>
+                <div class="card-body mt-3">
+                  <div class="row">
+                    <div class="col-md-9">
+                      <h5 class="card-title">Book Fair</h5>
+                    </div>
+                    <div class="col d-flex justify-content-end">
+                      <i class="fas fa-heart" [ngClass]="{ active: isActive }" (click)="onClick()"></i>
+                    </div>
+                  </div>
+
+                  <p class="card-text-1">Monday, Dec 20, 2022 | 8:00 PM(IST) onwards</p>
+                  <p class="card-text-2">Meeting & Networking</p>
+                  <p class="card-text-3">Paid - $2.00 <span class="ticketper">(per ticket)</span></p>
+                  <div class="row mb-2">
+                    <div class="col-md-6">
+                      <p class="piro"><i class="fa fa-user" aria-hidden="true"></i> By Piro Space</p>
+                      <p class="piro"><i class="fa-solid fa-heart"></i> Likes</p>
+                    </div>
+                    <div class="col-md-6 regis">
+                      <button class="btn-register" data-bs-toggle="modal" data-bs-target="#passwordAccess">Enter Password</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="requestAccess"   data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" [ngStyle]="{ display: passwordModal }">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="emptyForm()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/password-access.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">One Last Step</h3>
+          </div>
+          <div class="">
+            <p class="pass-text">If you already have password, please enter it below</p>
+          </div>
+          <div class="">
+            <form #passwordFrom="ngForm" (ngSubmit)="passwordFrom.form.valid && savePassworAccess(passwordFrom)">
+                <div class="row d-flex justify-content-center">
+                  <div class="col-md-6 px-0">
+                    <div class="form-group mb-3">
+                      <input
+                        [type]="fieldTextType ? 'text' : 'password'"
+                        autocomplete="false"
+                        type="password"
+                        class="form-control extra-width"
+                        id="pass"
+                        placeholder="Enter Password"
+                        [(ngModel)]="password"
+                        required
+                        name="password"
+                        #passwords="ngModel"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-1 px-0 input-group-append">
+                    <span class="input-group-text">
+                      <i
+                        class="fa"
+                        [ngClass]="{
+                          'fa-eye-slash': !fieldTextType,
+                          'fa-eye': fieldTextType
+                        }"
+                        (click)="toggleFieldTextType()"
+                      ></i>
+                    </span>
+                  </div>
+                  <div class="col-md-4">
+                    <button class="btn-registernow" type="submit">Register Now</button>
+                  </div>
+                </div>
+                <div class="error-show" *ngIf="errorMessage">
+                  <p class="error-class-backend"><i class="fa-solid fa-circle-exclamation"></i> {{ errorMessage }}.</p>
+                </div>
+
+            </form>
+          </div>
+          <div class="">
+            <div class="col-md strike">
+              <span>OR</span>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center mt-4 mb-4">
+            <div class="col-md-4">
+              <!-- <button class="btn-registernow" data-bs-toggle="modal" data-bs-target="#passwordPending" (click)="requestAccess()">
+                Request Access
+              </button> -->
+              <button class="btn-registernow" (click)="requestAccess()">
+                Request Access
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-dialog modal-dialog-centered modal-lg" [ngStyle]="{ display: passwordRegistrationModal }">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/successful-registration.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">Registration Successful!</h3>
+          </div>
+          <div class="">
+            <p class="pending-text">
+              Thank you for showing interest in attending this event. It’s been added in your calendar You can see further details
+              of it in <b class="bold">My Events</b> section
+            </p>
+          </div>
+          <div class="d-flex justify-content-center mt-4 mb-5">
+            <div class="col-md-4 mx-3">
+              <button class="btn-not" data-bs-dismiss="modal">Explore More Events</button>
+            </div>
+            <div class="col-md-4">
+              <button class="btn-registernow" data-bs-dismiss="modal" (click)="gotToEvents()">Go to My Events</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-dialog modal-dialog-centered modal-lg" [ngStyle]="{ display: requestSentSuccessModal }">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/password-access.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">Request Sent Successfully!</h3>
+          </div>
+          <div class="">
+            <p class="pending-text">
+              Your request has been shared with the organiser. Upon request approval, you will be notified and this event will be
+              added to your calendar / <b class="bold">My Events</b> Section.
+            </p>
+          </div>
+          <div class="d-flex justify-content-center mt-4 mb-5">
+            <div class="col-md-4">
+              <button class="btn-not" data-bs-dismiss="modal">Explore More Events</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="passwordAccess"
+  data-bs-backdrop="static"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel4"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/password-access.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">Request Approved!</h3>
+          </div>
+          <div class="">
+            <p class="pass-text-received">Please enter the password you’ve received</p>
+          </div>
+          <div class="">
+            <form action="">
+              <div class="row d-flex justify-content-center">
+                <div class="col-md-6 px-0">
+                  <div class="form-group mb-3">
+                    <input
+                      [type]="fieldTextType ? 'text' : 'password'"
+                      autocomplete="false"
+                      type="password"
+                      class="form-control extra-width"
+                      id="requestPassword"
+                      placeholder="Enter Password"
+                      [(ngModel)]="password"
+                      required
+                      name="requestPass"
+                      #reqPass="ngModel"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-1 px-0 input-group-append">
+                  <span class="input-group-text">
+                    <i
+                      class="fa"
+                      [ngClass]="{
+                        'fa-eye-slash': !fieldTextType,
+                        'fa-eye': fieldTextType
+                      }"
+                      (click)="toggleFieldTextType()"
+                    ></i>
+                  </span>
+                </div>
+                <div class="col-md-4">
+                  <button class="btn-registernow">Register Now</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="d-flex justify-content-center mt-4 mb-5">
+            <div class="col-md-4 mx-3">
+              <button class="btn-not" data-bs-dismiss="modal">Explore More Events</button>
+            </div>
+            <div class="col-md-4">
+              <button class="btn-registernow" data-bs-dismiss="modal">Go to My Events</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="passwordPending"
+  data-bs-backdrop="static"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel3"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/password-access.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">Request Sent Successfully!</h3>
+          </div>
+          <div class="">
+            <p class="pending-text">
+              Your request has been shared with the organiser. Upon request approval, you will be notified and this event will be
+              added to your calendar / <b class="bold">My Events</b> Section.
+            </p>
+          </div>
+          <div class="d-flex justify-content-center mt-4 mb-5">
+            <div class="col-md-4">
+              <button class="btn-not" data-bs-dismiss="modal">Explore More Events</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="registrationSuccess"
+  data-bs-backdrop="static"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel2"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/password-access.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">Registration Successful!</h3>
+          </div>
+          <div class="">
+            <p class="pending-text">
+              Thank you for showing interest in attending this event. It’s been added in your calendar You can see further details
+              of it in <b class="bold">My Events</b> section
+            </p>
+          </div>
+          <div class="d-flex justify-content-center mt-4 mb-5">
+            <div class="col-md-4">
+              <button class="btn-registernow">Go to My Events</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Open Registration Modal -->
+<div
+  class="modal fade"
+  id="openRegistration"
+  data-bs-backdrop="static"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg" [ngStyle]="{ display: firstModal }">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/open-registration.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">Event Registration</h3>
+          </div>
+          <div class="">
+            <p class="register-text">Are you sure you want to Register for this Event?</p>
+          </div>
+          <div class="d-flex justify-content-center mt-4 mb-5">
+            <div class="col-md-4 mx-3">
+              <button class="btn-not" data-bs-dismiss="modal">No, not now</button>
+            </div>
+            <div class="col-md-4">
+              <button class="btn-registernow" (click)="proceed()">Yes, Proceed</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-dialog modal-dialog-centered modal-lg" [ngStyle]="{ display: secondModal }">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/successful-registration.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">Registration Successful!</h3>
+          </div>
+          <div class="">
+            <p class="pending-text">
+              Thank you for showing interest in attending this event. It’s been added in your calendar You can see further details
+              of it in <b class="bold">My Events</b> section
+            </p>
+          </div>
+          <div class="d-flex justify-content-center mt-4 mb-5">
+            <div class="col-md-4 mx-3">
+              <button class="btn-not" data-bs-dismiss="modal" (click)="exploreMore()">Explore More Events</button>
+            </div>
+            <div class="col-md-4">
+              <button class="btn-registernow" data-bs-dismiss="modal" (click)="gotToEvents()">Go to My Events</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Approval Pending modal -->
+<div
+  class="modal fade"
+  id="approvalPending"
+  data-bs-backdrop="static"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel3"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/password-access.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">Request Approval pending!</h3>
+          </div>
+          <div class="">
+            <p class="pending-text">
+              Your request has been shared with the organiser. Upon request approval, you will be notified and this event will be
+              added to your calendar / <b class="bold">My Events</b> Section.
+            </p>
+          </div>
+        </div>
+        <div class="">
+          <div class="col-md strike">
+            <span>OR</span>
+          </div>
+        </div>
+        <div class="">
+          <p class="already-text">If you already have password, please enter it below</p>
+        </div>
+        <div class="">
+          <form action="">
+            <div class="row d-flex justify-content-center">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <input
+                    autocomplete="false"
+                    type="password"
+                    class="form-control extra-width"
+                    id="pandingPass"
+                    placeholder="Enter Password"
+                    [(ngModel)]="password"
+                    required
+                    name="password"
+                    #passwords="ngModel"
+                  />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <button class="btn-registernow">Register Now</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--OTP modal-->
+<div class="modal fade" id="requestAccessOtp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" [ngStyle]="{ display: passwordModal }">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/password-access.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">One Last Step</h3>
+          </div>
+          <div class="d-flex justify-content-center mt-4 mb-4">
+            <div class="col-md-4">
+              <button class="btn-registernow" data-bs-toggle="modal" data-bs-target="#passwordPending" (click)="requestAccess()">
+                Request Access
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-dialog modal-dialog-centered modal-lg" [ngStyle]="{ display: passwordRegistrationModal }">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <img src="../../assets/images/successful-registration.svg" alt="" />
+        </div>
+        <div class="row">
+          <div class="">
+            <h3 class="pass-head">Registration Successful!</h3>
+          </div>
+          <div class="">
+            <p class="pending-text">
+              Thank you for showing interest in attending this event. It’s been added in your calendar You can see further details
+              of it in <b class="bold">My Events</b> section
+            </p>
+          </div>
+          <div class="d-flex justify-content-center mt-4 mb-5">
+            <div class="col-md-4 mx-3">
+              <button class="btn-not" data-bs-dismiss="modal">Explore More Events</button>
+            </div>
+            <div class="col-md-4">
+              <button class="btn-registernow" data-bs-dismiss="modal" (click)="gotToEvents()">Go to My Events</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- filter modal -->
+<!--
+<div
+  class="modal fade"
+  id="filterModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Filters</h5>
+        <button class="btn-filter mx-3" (click)="applyFilter()">Apply Filter</button>
+        <button class="btn-clear">Clear All</button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <p class="filter-titles">Date</p>
+          <div class="col-md-12">
+            <div class="form-check form-check-inline">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="TODAY" value="TODAY" (change)="fieldsChange($event)"  />
+                <label class="form-check-label" for="TODAY">Today</label>
+              </div>
+            </div>
+            <div class="form-check form-check-inline">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="TOMORROW" value="TOMORROW" (change)="fieldsChange($event)" />
+                <label class="form-check-label" for="TOMORROW">Tomorrow</label>
+              </div>
+            </div>
+            <div class="form-check form-check-inline">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="THISWEEK" value="THISWEEK"  (change)="fieldsChange($event)" />
+                <label class="form-check-label" for="THISWEEK">This week</label>
+              </div>
+            </div>
+            <div class="form-check form-check-inline">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="MONTH" value="MONTH"  (change)="fieldsChange($event)" />
+                <label class="form-check-label" for="MONTH">This month</label>
+              </div>
+            </div>
+            <div class="form-check form-check-inline">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="ANYDAY" value="ANYDAY"  (change)="fieldsChange($event)" />
+                <label class="form-check-label" for="ANYDAY">Any Day</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <p class="filter-titles">Type</p>
+          <div class="col-md-12">
+            <div class="form-check form-check-inline">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="today" value="TODAY" />
+                <label class="form-check-label" for="today">Conference, Convention or Expo</label>
+              </div>
+            </div>
+            <div class="form-check form-check-inline">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="tomorrow" value="Tomorrow" />
+                <label class="form-check-label" for="tomorrow">Meeting or Networking event</label>
+              </div>
+            </div>
+            <div class="form-check form-check-inline mt-2">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="week" value="ThisWeek" />
+                <label class="form-check-label" for="week">Talk or Seminar</label>
+              </div>
+            </div>
+            <div class="form-check form-check-inline mt-2">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="months" value="month" />
+                <label class="form-check-label" for="months">Party or Social gathering</label>
+              </div>
+            </div>
+            <div class="form-check form-check-inline mt-2">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="days" value="anyDay" />
+                <label class="form-check-label" for="days">Festival Celebration</label>
+              </div>
+            </div>
+            <div class="form-check form-check-inline mt-2">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="others" value="OTHER" />
+                <label class="form-check-label" for="others">Other</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <p class="filter-titles">Category</p>
+          <div class="col-md-12">
+            <div class="form-check form-check-inline mb-2">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="week" value="ThisWeek" />
+                <label class="form-check-label" for="week">Professional or Business</label>
+              </div>
+            </div>
+            <div class="form-check form-check-inline mb-2">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="months" value="month" />
+                <label class="form-check-label" for="months">Community or Organisation</label>
+              </div>
+            </div>
+            <div class="form-check form-check-inline mb-2">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="days" value="anyDay" />
+                <label class="form-check-label" for="days">Education</label>
+              </div>
+            </div>
+            <div class="form-check form-check-inline">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="others" value="OTHER" />
+                <label class="form-check-label" for="others">Other</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <p class="filter-titles">Entry/Access</p>
+          <div class="col-md-12">
+            <div class="form-check form-check-inline mb-2">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="week" value="ThisWeek" />
+                <label class="form-check-label" for="week">Open</label>
+              </div>
+            </div>
+            <div class="form-check form-check-inline">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="others" value="OTHER" />
+                <label class="form-check-label" for="others">Restricted</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <p class="filter-titles">Currency</p>
+          <div class="col-md-12">
+            <div class="form-check form-check-inline mb-2">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="week" value="ThisWeek" />
+                <label class="form-check-label" for="week">Any Currency</label>
+              </div>
+            </div>
+            <div class="form-check form-check-inline mb-2">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="months" value="month" />
+                <label class="form-check-label" for="months">Indian Rupee</label>
+              </div>
+            </div>
+            <div class="form-check form-check-inline mb-2">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="days" value="anyDay" />
+                <label class="form-check-label" for="days">U.S. Dollar</label>
+              </div>
+            </div>
+            <div class="form-check form-check-inline mb-2">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="others" value="OTHER" />
+                <label class="form-check-label" for="others">Euro</label>
+              </div>
+            </div>
+            <div class="form-check form-check-inline mb-2">
+              <div class="check">
+                <input class="form-check-input" type="checkbox" id="others" value="OTHER" />
+                <label class="form-check-label" for="others">Pound</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- currentDateTime < all.utcEndDateAndTime && image.png -->
+
+<!-- <i class="fa fa-user" aria-hidden="true"></i> 2 -->
